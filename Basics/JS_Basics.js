@@ -142,3 +142,137 @@ const func3 = (a = 'Paul', b = 'John') => {
 console.log(`${a} & ${b} = The Beatles`);
 };
 func3();
+
+// Object Continues..
+// There are 2 ways to define objects
+// Constructor Syntax
+let obj2 = new Object();
+
+// Literal Syntax
+let obj3 = {};
+
+// Object Literal and Properties
+obj2 = {
+    name: 'Fred',
+    age: 54,
+    job: 'Artist',
+    married: true,
+}
+
+// Accessing Object Properties
+// Dot Notation
+console.log(`obj2.name = ${obj2.name}`);
+console.log(`obj2.job = ${obj2.job}`);
+
+// Square Brackets
+console.log(`obj2['name'] = ${obj2['name']}`);
+console.log(`obj2['job'] = ${obj2['job']}`);
+
+// Adding a property in object
+obj2.canDrive = true
+console.log(obj2);
+
+// Notice when we initialized obj2, we didn't quote string keys like we used to do in 
+// Python dict. However, when you are passing multi word key, then in that case
+// you need to use quotes. For example,
+obj2["pin code"] = 205001;
+console.log(obj2);
+// In above case, you can't use dot notation, either for declaring property or accessing it
+// For eg. - obj2.'pin code' = 205001 will throw error
+
+
+// Computed Properties
+// let fruit = prompt('Which fruit you want to buy?', null);
+let fruit = 'apple'
+let obj4 = {
+    [fruit]:5,
+};
+console.log(obj4);
+
+// 'in' operator. Syntax - <'key' in object>
+console.log(`'age' in obj2 = ${'age' in obj2}`);
+console.log(`'address' in obj2 = ${'address' in obj2}`);
+
+// for..in loop
+for (let key in obj2){
+    console.log(key);
+}
+
+// this keyword - It has different values depending on where it is used:
+/*  
+- In a method, 'this' refers to the owner object
+- Alone, 'this' refers to the global object
+- In a function, 'this' refers to the global object
+- In a function, in strict mode, 'this' is undefined
+- In an event, 'this' refers to the element that received the event
+- Methods like call() and apply() can refer 'this' to any object
+*/
+
+// Loop in JS
+// for loop
+
+for(let i = 0; i < 3; i++){
+    console.log(i);
+}
+
+// break with label
+
+loop1:
+for(let i=0;i<5;i++){
+    loop2:
+    for(let j=0; j<i;j++){
+        if (i === 4){
+            break loop1;
+        }
+        console.log(j);
+    }
+}
+
+// In similar manner, label can be used with continue
+
+// while loop
+let temp5 = 121;
+let temp7, temp6;
+temp6, temp7 = 0;
+while (temp5 != 0){
+    temp6 = temp5 % 10;
+    temp5 = parseInt(temp5/10);
+    temp7 = (temp7 * 10) + temp6;
+}
+console.log(temp7);
+
+//do while loop
+let temp8 = 1;
+do {
+console.log(temp8);
+temp8++;
+}while(temp8 < 5);
+
+// arguments in JS
+// Arrow Function doesn't have arguments
+const func4 = function(p1, p2){
+    console.log(`para1 = ${p1}, para2 = ${p2}, args = ${arguments}`);
+    console.log(typeof(arguments));
+};
+
+func4(1,2,3,4);
+
+// restArgs
+
+const func5 = function(para1, para2, ...restArgs){
+    console.log(`para1 = ${para1}, para2 = ${para2}, rest = ${restArgs}`);
+    console.log(`typeof(restArgs) = ${typeof(restArgs)}`);
+};
+
+func5(32,45,12,99,99,99,99);
+
+/*
+1 - Rest Parameters is a real array and methods like forEach and sort can be applied. 
+Even though the arguments object has the length method, it is not a real array and using 
+array methods like sort would only bring us misery and sorrow.
+
+2 -Rest Parameters contain only the arguments that have no corresponding parameter 
+while arguments object contains all the arguments passed to the function.
+*/
+
+
