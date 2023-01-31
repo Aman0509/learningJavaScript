@@ -257,7 +257,7 @@ const func4 = function(p1, p2){
 
 func4(1,2,3,4);
 
-// restArgs
+// restArgs using '...' (Spread Operator)
 
 const func5 = function(para1, para2, ...restArgs){
     console.log(`para1 = ${para1}, para2 = ${para2}, rest = ${restArgs}`);
@@ -276,3 +276,130 @@ while arguments object contains all the arguments passed to the function.
 */
 
 
+// spread operator in objects
+
+let obj5 = {...obj2, blood_group:'O+'};
+obj5.name = 'Paul';
+console.log(obj5);
+
+// Short Circuiting
+
+true && 'Hello' && console.log('Bye');
+''|| 0 || false || console.log('Finally');
+
+// Nullish Coalescing Operator
+let var1 = null ?? undefined ?? 0;
+console.log(var1);
+
+// Optional Chaining
+// Access values without checking if the parent object exists.
+// Instead of returning error, it will return null or undefined.
+let dog = {
+    german_shepard:{
+        color: 'brown-black',
+        purpose: 'protection'
+    },
+    bulldog:{
+        color: 'skin',
+        purpose: 'protection'
+    },
+    husky:{
+        color: 'grey',
+        purpose: 'protection'
+    },
+    retriever: {
+        color: 'golden',
+        purpose: 'showoff'
+    }
+}
+
+console.log(dog.shibu?.color ?? 'breed not found');
+console.log(dog.husky?.purpose);
+console.log(dog?.bulldog.color);
+
+
+// for...of loop - Only works on iterables, for eg, like array, strings etc
+// and not on objects
+
+let arr1 = ['Hello', 'There', 1, 0, 0];
+for(let i of arr1){
+    console.log(i);
+}
+
+// If you want index as well
+for (let [j,k] of arr1.entries()){
+    console.log(j,k);
+}
+
+// Object keys function
+for (let var2 of Object.keys(dog)){
+    console.log(var2);
+}
+console.log(Object.keys(dog)); // It gives you an array
+
+// Object values function
+for (let var2 of Object.values(dog)){
+    console.log(var2);
+}
+console.log(Object.values(dog)); // It gives you an array
+
+// Object Entries function
+// Earlier we have used entries method on array but it does not work
+// for object. For object we used Entries function
+console.log(Object.entries(dog));
+for (let [t1,t2] of Object.entries(dog)){
+    console.log(t1, t2);
+}
+
+
+// Sets
+let s1 = new Set();
+console.log(s1);
+let s2 = new Set([45, 23, 11, 45, 23, 78, 54, 23]);
+console.log(s2);
+s1.add('a').add('b').add('c').add('d').add('a').add('c');
+console.log(s1);
+s2.delete(78);
+console.log(s2);
+console.log(s1.has('e'));
+console.log(s2.size);
+// Set has keys() and values(), but both values are identical
+console.log(s1.keys());
+console.log(s1.values());
+for (let [i,j] of s1.entries()){
+    console.log(i == j);
+}
+
+// Map
+let m1 = new Map([['a', 1],
+['b', 2],
+['c',3],
+['d', 4]]);
+let m3 = {
+    'a': 1,
+    'b': 2
+}
+let m2 = new Map();
+m2.set('FName', 'John')
+    .set('LName', 'Wick')
+    .set('Fav_Pet', 'Dog');
+
+console.log(m1);
+console.log(m2);
+console.log(m1.size);
+console.log(m2.has('FName'));
+console.log(m1.get('d'));
+for (let i of m2.keys()){
+    console.log(i);
+}
+for (let i of m2.values()){
+    console.log(i);
+}
+for (let [i,j] of m2.entries()){
+    console.log(i,j);
+}
+// Iteration is same as using entries()
+for (let [i,j] of m2){
+    console.log(i,j);
+}
+console.log(m1['a']); // Random Access is not allowed
