@@ -15,7 +15,7 @@
 
 :abacus: [Understand with Code](summary-with-code/script.js)
 
-:notebook_with_decorative_cover: [Project]()
+:notebook_with_decorative_cover: [Projects](projects/)
 
 ## Adding/Importing JS to the Website
 
