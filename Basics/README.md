@@ -10,6 +10,7 @@
 | [Functions in JavaScript](#functions-in-javascript) |
 | [Arrays](#arrays)|
 | [Importing JavaScript with `defer` and `async`](#importing-javascript-with-defer-and-async) |
+| [Efficient Development & Debugging](#efficient-development--debugging) |
 
 &nbsp;
 
@@ -334,3 +335,22 @@ Readings:
 - [Async & Defer — How to Load JavaScript Properly](https://javascript.plainenglish.io/async-and-defer-the-complete-guide-to-loading-javascript-properly-ce6edce1e6b5)
 
 - [Efficiently load JavaScript with defer and async](https://flaviocopes.com/javascript-async-defer/)
+
+## Efficient Development & Debugging
+
+| Write Code Efficiently | Find Help | Debug Your Code |
+| :--- | :--- | :--- |
+| Work in a productive environment (i.e. IDE, editor)| Use MDN | An error message! Don't panic instead read and utilize error messages |
+| Auto-format code & use shortcuts | Learn how to google (seriously!) | Use console.log() to gain insights into your code (flow) |
+| Use auto-completion and hints | Ask proper questions, help others | Use the (Chrome) debugging tools |
+| Explore extensions & settings | Trial & Error | Use your IDEs debugging capabilities |
+
+Readings:
+
+- [Google Chrome DevTools Docs](https://developers.google.com/web/tools/chrome-devtools/)
+
+- [Debugging in the browser](https://javascript.info/debugging-chrome)
+
+- [The Beginner’s Guide to Chrome Developer Tools](https://nira.com/chrome-developer-tools/)
+
+- [Debug in VSCode](https://code.visualstudio.com/docs/editor/debugging)
