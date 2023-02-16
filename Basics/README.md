@@ -70,9 +70,41 @@ Readings:
 
 ## [Working with Variables and Operators](https://drive.google.com/uc?export=view&id=1_3XRDc2Zm3zK-0QpjHd7GY3BlclZpehB)
 
+### Useful Points
+
+1. Strings can also be compared with greater than (`>`) or lower/smaller than (`<`) operators.
+
+    JavaScript compares strings based on standard lexicographical ordering, using Unicode values. That means that `b` is greater than `a` for instance.
+
+    JavaScript always looks at the first character and only considers other characters if the first character is similar. In addition, capital characters are considered to be smaller than lowercase characters.
+
+    ```
+    'ab' > 'aa' // true
+    'a' > 'B' // true
+    'a' > 'b' // false
+    ```
+
+2. [Beware When Comparing Objects & Arrays for Equality.](https://drive.google.com/uc?export=view&id=1jpVtZ8AAdzrOmghqubDAJ4-Tyy4j8Q1Y)
+
+    ```
+    let obj1 = {name: 'XYZ'};
+    let obj2 = {name: 'XYZ'};
+    console.log(obj1 == obj2); // false
+    console.log(obj1 === obj2) // false
+
+    let arr1 = ['hello', 'world']
+    let arr2 = ['hello', 'world']
+    console.log(arr1 == arr2); // false
+    console.log(arr1 === arr2) // false
+    ```
+
+    Object and Arrays, both are of type `object` and objects are not compared based on their values but based on the references of the variables. Hence, equality does not work similar to other data types.
+
 Readings:
 
 - [JavaScript Operators](https://www.programiz.com/javascript/operators)
+
+- [Operator precedence](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Operator_Precedence)
 
 - [JavaScript Data Types: Typeof Explained](https://www.freecodecamp.org/news/javascript-data-types-typeof-explained/)
 
