@@ -11,6 +11,10 @@
 | [Arrays](#arrays)|
 | [Importing JavaScript with `defer` and `async`](#importing-javascript-with-defer-and-async) |
 | [Efficient Development & Debugging](#efficient-development--debugging) |
+| [ES5 v ES6+](#es5-v-es6) |
+| [`var` vs `let` & `const`](#var-vs-let--const) |
+| [Understanding Hoisting](#understanding-hoisting) |
+| [Strict Mode and Writing Good Code](#strict-mode-and-writing-good-code) |
 
 &nbsp;
 
@@ -26,7 +30,7 @@ The `<script>` tag is what we use to includes our JavaScript. It's a lot like th
 
 Here's a very basic snippet of JavaScript using the script tag. This JavaScript is written directly into our HTML page. It will call and alert box as soon as the page loads.
 
-```
+```html
 <script type="text/javascript">
   alert("This alert box was called with the onload event");
 </script>
@@ -54,8 +58,6 @@ Readings:
 
 Readings:
 
-- [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
-
 - [JavaScript Variables and Constants](https://www.programiz.com/javascript/variables-constants)
 
 - [Variables and Constants](https://sabe.io/classes/javascript/variables-constants)
@@ -78,7 +80,7 @@ Readings:
 
     JavaScript always looks at the first character and only considers other characters if the first character is similar. In addition, capital characters are considered to be smaller than lowercase characters.
 
-    ```
+    ```javascript
     'ab' > 'aa' // true
     'a' > 'B' // true
     'a' > 'b' // false
@@ -86,7 +88,7 @@ Readings:
 
 2. [Beware When Comparing Objects & Arrays for Equality.](https://drive.google.com/uc?export=view&id=1jpVtZ8AAdzrOmghqubDAJ4-Tyy4j8Q1Y)
 
-    ```
+    ```javascript
     let obj1 = {name: 'XYZ'};
     let obj2 = {name: 'XYZ'};
     console.log(obj1 == obj2); // false
@@ -145,7 +147,7 @@ There is a difference between writing correct code (i.e. avoiding syntax errors)
 
 Here's a syntax error example:
 
-```
+```javascript
 function greetUser {
     alert('Hi there!');
 }
@@ -155,7 +157,7 @@ What's the problem?
 
 This function has no parameter list `(the ())`, it should be:
 
-```
+```javascript
 function greetUser() {
     alert('Hi there!');
 }
@@ -163,7 +165,7 @@ function greetUser() {
 
 Writing readable code along with correct syntax is equally important. Take this as an example:
 
-```
+```javascript
 function greetUser() {alert('Hi there!');}
 ```
 
@@ -173,7 +175,7 @@ This would be a valid code snippet!
 
 But of course this version of the code is more readable:
 
-```
+```javascript
 function greetUser() {
     alert('Hi there!');
 }
@@ -181,13 +183,13 @@ function greetUser() {
 
 The same goes for variable definitions:
 
-```
+```javascript
 let userName='Max';
 ```
 
 would be valid. And of course you can also read it. But,
 
-```
+```javascript
 let userName = 'Max';
 ```
 
@@ -197,13 +199,13 @@ So in general, *whitespace, adding a line break and indentation is optional* as 
 
 You can also *structure longer expressions across multiple lines* to make them more readable, for example:
 
-```
+```javascript
 let someResult = 5 + 10 - 3 + 22 - 10000 + 5.344 * 1200;
 ```
 
 could be written as:
 
-```
+```javascript
 let someResult = 5 + 10 - 3 + 
                  22 - 10000 + 5.344 * 
                  1200;
@@ -211,7 +213,7 @@ let someResult = 5 + 10 - 3 +
 
 The same goes for long string concatenations:
 
-```
+```javascript
 let someLongString = 'Hi, this is going to be a bit longer, ' +
                      'so maybe split it across multiple lines by ' +
                      'concatenating multiple strings!';
@@ -219,7 +221,7 @@ let someLongString = 'Hi, this is going to be a bit longer, ' +
 
 This would not be valid, it would be a syntax error:
 
-```
+```javascript
 let someLongString = 'Hi, this is going to be a bit longer, 
                       so maybe split it across multiple lines by 
                       concatenating multiple strings!';
@@ -235,6 +237,47 @@ Adding a semi-colon after a function wouldn't be a problem, you wouldn't get an 
 
 ## [Functions in JavaScript](https://drive.google.com/uc?export=view&id=1eV4tQnw2DLxAAZ_KN6WDTZtIC9UkSZGW)
 
+In JavaScript, a function is a block of code that performs a specific task and can be called or invoked from elsewhere in the code. Functions are a fundamental building block of the language and are used extensively to create reusable code and modularize large programs.
+
+In JavaScript, functions can be declared in two ways:
+
+1. **Function Declarations**: This is the traditional way to define a function, using the `function` keyword followed by a name, a set of parameters in parentheses, and a function body in curly braces. For example:
+
+```javascript
+function myFunction(param1, param2) {
+    // Function body
+    return param1 + param2;
+}
+```
+
+2. **Function Expressions**: This is a newer way to define a function, which involves assigning a function to a variable or a property of an object. Function expressions are often used to create anonymous functions, which can be passed as arguments to other functions. For example:
+
+```javascript
+let myFunction = function(param1, param2) {
+    // Function body
+    return param1 + param2;
+};
+```
+
+Functions can also have optional parameters, which are specified in the function declaration and can be used to provide default values or handle variable numbers of arguments. For example:
+
+```javascript
+function myFunction(param1, param2, optionalParam) {
+    if (typeof optionalParam === "undefined") {
+        optionalParam = "default value";
+    }
+    // Function body
+    return param1 + param2 + optionalParam;
+}
+
+myFunction(1, 2); // Output: "3default value"
+myFunction(1, 2, "custom value"); // Output: "3custom value"
+```
+
+Functions can return values using the `return` statement, which stops the function execution and passes a value back to the caller. Functions can also access variables outside their own scope, through closures. This is a powerful feature that allows functions to maintain state and create private variables.
+
+Finally, JavaScript supports higher-order functions, which are functions that take other functions as arguments or return functions as values. Higher-order functions are a key feature of functional programming and are often used to create flexible and reusable code.
+
 Readings:
 
 - [JavaScript Function and Function Expressions](https://www.programiz.com/javascript/function)
@@ -243,13 +286,11 @@ Readings:
 
 - [JavaScript Variable Scope](https://www.programiz.com/javascript/variable-scope)
 
-- [JavaScript Hoisting](https://www.programiz.com/javascript/hoisting)
-
 ### Shadowed Variables
 
 You learned about local ("function-internal") variables and global variables. What happens if you have this code?
 
-```
+```javascript
 let userName = 'Max';
 function greetUser(name) {
     let userName = name;
@@ -265,7 +306,7 @@ You might've expected that an error gets thrown because we use and declare `user
 
 It indeed is not allowed on the same level in the same scope. So this would fail:
 
-```
+```javascript
 let userName = 'Max';
 let userName = 'Manu';
 ```
@@ -274,7 +315,7 @@ Why does it work in the first code snippet though?
 
 Because we first create a global variable `userName` via
 
-```
+```javascript
 let userName = 'Max';
 ```
 
@@ -288,7 +329,7 @@ When referring to `userName` inside of the `greetUser` function we now always re
 
 It can be confusing to see that there seem to be two ways of executing a function:
 
-```
+```javascript
 function add() {
     something = someNum + someOtherNum;
 }
@@ -300,7 +341,7 @@ It's important to understand why we have these "two ways"!
 
 In general, you call a function that you defined by using its name (e.g. `add`) and *adding parentheses* (with any parameters the function might need, or empty parentheses if no parameters are required like in the above example).
 
-```
+```javascript
 add()
 ```
 
@@ -310,13 +351,13 @@ Sometimes however, you don't want to execute the function immediately. You rathe
 
 That's when you don't directly call the function but when you instead just provide JavaScript with the name of the function.
 
-```
+```javascript
 someButton.addEventListener('click', add);
 ```
 
 This snippet would tell JavaScript: "Hey, when the button is clicked, go ahead and execute add.".
 
-```
+```javascript
 someButton.addEventListener('click', add());
 ```
 
@@ -326,7 +367,7 @@ Because JavaScript would encounter that line when it parses/executes your script
 
 Just writing add somewhere in your code would do nothing by the way:
 
-```
+```javascript
 let someVar = 5;
 add
 alert('Do something else...');
@@ -338,13 +379,78 @@ Because you just throw the name of the function in there but you don't give any 
 
 ## Arrays
 
-An array is an object that can store multiple values at once. For example,
+In JavaScript, an array is a data structure that allows you to store and manipulate a collection of values, such as numbers, strings, objects, or other arrays. Arrays are an essential part of the language and are used extensively to represent lists, sets, queues, and other data structures.
 
-```
-const words = ['hello', 'world', 'welcome'];
+In JavaScript, arrays are created using square brackets `[]` and can contain any number of elements, separated by commas. For example:
+
+```javascript
+const myArray = [1, 2, "three", { key: "value" }];
 ```
 
-Here, words is an array. The array is storing 3 values.
+Arrays are 0-indexed, which means that the first element is at index 0, the second element is at index 1, and so on. You can access an element in an array using its index, like this:
+
+```javascript
+const myArray = [1, 2, 3];
+console.log(myArray[0]); // Output: 1
+console.log(myArray[1]); // Output: 2
+console.log(myArray[2]); // Output: 3
+```
+
+You can also modify an element in an array by assigning a new value to its index:
+
+```javascript
+let myArray = [1, 2, 3];
+myArray[1] = "two";
+console.log(myArray); // Output: [1, "two", 3]
+```
+
+Arrays have a number of built-in methods that allow you to manipulate them in various ways. Here are some examples:
+
+- `push` adds one or more elements to the end of an array:
+
+    ```javascript
+    let myArray = [1, 2, 3];
+    myArray.push(4, 5);
+    console.log(myArray); // Output: [1, 2, 3, 4, 5]
+
+    ```
+- `pop` removes and returns the last element of an array:
+
+    ```javascript
+    let myArray = [1, 2, 3];
+    let lastElement = myArray.pop();
+    console.log(lastElement); // Output: 3
+    console.log(myArray); // Output: [1, 2]
+    ```
+
+- `concat` combines two or more arrays into a new array:
+
+    ```javascript
+    let array1 = [1, 2, 3];
+    let array2 = ["four", "five"];
+    let combinedArray = array1.concat(array2);
+    console.log(combinedArray); // Output: [1, 2, 3, "four", "five"]
+    ```
+
+- `sort` sorts the elements of an array in place:
+
+    ```javascript
+    let myArray = [3, 1, 4, 2];
+    myArray.sort();
+    console.log(myArray); // Output: [1, 2, 3, 4]
+    ```
+
+- `map` creates a new array by applying a function to each element of an existing array:
+
+    ```javascript
+    let myArray = [1, 2, 3];
+    let squaredArray = myArray.map(function (x) {
+    return x * x;
+    });
+    console.log(squaredArray); // Output: [1, 4, 9]
+    ```
+
+These are just a few examples of the many array methods available in JavaScript. Arrays are a versatile and powerful data structure that can help you write clean and efficient code.
 
 Readings:
 
@@ -386,3 +492,157 @@ Readings:
 - [The Beginner’s Guide to Chrome Developer Tools](https://nira.com/chrome-developer-tools/)
 
 - [Debug in VSCode](https://code.visualstudio.com/docs/editor/debugging)
+
+## [ES5 v ES6+](https://drive.google.com/uc?export=view&id=1WzbGASGJu2izPnRer54XkeEkMWrwroL9)
+
+ES5 (ECMAScript 5) and ES6 (ECMAScript 2015) are two different versions of the ECMAScript specification that define the syntax and behavior of JavaScript. ES6 is a newer version that introduced several significant changes to the language compared to ES5.
+
+Here are some of the key differences between ES5 and ES6:
+
+1. **Syntax**: ES6 introduced new syntax features such as arrow functions, template literals, and the spread operator, which make it easier and more concise to write code.
+
+2. **let and const**: In ES5, the only way to declare variables was with the var keyword. In ES6, the let and const keywords were introduced, which offer more fine-grained control over variable scoping and immutability.
+
+3. **Classes**: ES6 introduced a new syntax for defining classes in JavaScript, which is similar to class definitions in other object-oriented programming languages.
+
+4. **Modules**: ES6 introduced a standardized module system for JavaScript, which makes it easier to organize and reuse code across different files.
+
+5. **Promises**: ES6 introduced the Promise object, which provides a standardized way of handling asynchronous operations in JavaScript.
+
+6. **Default** function parameters: ES6 allows developers to define default values for function parameters, which makes it easier to write more robust and flexible functions.
+
+7. **Destructuring**: ES6 introduced a new syntax for destructuring objects and arrays, which makes it easier to extract values from complex data structures.
+
+Overall, ES6 introduced several significant changes to the language that make it more powerful and easier to use, especially for larger and more complex projects. However, because ES6 is a newer version, not all browsers and environments fully support its features, so it may be necessary to use tools like Babel to transpile ES6 code to ES5 for broader compatibility.
+
+Readings:
+
+- [ES5 vs. ES6 in JavaScript](https://medium.com/sliit-foss/es5-vs-es6-in-javascript-cb10f5fd600c)
+
+- [ES5 vs ES6 (with example code)](https://medium.com/recraftrelic/es5-vs-es6-with-example-code-9901fa0136fc)
+
+## [`var` vs `let` & `const`](https://drive.google.com/uc?export=view&id=1VgaUD6olnN1Rq9mk3pBwVrimD6TJVG0v)
+
+In JavaScript, `var`, `let`, and `const` are used to declare variables, but they have some differences in their behavior.
+
+`var` is the oldest way of declaring variables in JavaScript. It has function scope and hoisting, which means that a `var` variable declared inside a function is only accessible within that function, and it can be declared after it's used in the code.
+
+`let` and `const` were introduced in ECMAScript 6 (ES6) and have block scope, which means that a `let` or `const` variable declared inside a block (a pair of curly braces) is only accessible within that block. They do not have hoisting, which means that they need to be declared before they are used in the code.
+
+The main difference between `let` and `const` is that let can be reassigned a new value, while `const` cannot be reassigned. This means that `const` should be used when you want to declare a variable that will never be reassigned. However, note that for objects and arrays declared with `const`, you can still modify their properties or elements.
+
+```javascript
+// var example
+function varExample() {
+    var x = 10;
+    if (true) {
+        var x = 20;
+        console.log(x); // Output: 20
+    }
+    console.log(x); // Output: 20
+}
+
+// let example
+function letExample() {
+    let x = 10;
+    if (true) {
+        let x = 20;
+        console.log(x); // Output: 20
+    }
+    console.log(x); // Output: 10
+}
+
+// const example
+function constExample() {
+    const x = 10;
+    // x = 20; // Error: Assignment to constant variable.
+    const person = { name: 'John', age: 30 };
+    person.age = 31; // This is allowed
+    console.log(person); // Output: { name: 'John', age: 31 }
+}
+```
+
+Readings:
+
+- [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
+
+## Understanding Hoisting
+
+Hoisting is a JavaScript mechanism that moves variable and function declarations to the top of their scope, before the code is executed. This means that regardless of where the declarations are in the code, they are processed first and become available to the rest of the code in that scope.
+
+In the case of function declarations, the entire function is hoisted, including its body. This means that you can call the function before it is declared in the code, like this:
+
+```javascript
+myFunction(); // This works because myFunction is hoisted
+
+function myFunction() {
+    console.log("Hello world!");
+}
+```
+
+In the case of variable declarations, only the variable name is hoisted, not its value. This means that if you try to access the variable before it is declared, it will have a value of `undefined`. For example:
+
+```javascript
+console.log(x); // Output: undefined
+var x = 10;
+```
+
+In the above code, the variable `x` is declared with `var` after it is used in the `console.log` statement. However, because of hoisting, the variable name `x` is hoisted to the top of the scope, and its value is `undefined` until it is assigned the value `10`.
+
+***It's important to note that only declarations are hoisted, not initializations. So, in the following code, only the variable declaration is hoisted, but the assignment is not:***
+
+```javascript
+console.log(x); // Output: undefined
+var x; // Declaration is hoisted
+x = 10; // Initialization is not hoisted
+```
+
+To avoid confusion and improve code readability, it's generally recommended to declare variables and functions at the beginning of the scope where they are used, instead of relying on hoisting.
+
+Readings:
+
+- [JavaScript Hoisting](https://www.programiz.com/javascript/hoisting)
+
+## Strict Mode and Writing Good Code
+
+Strict mode is a feature in JavaScript that allows you to opt in to a stricter, more secure version of the language. When you enable strict mode, the JavaScript interpreter enforces a set of rules that help prevent common errors and discourage bad coding practices.
+
+To enable strict mode, you need to add the string `"use strict"` at the beginning of your JavaScript file or function. For example:
+
+```javascript
+"use strict";
+
+function myFunction() {
+    // Code in strict mode
+}
+```
+
+Here are some of the key features of strict mode:
+
+1. Strict mode eliminates some silent errors that can occur in normal JavaScript, such as accidental creation of global variables and duplicate function parameters.
+
+2. Strict mode makes it easier to write "secure" JavaScript, by disallowing the use of certain dangerous features, such as `eval` and `with`.
+
+3. Strict mode changes the behavior of some built-in features in JavaScript. For example, in strict mode, assigning a value to a non-writable property or a getter-only property will throw a TypeError.
+
+4. Strict mode changes the behavior of `this` inside functions. In normal JavaScript, the value of `this` inside a function depends on how the function is called. In strict mode, if a function is called without an object context, `this` will be `undefined` instead of the global object.
+
+Here's an example of how strict mode can help prevent errors:
+
+```javascript
+"use strict";
+
+function myFunction() {
+    x = 10; // Error: variable x is not declared
+}
+
+myFunction();
+```
+
+In the above code, `x` is assigned a value without being declared with `var`, `let`, or `const`. In normal JavaScript, this would create a global variable, which can be a source of bugs and security vulnerabilities. In strict mode, however, this code will throw an error, making the mistake more visible and preventing unintended side effects.
+
+Overall, strict mode is a useful feature in JavaScript that can help you write more secure and reliable code.
+
+Readings:
+
+- [JavaScript "use strict"](https://www.programiz.com/javascript/use-strict)

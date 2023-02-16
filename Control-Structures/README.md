@@ -16,7 +16,7 @@
 
 Always keep in mind that `condition` in
 
-```
+```javascript
 if (condition) { ... }
 ```
 
@@ -28,7 +28,7 @@ Since `if` only wants a boolean, you of course **don't have to use such an opera
 
 Example:
 
-```
+```javascript
 const isLoggedIn = true;
 if (isLoggedIn) {
     // This code will execute because isLoggedIn is true => A valid condition
@@ -37,7 +37,7 @@ if (isLoggedIn) {
 
 You could write
 
-```
+```javascript
 const isLoggedIn = true;
 if (isLoggedIn === true) {
     ...
@@ -47,7 +47,7 @@ but that would be redundant. You'd generate another new boolean where you alread
 
 You can use the ! operator to negate ("invert") the value:
 
-```
+```javascript
 const isLoggedIn = true;
 if (!isLoggedIn) {
     // This code will NOT execute because isLoggedIn is true but ! inverts it (in this check)
@@ -57,7 +57,7 @@ if (!isLoggedIn) {
 ```
 Again, that would be similar to:
 
-```
+```javascript
 const isLoggedIn = true;
 if (isLoggedIn !== true) {
     // This would NOT execute
@@ -74,7 +74,7 @@ It's important to understand that JavaScript is able to use variables in conditi
 
 This is kind of obvious, if we consider a boolean variable, for example:
 
-```
+```javascript
 let isLoggedIn = true;
 if (isLoggedIn) {
     ...
@@ -85,7 +85,7 @@ Since if just wants a condition that returns true or false, it makes sense that 
 
 Whilst the above example makes sense, it can be confusing when you encounter code like this for the first time:
 
-```
+```javascript
 let userInput = 'Max';
 if (userInput) {
     ... // this code here will execute because 'Max' is "truthy" (all strings but empty strings are)
@@ -102,13 +102,13 @@ It's important to understand that JavaScript doesn't really convert the value th
 
 Instead,
 
-```
+```javascript
 if (userInput) { ... }
 ```
 
 is basically transformed (behind the scenes) to
 
-```
+```javascript
 if (userInput === true) {
 ```
 
@@ -116,7 +116,7 @@ And here, the `=== operator` generates and returns a boolean. It also doesn't to
 
 And that's exactly what JavaScript automatically does when it finds something like this:
 
-```
+```javascript
 if (userInput) { ... }
 ```
 
@@ -124,7 +124,7 @@ if (userInput) { ... }
 
 ***[Click Here](https://drive.google.com/uc?export=view&id=1vIjIWjVCoshekcTHqsbIft6AmI_Xs6aM) to know about logical operator tricks.***
 
-```
+```javascript
 const userName = 'Max';
 const altName = '';
 console.log(userName === 'Max'); // generates and prints a boolean => true
@@ -146,7 +146,7 @@ console.log(userName && ''); // userName is truthy, hence second value is return
 
 Because of the above described behaviors, you often use `||` in JavaScript to assign default/fallback values to variables or constants:
 
-```
+```javascript
 const enteredValue = ''; // let's assume this is set based on some input provided by the user, therefore it might be an empty string
  
 const userName = enteredValue || 'PLACEHOLDER'; // will assign 'PLACEHOLDER' if enteredValue is an empty string
@@ -172,6 +172,8 @@ Readings:
 
 ## [Loops in JS](https://drive.google.com/uc?export=view&id=1vi7o5Gb2aXUHH91UqtbgQUoBJFZSiLLo)
 
+Loops are a fundamental programming concept that allow you to execute a block of code repeatedly. In JavaScript, there are several types of loops that you can use:
+
 | for loop | for-of loop | for-in loop | while loop |
 | :--- | :--- | :--- | :--- |
 | Execute code a certain amount of times (with counter variable) | Execute for every element in an array | Execute for every key in an object | Execute code as long as a condition is true |
@@ -186,6 +188,33 @@ Readings:
 - [Label Statement](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/label)
 
 ## [Error Handling with "try-catch"](https://drive.google.com/uc?export=view&id=1_rqoo-T7NPfZPsU6Dc1qofa4j4g3bBtP)
+
+In JavaScript, you can use the `try...catch...finally` statement to handle errors that occur during the execution of your code. Here is how it works:
+
+- The `try` block contains the code that you want to execute. If an error occurs during the execution of this code, control is passed to the `catch` block.
+
+- The `catch` block contains the code that you want to execute when an error occurs. The error object is passed to this block as a parameter, and you can use it to handle the error. You can also use the `catch` block to log the error or display an error message to the user.
+
+- The `finally` block contains the code that you want to execute after the `try` and `catch` blocks have executed, regardless of whether an error occurred or not. This block is optional, and you can omit it if you don't need to execute any code after the `try` and `catch` blocks.
+
+Here is an example of using `try...catch...finally` to handle errors in JavaScript:
+
+```javascript
+try {
+    // code that may throw an error
+    const result = someFunction();
+} catch (error) {
+    // code to handle the error
+    console.error('An error occurred:', error);
+} finally {
+    // code to execute after the try and catch blocks
+    console.log('Execution complete.');
+}
+```
+
+In this example, the `try` block contains a call to a function that may throw an error. If an error occurs, control is passed to the `catch` block, which logs the error to the console. The `finally` block is then executed, which logs a message to the console to indicate that the code has finished executing.
+
+Using `try...catch...finally` is a good practice to handle errors in your code, as it helps to prevent your application from crashing or displaying unexpected behavior to the user.
 
 Readings:
 
