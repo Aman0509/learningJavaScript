@@ -15,6 +15,14 @@
 | [`var` vs `let` & `const`](#var-vs-let--const) |
 | [Understanding Hoisting](#understanding-hoisting) |
 | [Strict Mode and Writing Good Code](#strict-mode-and-writing-good-code) |
+| [Revisited JavaScript](#revisited-javascript)|
+| [JavaScript - An Interpreted or a Compiled Language?](#javascript---an-interpreted-or-a-compiled-language) |
+| [JavaScript Engine](#javascript-engine) |
+| [JavaScript Runtime](#javascript-runtime) |
+| [Execution Context](#execution-context) |
+| [JavaScript Language vs Browser APIs](#javascript-language-vs-browser-apis) |
+| [Primitive vs Reference Values](#primitive-vs-reference-values) |
+| [Garbage Collection & Memory Management](#garbage-collection--memory-management) |
 
 &nbsp;
 
@@ -646,3 +654,254 @@ Overall, strict mode is a useful feature in JavaScript that can help you write m
 Readings:
 
 - [JavaScript "use strict"](https://www.programiz.com/javascript/use-strict)
+
+## Revisited JavaScript
+
+<img src="https://drive.google.com/uc?export=view&id=1-DPKRKjZ8cYYZTErfcHk04nOgvusUbQj" height="250" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1psz_XEtMUqmBBrg-uAlVrkZCOvK6MUQz" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1Naenpa_5tRw_CxqxPu2Qr8uBb0SRYyWK" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1BzZindxyS7m6u7h5uirjI6bvpyecxjlT" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1Tj0QtWZuMRZBjUdCwrLuF8igXICJqC_h" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1LZdHtIZm_2m64Ykq7zSQ-xriDJqXXRbF" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1t39PtAYK8FMOjAc5Dh_WVlX5TjUiQuur" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1NLoAE-Krkynx72b2gWe6SJLCxH6zISgM" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1vZWhnJBT-C3xqScs7oHpIwzV1noXhsNu" height="350" width="800" alt="jonasschmedtman ppt">
+
+## JavaScript - An Interpreted or a Compiled Language?
+
+JavaScript (JS) is generally considered to be an interpreted language, although it uses a combination of interpretation and **just-in-time(JIT)** compilation to execute code.
+
+When JavaScript code is executed, the browser or JavaScript engine reads the source code and directly interprets it to execute the instructions. However, some modern JavaScript engines use JIT compilation, which compiles the code on-the-fly as it is being interpreted, which can improve performance.
+
+So in summary, JavaScript is primarily an interpreted language, but it can also use JIT compilation to optimize code execution.
+
+<img src="https://drive.google.com/uc?export=view&id=1Xxj13E2CeS_szgi7CiBKyyMdokMpVzA-" height="350" width="800" alt="jonasschmedtman ppt">
+
+<img src="https://drive.google.com/uc?export=view&id=1t7q-gvAHOuJUqjVl45XXJSZNGEPnsa0o" height="350" width="800" alt="jonasschmedtman ppt">
+
+Above image shows how modern JS perform JIT compilation. Firstly, raw JavaScript file goes into the **Parser**.
+
+**Parser**: It checks for syntax and semantics. Parser is nothing but a lexical analysis that results into the breaking of code into tokens in order to understand their meanings and these tokens gets converted into Abstract Syntax Tree(AST).
+
+**Abstract Syntax tree**: It is a hierarchical tree like structure of program representation which allows compiler to understand the program.
+
+**Compilation**: Generated AST is now get complied and corresponding machine code is generated. Immediate after, machine code gets executed.
+
+Modern JS engine initially creates the unoptimized version of machine code just so that it gets start executing as fast as possible. In background, this machine code is being optimized and recompiled during already running program execution. This can be done multiple times and after each optimization, unoptimized code gets swapped with optimized machine code and without ever stopping execution of course. This process makes modern engines like V8 so fast. 
+
+***All this parsing, compilation and optimization happens in special threads inside the engine that we can’t access from our code.***
+
+## [JavaScript Engine](https://drive.google.com/uc?export=view&id=1ivZRKCAjA5NRsYxbxVeu8sEFJBlR1aCF)
+
+A JavaScript engine is a program or software component that executes JavaScript code. It is responsible for interpreting and executing JavaScript code, and typically powers web browsers, as well as server-side environments like Node.js.
+
+Some popular JavaScript engines include V8 (used in Google Chrome and Node.js), SpiderMonkey (used in Firefox), and Chakra (used in Microsoft Edge and Internet Explorer) and many more. As long as they follow the standard set by the ECMAScript standards, anyone can write a JS engine.
+
+Each JavaScript engine may have different performance characteristics and features, but they all aim to provide a fast and efficient environment for executing JavaScript code.
+
+<img src="https://drive.google.com/uc?export=view&id=1k2L-JfhMGoU0FpGZjTPDT6EWq1d30xAb" height="350" width="800" alt="jonasschmedtman ppt">
+
+## JavaScript Runtime
+
+JavaScript runtime is the environment where JavaScript code is executed. It provides the necessary tools and services to execute JavaScript code, such as a **memory heap for storing variables and objects, a call stack for tracking the execution of functions, and an event loop for handling asynchronous events.**
+
+Think of the JS runtime environment as a big container. Within the big container are other smaller containers. As the JS engine parses the code it starts putting pieces of it into different containers. And of course, heart of JS runtime environment is always JS engine.
+
+The most common JavaScript runtime is the web browser, which provides a JavaScript engine (such as V8 in Chrome) along with the necessary APIs for interacting with the browser environment, such as the Document Object Model (DOM) and Web APIs.
+
+Node.js is another popular JavaScript runtime that allows JavaScript to be executed outside of the browser, such as on a server. It includes a JavaScript engine (also V8), along with additional modules and APIs for building server-side applications.
+
+Other JavaScript runtime also exists, such as in-game engines that allow JavaScript to be used for game scripting, or desktop applications that use JavaScript as a scripting language.
+
+<img src="https://drive.google.com/uc?export=view&id=1Z1d3grZ6N2JLSY1NKqtgvVnO9MFlHklZ" height="350" width="800" alt="jonasschmedtman ppt">
+
+JavaScript is a single threaded language which means that only one set of instructions can be executed at a time. There is only one call stack. Except behind the scenes, we do not only have the JS Engine but also there is the JS Runtime. The runtime is the whole package including all the tools, the engine is responsible of composing JS.
+The browser comes with the **web API which is not native to JS**. The web API can take care of asynchronous actions. You can access the web API by using methods on the `window` object.
+
+## Execution Context
+
+<img src="https://drive.google.com/uc?export=view&id=1Rta4u5dt3I76z9chRhMsTL8jjbALIxhB" height="350" width="800" alt="jonasschmedtman ppt">
+
+An **Execution Context** is a conceptual structure that holds information about the environment in which the current code is being executed. The execution context includes information such as the ***value of the `this` keyword, the current scope chain, and any variables and functions that are currently in scope.***
+
+Execution context has three types:
+
+1. **Global Execution Context (GEC)**: This is the default execution context in which JS code start its execution when the file first loads in the browser. All the global code (top level code) i.e. code which is not inside any function or object is executed inside the global execution context. GEC cannot be more than one because only one global environment is possible for JS code execution as the JS engine is single threaded.
+
+2. **Functional Execution Context (FEC)**: It is defined as the context created by the JS engine whenever it finds any function call. Each function has its own execution context. It can be more than one. Functional execution context has access to all the code of the global execution context though vice versa is not applicable. While executing the global execution context code, if JS engine finds a function call, it creates a new functional execution context for that function. In the browser context, if the code is executing in strict mode value of `this` is `undefined` else it is `window` object in the function execution context.
+
+3. **Eval**: Execution context inside `eval` function.
+
+JavaScript engine creates the execution context in the following two stages:
+
+- Creation Phase
+- Execution Phase
+
+### Creation Phase
+
+Creation phase is the phase in which the JS engine has called a function, but its execution has not started. In the creation phase, JS engine is in the compilation phase and it just scans over the function code to compile the code, it doesn’t execute any code. In the creation phase, JS engine performs the following task:
+
+1. **Creates the Activation object or the Variable object**: Activation object is a special object in JS which contain all the variables, function arguments and inner functions declaration information. As activation object is a special object it does not have the `dunder proto` property. Activation object or variable object contains the argument object which has details about the arguments of the function.
+
+2. **Creates the scope chain**: Once the activation object gets created, the JS engine initializes the scope chain which is a list of all the variables objects inside which the current function exists. This also includes the variable object of the global execution context. Scope chain also contains the current function variable object.
+
+3. **Determines the value of `this`**: After the scope chain, the JavaScript engine initializes the value of `this`.
+
+<img src="https://drive.google.com/uc?export=view&id=1n6sLHvudZqU50lf7D6eM57NWahKC_EY6" height="550" width="800" alt="jonasschmedtman ppt">
+
+> Note - Execution context belonging to Arrow function do not get their own Argument keywords nor do they get ‘this’ keyword. Instead they can use the argument objects and this keyword from their closest regular function parent.
+
+<img src="https://drive.google.com/uc?export=view&id=197Q5hZ1PScKKD7wS2p4qa0YzzwIEJWvH" height="550" width="800" alt="jonasschmedtman ppt">
+
+Let’s simulate creation phase for code written below. So, we will have one global context and 2 function context in this example. In global context, we will have ‘name’ and ‘x’ variable and ‘first’ and ‘second’ function. ***Technically, none of the value will be known during creation phase rather it will be known during execution phase, but for understanding purpose, values are mentioned in below screenshot.***
+
+<img src="https://drive.google.com/uc?export=view&id=1WYFtqN5koES-Zyw9wPwicymHCCc0VE7x" height="400" width="800" alt="jonasschmedtman ppt">
+
+Now the question is how engine will keep the track of the order in which functions were called and how will it know where it currently is in the execution?
+
+The answer is **Call Stack**.
+
+<img src="https://drive.google.com/uc?export=view&id=1JGIvY6xzCC0kn76oDyn_6ChS__Y6DyL5" height="350" width="800" alt="jonasschmedtman ppt">
+
+Some points:
+- Firstly the global execution will get placed in stack as soon as the execution started.
+- If there is any function call found, it will get placed on top of global execution context in call stack.
+- Once all the functions are stacked as per their calling priority (lastly called function will be on top in call stack), execution of function will start from the top one being executed first and so on.
+- Once all the functions will get executed, global execution context will remain there in call stack until we close the browser tab or browser window.
+
+### Execution Phase
+
+The execution phase is the second phase in the life cycle of an execution context. During the execution phase, the JavaScript engine executes the code that was parsed and processed in the creation phase.
+
+During the execution phase, the following actions take place:
+
+1. **Variable assignments**: Any variable values that were not initialized during the creation phase are assigned values during the execution phase.
+
+2. **Function calls**: If the code being executed includes function calls, a new execution context is created for each function call, and the same process of creation, execution, and cleanup is followed for each of those execution contexts.
+
+3. **Code execution**: The JavaScript engine executes the code line by line, following the sequence of operations defined in the code.
+
+4. **Scope resolution**: As the code is executed, the JavaScript engine resolves variable references by looking up the variable in the current scope chain. If the variable is not found in the current scope chain, the engine will search the outer scope chain until the variable is found or the global scope is reached.
+
+5. **Exception handling**: If an exception is thrown during code execution, the engine will catch the exception and follow the appropriate exception handling procedures.
+
+Once the execution phase is complete, the JavaScript engine moves to the cleanup phase, where it frees up memory and removes the execution context from the call stack.
+
+Readings:
+
+- [How code get executed](https://drive.google.com/uc?export=view&id=18tVyoPjdk-SnXbhBNaEP5E9_3yctgwHL)
+
+- [How JavaScript Works & Execution Context - Namaste JavaScript](https://www.youtube.com/watch?v=ZvbzSrg0afE&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP&index=2)
+
+- [How JavaScript Code is executed? & Call Stack - Namaste JavaScript](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP&index=3)
+
+## JavaScript Language vs Browser APIs
+
+Essentially, you can split the code you write into these two pieces:
+
+1. **The JavaScript Language**: Understands core syntax (`let`, `const` etc) but does NOT know anything about the DOM for instance.
+
+2. **Browser APIs**: Not responsible for understanding your code but instead responsible for exposing APIs like the DOM API which you can use from inside your script code.
+
+The JavaScript language is advanced by the ECMA International Technical Committee 39 (TC39), which is a group that's part of the ECMA organization. It's responsible for adding new features to the JavaScript language itself. For example, in the past, it was responsible for adding `let` and `const`.
+
+Learn more about TC39 here: https://tc39.es/
+
+Explore the current proposals that are being discussed by that group, features that potentially make it into the core JavaScript language in the future: https://github.com/tc39/proposals
+
+**IMPORTANT**: Just because a feature becomes part of the language does NOT mean that all JavaScript engines immediately support that feature. Of course the people developing the engines are doing their best to provide support as soon as possible but that process simply also takes time.
+
+On the other hand, engine vendors also sometimes start supporting certain features BEFORE TC39 made a feature an official part of JavaScript. Because in the end, it's of course totally up to the people working on the engines to decide which syntax their JS engine understands.
+
+**Browser APIs** also are standardized because the different browser vendors (Google for Chrome, Microsoft for Edge etc.) of course want to (roughly) provide feature parity and similar APIs. It wouldn't be a great developer experience if you had different functions which you need to call to make your scripts work in different browsers. Although, in the past, this was pretty normal.
+
+Nowadays, thankfully, this is getting way better because there also is a working group that works on browser APIs - so that different features and APIs in different browsers are avoided as good as possible.
+
+That working group has the name `WHATWG` and you can learn more about it here: https://whatwg.org/.
+
+If you're interested in learning more about the APIs that were or are "managed" by this group, you can check this site: https://spec.whatwg.org/
+
+***This working group is not related to TC39!***
+
+## [Primitive vs Reference Values](https://drive.google.com/uc?export=view&id=13qGnfsr5mgIiMaZZC40IbXC4TX3cYxMe)
+
+In JavaScript, values can be categorized into two types: primitive values and reference values.
+
+**Primitive values** are values that are immutable (cannot be changed), and are copied by value. There are 6 primitive types in JavaScript:
+
+- undefined
+- null
+- boolean
+- number
+- string
+- symbol
+
+Example:
+
+```javascript
+let a = 10;
+let b = a; // value of 'a' is copied to 'b'
+a = 20; // 'a' is changed, but 'b' is still 10
+console.log(a); // 20
+console.log(b); // 10
+```
+
+**Reference values**, on the other hand, are values that are mutable (can be changed), and are copied by reference. Reference values are objects, arrays, and functions.
+
+```javascript
+let obj1 = { name: "John" };
+let obj2 = obj1; // reference of 'obj1' is copied to 'obj2'
+obj1.name = "Jane"; // 'obj1' and 'obj2' both refer to the same object
+console.log(obj1.name); // "Jane"
+console.log(obj2.name); // "Jane"
+```
+
+In the above example, when the property of name is changed on the obj1, it also changes on the obj2 because they both refer to the same object in memory.
+
+<img src="https://drive.google.com/uc?export=view&id=1gqePMazxXaRTyxhyUX44MWwNAIipzO3M" height="350" width="800" alt="jonasschmedtman ppt">
+
+- Any variable name is basically an identifier which points to a memory address where the value is actually stored. An identifier never contains value. So, remember it!!
+
+- Although we have defined `friend` object as `const`, but we are able to change the age attribute of it. This is because memory address of `friend` in stack contains reference to memory address in heap and the value of its attributes.
+
+- Primitive types are basically stored in execution context (of function, global or regular) which lives in call stack. In simple words, primitive types are stored in call stack. However, reference types or objects are stored in heap memory.
+
+<img src="https://drive.google.com/uc?export=view&id=1c7JOWpIK5d_TD8d88mZ90bsIyTueFmPu" height="350" width="800" alt="jonasschmedtman ppt">
+
+Readings:
+
+- [Primitive vs Reference Data Types in JavaScript](https://www.freecodecamp.org/news/primitive-vs-reference-data-types-in-javascript/)
+
+- [JavaScript Primitive vs. Reference Values](https://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
+
+## [Garbage Collection & Memory Management](https://drive.google.com/uc?export=view&id=1ws6IflSkHY1YsDCqxfB38gPR-fDAgj59)
+
+**Garbage collection** is the process of automatically managing memory in a programming language, such as JavaScript. In JavaScript, memory is allocated when objects are created and freed up automatically when they are no longer referenced. The garbage collector is responsible for identifying and removing objects that are no longer being used by the program, thus freeing up memory for other objects.
+
+JavaScript uses a technique called "mark and sweep" to perform garbage collection. This technique involves the following steps:
+
+1. **Marking**: The garbage collector starts from a set of roots, which are typically global objects or objects referenced from the program's stack. It then traverses the object graph and marks all objects that are still reachable.
+
+2. **Sweeping**: The garbage collector then goes through the memory heap and frees up all objects that are not marked as reachable.
+
+There are different algorithms used for garbage collection, such as *reference counting*, which counts the number of references to an object and frees it up when the reference count reaches zero, or generational collection, which focuses on objects that are created recently and are likely to be garbage.
+
+**Memory management** in JavaScript is handled automatically by the garbage collector. However, it's important to understand how the garbage collector works and how to avoid memory leaks in order to write efficient and performant code. Some best practices to avoid memory leaks in JavaScript include:
+
+- Use the `let` and `const` keywords to define variables, as they have a block scope and are automatically garbage collected when they go out of scope.
+
+- Use event listeners wisely, and remember to remove them when they are no longer needed to avoid retaining references to objects that are no longer used.
+
+- Avoid circular references between objects, as they can prevent the garbage collector from freeing up memory.
+
+- Use `setTimeout` or `setInterval` with care, as they can cause memory leaks if not used properly. It's important to clear these timers when they are no longer needed.
+
+By following these best practices, you can ensure that your JavaScript code is efficient and free from memory leaks.
