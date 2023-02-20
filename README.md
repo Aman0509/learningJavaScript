@@ -5,6 +5,7 @@
 - [Introduction](Introduction/README.md#introduction)
 - [Basics](Basics/README.md)
 - [Working with Control Structures - if..else Statements, Loops & Error Handling](Control-Structures/README.md)
+- [More on Functions](More-on-Functions/README.md)
 
 ## References
 
