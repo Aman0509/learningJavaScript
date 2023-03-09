@@ -395,6 +395,52 @@ function arrayDestructuring() {
   console.log(d); // Output: 4
 }
 
+function workingWithSets() {
+  console.log("****************Sets****************");
+  const mySet = new Set(['apple', 'banana', 'orange']);
+  console.log(mySet); // Set(3) {'apple', 'banana', 'orange'}
+  mySet.add('pear'); // adds 'pear' to the Set
+  console.log(mySet); // Set(4) {'apple', 'banana', 'orange', 'pear'}
+  mySet.delete('banana'); // removes 'banana' from the Set
+  console.log(mySet); // Set(3) {'apple', 'orange', 'pear'}
+  console.log(mySet.has('apple')); // returns true
+  console.log(mySet.has('banana')); // returns false (since it was removed)
+  console.log(mySet.size); // 3
+  mySet.forEach(function(value) {
+    console.log(value);
+  });
+  console.log(mySet.keys()); // SetIterator {'apple', 'orange', 'pear'}
+  console.log(mySet.values()); // SetIterator {'apple', 'orange', 'pear'}
+  console.log(mySet.entries()); // SetIterator {'apple' => 'apple', 'orange' => 'orange', 'pear' => 'pear'}
+  mySet.clear(); // removes all elements from the Set
+  console.log(mySet); // Set(0) {size: 0}
+}
+
+function workingWithMaps() {
+  console.log("****************Maps****************");
+  const myMap = new Map([
+    ['apple', 1],
+    ['banana', 2],
+    ['orange', 3]
+  ]);
+  console.log(myMap); // Map(3) {'apple' => 1, 'banana' => 2, 'orange' => 3}
+  myMap.set('pear', 4); // adds a new key-value pair 'pear' maps to 4
+  console.log(myMap); // Map(4) {'apple' => 1, 'banana' => 2, 'orange' => 3, 'pear' => 4}
+  console.log(myMap.get('apple')); // 1
+  console.log(myMap.get('grape')); // undefined
+  myMap.delete('banana');
+  console.log(myMap); // Map(3) {'apple' => 1, 'orange' => 3, 'pear' => 4}
+  console.log(myMap.size); // 3
+  myMap.forEach(function(value, key) {
+    console.log(key, value);
+  }); // 'apple 1' 'orange 3' 'pear 4'
+  console.log(myMap.keys()); // MapIterator {'apple', 'orange', 'pear'}
+  console.log(myMap.values()); // MapIterator {1, 3, 4}
+  console.log(myMap.entries()); // MapIterator {'apple' => 1, 'orange' => 3, 'pear' => 4}
+  myMap.clear();
+  console.log(myMap); // Map(0) {size: 0}
+}
+
 // creatingArray();
 // addingOrRemovingArrayElements();
 // selectingRangeWithSlice();
@@ -410,3 +456,5 @@ function arrayDestructuring() {
 // splitAndJoin();
 // spreadOperator();
 // arrayDestructuring();
+// workingWithSets();
+// workingWithMaps();

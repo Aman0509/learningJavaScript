@@ -18,6 +18,7 @@
 | [Array & Strings - `split()` and `join()`](#array--strings---split-and-join) |
 | [The Spread Operator (`...`)](#the-spread-operator) |
 | [Understanding Array Destructuring](#understanding-array-destructuring) |
+| [Maps & Sets](#maps--sets) |
 
 &nbsp;
 
@@ -817,3 +818,390 @@ console.log(d); // Output: 4
 ```
 
 In this example, we have a nested array matrix that contains two sub-arrays. We use array destructuring to assign the values of the sub-arrays to variables `a`, `b`, `c`, and `d`.
+
+## Maps & Sets
+
+### Overview
+
+<img src="https://drive.google.com/uc?export=view&id=1J05xB_-VCFifh9sGtHoW6ltd4a5wo-J6" height="350" width="700" alt="academind slide">
+
+### Working with [Sets](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#instance_methods)
+
+A Set is a built-in data structure that allows you to store unique values of any type, including primitive types such as strings, numbers, and booleans, as well as more complex types like objects and arrays.
+
+You can create a new Set object by calling the Set constructor function without any arguments, or by passing an iterable object like an array to the Set constructor function.
+
+Here's an example of creating a new Set object with some values:
+
+```javascript
+const mySet = new Set(['apple', 'banana', 'orange']);
+```
+
+This creates a new Set object with three elements: 'apple', 'banana', and 'orange'. Note that any duplicate elements are automatically removed, so if you try to add a value that already exists in the Set, it will be ignored.
+
+Once you have a Set object, there are several methods and properties you can use to interact with it:
+
+1. **[add(value)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/add)**: Adds a new element to the Set.
+
+```javascript
+mySet.add('pear'); // adds 'pear' to the Set
+```
+
+2. **[delete(value)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/delete)**: Removes an element from the Set.
+
+```javascript
+mySet.delete('banana'); // removes 'banana' from the Set
+```
+
+3. **[has(value)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/has)**: Checks if an element is in the Set.
+
+```javascript
+console.log(mySet.has('apple')); // returns true
+console.log(mySet.has('banana')); // returns false (since it was removed)
+```
+
+4. **[size](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/size)**: Returns the number of elements in the Set.
+
+```javascript
+console.log(mySet.size); // 3
+```
+
+5. **[forEach(callbackFn, thisArg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/forEach)**: Executes a provided function once for each element in the Set.
+
+```javascript
+mySet.forEach(function(value) {
+  console.log(value);
+}); // apple orange pear
+```
+
+Note that the forEach method takes a callback function as its first argument, which is called once for each element in the Set. You can also pass a second argument to specify the value of this inside the callback function.
+
+6. **[keys()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/keys)**: Returns a new Iterator object that contains the keys for each element in the Set.
+
+```javascript
+const mySet = new Set(['apple', 'banana', 'orange']);
+const keysIterator = mySet.keys();
+
+console.log(keysIterator.next()); // { value: 'apple', done: false }
+console.log(keysIterator.next()); // { value: 'banana', done: false }
+console.log(keysIterator.next()); // { value: 'orange', done: false }
+console.log(keysIterator.next()); // { value: undefined, done: true }
+```
+
+7. **[values()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/values)**: Returns a new Iterator object that contains the values for each element in the Set.
+
+```javascript
+const mySet = new Set(['apple', 'banana', 'orange']);
+const valuesIterator = mySet.values();
+
+console.log(valuesIterator.next()); // { value: 'apple', done: false }
+console.log(valuesIterator.next()); // { value: 'banana', done: false }
+console.log(valuesIterator.next()); // { value: 'orange', done: false }
+console.log(valuesIterator.next()); // { value: undefined, done: true }
+```
+
+8. **[entries()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/entries)**: Returns a new Iterator object that contains an array of [value, value] for each element in the Set (since a Set doesn't have keys).
+
+```javascript
+const mySet = new Set(['apple', 'banana', 'orange']);
+const entriesIterator = mySet.entries();
+
+console.log(entriesIterator.next()); // { value: ['apple', 'apple'], done: false }
+console.log(entriesIterator.next()); // { value: ['banana', 'banana'], done: false }
+console.log(entriesIterator.next()); // { value: ['orange', 'orange'], done: false }
+console.log(entriesIterator.next()); // { value: undefined, done: true }
+```
+
+9. **[clear()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/clear)**: Removes all elements from the Set.
+
+```javascript
+mySet.clear(); // removes all elements from the Set
+```
+
+**Other operations in Set**
+
+**Union**
+
+```javascript
+const set1 = new Set([1, 2, 3]);
+const set2 = new Set([2, 3, 4]);
+const unionSet = new Set([...set1, ...set2]);
+
+console.log(unionSet); // Set { 1, 2, 3, 4 }
+```
+
+**Intersection**
+
+```javascript
+const set1 = new Set([1, 2, 3]);
+const set2 = new Set([2, 3, 4]);
+const intersectionSet = new Set([...set1].filter(x => set2.has(x)));
+
+console.log(intersectionSet); // Set { 2, 3 }
+```
+
+**Difference**
+
+```javascript
+const set1 = new Set([1, 2, 3]);
+const set2 = new Set([2, 3, 4]);
+const differenceSet = new Set([...set1].filter(x => !set2.has(x)));
+
+console.log(differenceSet); // Set { 1 }
+```
+
+Readings:
+
+- [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)
+
+- [Sets in JavaScript](https://www.geeksforgeeks.org/sets-in-javascript/)
+
+### Working with [Maps](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+
+A Map is a built-in data structure that allows you to store key-value pairs. The key can be of any type, including primitive types and objects, and the value can be of any type as well.
+
+You can create a new Map object by calling the Map constructor function without any arguments, or by passing an iterable object like an array of key-value pairs to the Map constructor function.
+
+Here's an example of creating a new Map object with some key-value pairs:
+
+```javascript
+const myMap = new Map([
+  ['apple', 1],
+  ['banana', 2],
+  ['orange', 3]
+]);
+```
+
+This creates a new Map object with three key-value pairs: 'apple' maps to 1, 'banana' maps to 2, and 'orange' maps to 3.
+
+Once you have a Map object, there are several methods and properties you can use to interact with it:
+
+1. **[set(key, value)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/set)**: Adds a new key-value pair to the Map.
+
+```javascript
+myMap.set('pear', 4); // adds a new key-value pair 'pear' maps to 4
+```
+
+2. **[get(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get)**: Returns the value associated with the given key, or undefined if the key does not exist in the Map.
+
+```javascript
+myMap.get('apple'); // returns 1
+myMap.get('banana'); // returns 2
+myMap.get('pear'); // returns 4 (since it was added)
+myMap.get('grape'); // returns undefined
+```
+
+3. **[has(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has)**: Checks if a key exists in the Map.
+
+```javascript
+myMap.has('apple'); // returns true
+myMap.has('grape'); // returns false
+```
+
+4. **[delete(key)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/delete)**: Removes a key-value pair from the Map.
+
+```javascript
+myMap.delete('banana'); // removes the 'banana' key-value pair from the Map
+```
+
+5. **[size](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/size)**: Returns the number of key-value pairs in the Map.
+
+```javascript
+myMap.size; // returns 3 (since 'banana' was removed and 'pear' was added)
+```
+
+6. **[forEach(callbackFn, thisArg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/forEach)**: Executes a provided function once for each key-value pair in the Map.
+
+```javascript
+myMap.forEach(function(value, key) {
+  console.log(key, value);
+}); // 'apple 1' 'orange 3' 'pear 4'
+```
+
+Note that the `forEach` method takes a callback function as its first argument, which is called once for each key-value pair in the Map. You can also pass a second argument to specify the value of this inside the callback function.
+
+7. **[keys()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/keys)**: Returns a new Iterator object that contains the keys for each key-value pair in the Map.
+
+```javascript
+const keysIterator = myMap.keys();
+
+console.log(keysIterator.next()); // { value: 'apple', done: false }
+console.log(keysIterator.next()); // { value: 'orange', done: false }
+console.log(keysIterator.next()); // { value: 'pear', done: false }
+console.log(keysIterator.next()); // { value: undefined, done: true }
+```
+
+8. **[values()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/values)**: Returns a new Iterator object that contains the values for each key-value pair in the Map.
+
+```javascript
+const valuesIterator = myMap.values();
+
+console.log(valuesIterator.next()); // { value: 1, done: false }
+console.log(valuesIterator.next()); // { value: 3, done: false }
+console.log(valuesIterator.next()); // { value: 4, done: false }
+console.log(valuesIterator.next()); // { value: undefined, done: true }
+```
+
+9. **[entries()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/entries)**: Returns a new Iterator object that contains an array of [key, value] for each key-value pair in the Map.
+
+```javascript
+const entriesIterator = myMap.entries();
+
+console.log(entriesIterator.next()); // { value: ['apple', 1], done: false }
+console.log(entriesIterator.next()); // { value: ['orange', 3], done: false }
+console.log(entriesIterator.next()); // { value: ['pear', 4], done: false }
+console.log(entriesIterator.next()); // { value: undefined, done: true }
+```
+
+10. **[clear()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/clear)**: Removes all key-value pairs from the Map.
+
+```javascript
+myMap.clear(); // removes all key-value pairs from the Map
+```
+
+### Maps vs Objects
+
+<img src="https://drive.google.com/uc?export=view&id=1duFt-jLCCgfLpvQEnblBMKACamyRpRia" height="350" width="700" alt="academind slide">
+
+Readings:
+
+- [7 Differences between Objects and Maps in JavaScript](https://medium.com/dailyjs/7-differences-between-objects-and-maps-in-javascript-bc901dfa9350)
+
+- [Differences between JavaScript Map and Object](https://dev.to/hebashakeel/differences-between-javascript-map-and-object-821)
+
+- [JavaScript Map vs Object](https://www.scaler.com/topics/javascript-map-vs-object/)
+
+### Understanding [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)
+
+`WeakSet` is a built-in data type that is similar to a Set but only stores weak references to its elements. This means that objects stored in a `WeakSet` can be garbage collected even if there is a reference to them in the `WeakSet`. Here are some examples of how to create and use a `WeakSet`, as well as some of its methods:
+
+```javascript
+// Create a WeakSet
+const myWeakSet = new WeakSet();
+
+// Create some objects to store in the WeakSet
+const obj1 = { name: "John" };
+const obj2 = { name: "Mary" };
+const obj3 = { name: "Bob" };
+
+// Add the objects to the WeakSet
+myWeakSet.add(obj1);
+myWeakSet.add(obj2);
+myWeakSet.add(obj3);
+
+// Check if the WeakSet contains an object
+console.log(myWeakSet.has(obj1)); // true
+
+// Remove an object from the WeakSet
+myWeakSet.delete(obj2);
+
+// Check if the WeakSet contains the removed object
+console.log(myWeakSet.has(obj2)); // false
+```
+
+In this example, we created a `WeakSet` called `myWeakSet` and added three objects to it using the `add` method. We then checked if the `WeakSet` contained the first object using the `has` method, which returned `true`. Next, we removed the second object from the `WeakSet` using the `delete` method and checked if it was still in the `WeakSet`, which returned `false`.
+
+Here are some other methods that can be used with WeakSet:
+
+```javascript
+// Create a WeakSet
+const myWeakSet = new WeakSet();
+
+// Create some objects to store in the WeakSet
+const obj1 = { name: "John" };
+const obj2 = { name: "Mary" };
+const obj3 = { name: "Bob" };
+
+// Add the objects to the WeakSet
+myWeakSet.add(obj1);
+myWeakSet.add(obj2);
+myWeakSet.add(obj3);
+
+// Get the number of objects in the WeakSet
+console.log(myWeakSet.size); // undefined
+
+// Iterate over the objects in the WeakSet
+myWeakSet.forEach((obj) => {
+  console.log(obj.name);
+});
+// "John"
+// "Bob"
+```
+
+Note that unlike Set, WeakSet does not have a `size` property or a `keys` method since it does not support iteration over its elements. Additionally, the `forEach` method can be used to iterate over the elements of the WeakSet, but it is not guaranteed to execute in any particular order since the garbage collector may remove objects from the `WeakSet` at any time.
+
+### Understanding [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)
+
+`WeakMap` is a built-in object that provides a collection of key-value pairs where the keys are weakly referenced objects. Similar to `WeakSet`, the objects in a `WeakMap` can be garbage collected if there are no other strong references to them, which makes `WeakMap` useful in cases where you want to associate metadata with objects but you don't want to prevent them from being garbage collected.
+
+Here are the methods available in `WeakMap`:
+
+1. `get(key)`: Returns the value associated with the specified key in the `WeakMap` object, or undefined if the key does not exist.
+
+```javascript
+const myWeakMap = new WeakMap();
+const obj1 = {};
+const obj2 = {};
+
+myWeakMap.set(obj1, "value1");
+myWeakMap.set(obj2, "value2");
+
+console.log(myWeakMap.get(obj1)); // "value1"
+console.log(myWeakMap.get(obj2)); // "value2"
+console.log(myWeakMap.get({})); // undefined
+```
+
+2. `set(key, value)`: Sets the value for the specified key in the `WeakMap` object.
+
+```javascript
+const myWeakMap = new WeakMap();
+const obj1 = {};
+const obj2 = {};
+
+myWeakMap.set(obj1, "value1");
+myWeakMap.set(obj2, "value2");
+
+console.log(myWeakMap.get(obj1)); // "value1"
+console.log(myWeakMap.get(obj2)); // "value2"
+
+myWeakMap.set(obj1, "new value");
+console.log(myWeakMap.get(obj1)); // "new value"
+```
+
+3. `has(key)`: Returns a boolean indicating whether the specified key exists in the `WeakMap` object.
+
+```javascript
+const myWeakMap = new WeakMap();
+const obj1 = {};
+const obj2 = {};
+
+myWeakMap.set(obj1, "value1");
+
+console.log(myWeakMap.has(obj1)); // true
+console.log(myWeakMap.has(obj2)); // false
+```
+
+4. `delete(key)`: Removes the key-value pair associated with the specified key from the `WeakMap` object.
+
+```javascript
+const myWeakMap = new WeakMap();
+const obj1 = {};
+const obj2 = {};
+
+myWeakMap.set(obj1, "value1");
+myWeakMap.set(obj2, "value2");
+
+console.log(myWeakMap.has(obj1)); // true
+myWeakMap.delete(obj1);
+console.log(myWeakMap.has(obj1)); // false
+```
+
+> Note that `WeakMap` only accepts objects as keys, and attempts to use non-object keys will result in a `TypeError`.
+
+Readings:
+
+- [WeakMap and WeakSet](https://javascript.info/weakmap-weakset#:~:text=WeakMap%20is%20Map%20%2Dlike%20collection,become%20inaccessible%20by%20other%20means.)
+
+- [WeakMap and WeakSet: Understanding JavaScript weak references](https://blog.logrocket.com/weakmap-weakset-understanding-javascript-weak-references/)
+
+- [Map, Set, WeakMap and WeakSet in Javascript](https://medium.com/yemeksepeti-teknoloji/map-set-weakmap-and-weakset-in-javascript-c47e3b120a01)
