@@ -9,6 +9,7 @@
 - [Document Object Model(DOM)](DOM/README.md)
 - [More on Arrays and Iterables](More-on-Arrays-and-Iterables/README.md)
 - [More on Objects](More-on-Objects/README.md)
+- [Classes and Object Oriented Programming (OOP)](Classes-and-Object-Oriented-Programming/README.md)
 
 ## References
 

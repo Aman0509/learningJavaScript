@@ -21,6 +21,10 @@
 | [`this` and Arrow Functions](#this-and-arrow-functions) |
 | [Getters and Setters](#getters-and-setters) |
 
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
+
 ## [What's an Object?](https://drive.google.com/uc?export=view&id=1YEh70JlCORd8i7PSuuDV9xK4s_mTqFcZ)
 
 An object is a collection of properties, where each property is a key-value pair. There are several ways to create an object in JavaScript:
