@@ -12,6 +12,7 @@
 | [The `location` and `history` Objects](#the-location-and-history-objects) |
 | [The `navigator` Object](#the-navigator-object) |
 | [Working with Dates](#working-with-dates) |
+| [The Error Object](#the-error-object) |
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -396,3 +397,53 @@ const currentSecond = currentDate.getSeconds();
 ```
 
 Note that the `Date()` function uses the local time zone of the user's computer. If you need to work with a specific time zone or date format, you may need to use a library like `moment.js` or perform manual calculations.
+
+## The [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/Error) Object
+
+In JavaScript, the `Error` object is a built-in object that represents an error that occurs during the execution of a program. When an error occurs, an `Error` object is created and thrown, which can be caught and handled by the program.
+
+The `Error` object has several properties and methods that provide information about the error:
+
+- [`name`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/name): A string that specifies the name of the error.
+- [`message`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/message): A string that specifies a human-readable description of the error.
+- [`stack`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack): A string that specifies a stack trace of the error.
+- [`toString()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/toString): A method that returns a string representation of the error.
+
+Here's an example of how to create and throw an `Error` object:
+
+```javascript
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error('Cannot divide by zero');
+  }
+  return a / b;
+}
+
+try {
+  const result = divide(10, 0);
+  console.log(result);
+} catch (e) {
+  console.error(e.name + ': ' + e.message);
+}
+```
+
+In this example, the `divide()` function checks if the second argument is zero and throws an `Error` object if it is. The program then catches the error using a `try...catch` statement and logs the error message to the console.
+
+You can also create custom `Error` objects by extending the `Error` class:
+
+```javascript
+class CustomError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'CustomError';
+  }
+}
+
+try {
+  throw new CustomError('Something went wrong');
+} catch (e) {
+  console.error(e.name + ': ' + e.message);
+}
+```
+
+In this example, a custom `Error` object is created by extending the `Error` class and adding a custom name. The error is then thrown and caught using a `try...catch` statement, just like before.
