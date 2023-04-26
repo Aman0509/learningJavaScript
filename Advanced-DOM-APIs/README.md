@@ -9,6 +9,7 @@
 | [Working with `<template>` tag](#working-with-template-tag) |
 | [Loading Script Dynamically](#loading-script-dynamically) |
 | [Setting Timers and Intervals](#setting-timers-and-intervals) |
+| [The `location` and `history` Objects](#the-location-and-history-objects)
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -268,3 +269,53 @@ clearInterval(interval);
 ```
 
 In this example, `clearTimeout` is used to cancel the timer and prevent the code from executing after the specified time. `clearInterval` works similarly for intervals.
+
+## The [`location`](https://developer.mozilla.org/en-US/docs/Web/API/Location) and [`history`](https://developer.mozilla.org/en-US/docs/Web/API/History_API) Objects
+
+In the Document Object Model (DOM), the `location` and `history` objects are used to interact with the browser's location and history.
+
+### The `location` object
+
+The `location` object represents the current location of the document, including the URL and any query parameters. You can use this object to get information about the current location or to navigate to a new location. Here are some examples:
+
+```javascript
+// Get the current URL
+const currentUrl = location.href;
+
+// Navigate to a new URL
+location.href = "https://www.example.com";
+
+// Get the query parameters
+const queryParams = location.search;
+```
+
+Readings:
+
+- [What is the DOM Location object?](https://www.educative.io/answers/what-is-the-dom-location-object)
+
+- [JavaScript Location](https://www.javascripttutorial.net/javascript-bom/javascript-location/)
+
+### The `history` object
+
+The `history` object represents the user's navigation history, including the pages they have visited and any back/forward navigation. You can use this object to navigate back or forward in the user's history or to get information about the history. Here are some examples:
+
+```javascript
+// Go back one page in the history
+history.back();
+
+// Go forward one page in the history
+history.forward();
+
+// Get the length of the history
+const historyLength = history.length;
+```
+
+Both the `location` and `history` objects are part of the `window` object in the browser's global scope, so you can access them directly without needing to declare them first.
+
+Readings:
+
+- [Working with history object of HTML DOM](https://iq.opengenus.org/history-object-of-html-dom/)
+
+- [JavaScript History](https://www.javascripttutorial.net/javascript-bom/javascript-history/)
+
+- [JavaScript History Object](https://www.studytonight.com/javascript/javascript-history-object)
