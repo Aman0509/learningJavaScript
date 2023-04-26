@@ -158,6 +158,15 @@ class App {
 		const finishedProjectsList = new ProjectList('finished');
 		activeProjectsList.setSwitchHandlerFunction(finishedProjectsList.addProject.bind(finishedProjectsList));
 		finishedProjectsList.setSwitchHandlerFunction(activeProjectsList.addProject.bind(activeProjectsList));
+		document.getElementById('start-analytics').addEventListener('click', this.startAnalytics);
+	}
+
+	// This is just a random function to demonstrate about adding a JS dynamically on some event
+	static startAnalytics() {
+		const analyticsScript = document.createElement('script');
+		analyticsScript.src = 'assets/scripts/analytics.js';
+		analyticsScript.defer = true;
+		document.head.append(analyticsScript);
 	}
 }
 

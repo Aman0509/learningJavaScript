@@ -7,6 +7,7 @@
 | [Working with Element Sizes and Positions](#working-with-element-sizes-and-positions) |
 | [Handling Scrolling](#handling-scrolling) |
 | [Working with `<template>` tag](#working-with-template-tag) |
+| [Loading Script Dynamically](#loading-script-dynamically) |
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -196,3 +197,35 @@ Readings:
 - [HTML template Tag](https://www.geeksforgeeks.org/html-template-tag/)
 
 - [Document: importNode() method](https://developer.mozilla.org/en-US/docs/Web/API/Document/importNode)
+
+## Loading Script Dynamically
+
+Loading JavaScript dynamically in a web page can be useful for a variety of reasons, such as improving performance by only loading the necessary code when it's needed, or adding functionality to the page without requiring a full page reload.
+
+It can be accomplished by creating a new `script` element, setting its `src` attribute to the URL of the JavaScript file, and then adding the element to the `head` section of the current HTML document. Here's an example:
+
+```javascript
+const script = document.createElement('script');
+script.src = 'path/to/script.js';
+document.head.appendChild(script);
+```
+
+In this example, `document.createElement('script')` creates a new `script` element. Then, we set the `src` attribute of the script element to the URL of the JavaScript file we want to load. Finally, we append the `script` element to the `head` section of the current document using `document.head.appendChild(script)`.
+
+It's important to note that when you dynamically load a script, it's not guaranteed to execute immediately, and any code that depends on the loaded script should be executed only after the script has been fully loaded and is ready to use (it can also be handled with [`defer`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script) attribute). To handle this, you can listen for the `load` event on the `script` element before executing any dependent code:
+
+```javascript
+const script = document.createElement('script');
+script.src = 'path/to/script.js';
+script.addEventListener('load', () => {
+  // Code that depends on the loaded script goes here
+});
+document.head.appendChild(script);
+```
+
+In this example, we add an event listener for the `load` event on the `script` element. Once the script has loaded, the listener function will be executed, and any dependent code can be executed inside it.
+
+
+> **Note**
+>
+> Adding scripts dynamically can be a powerful feature, but it's important to use it carefully. If you're dynamically rendering user-created scripts, you need to be especially cautious, as this could make your website vulnerable to attacks like cross-site scripting. This type of attack involves injecting malicious code into your website's code, and we'll be discussing it in more detail in the security section later in the course. To avoid these kinds of attacks, it's crucial that you don't dynamically add a script based on user-entered content, or if you must do so, be sure to validate and sanitize the content thoroughly before executing it.
