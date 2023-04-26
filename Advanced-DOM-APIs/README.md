@@ -9,7 +9,8 @@
 | [Working with `<template>` tag](#working-with-template-tag) |
 | [Loading Script Dynamically](#loading-script-dynamically) |
 | [Setting Timers and Intervals](#setting-timers-and-intervals) |
-| [The `location` and `history` Objects](#the-location-and-history-objects)
+| [The `location` and `history` Objects](#the-location-and-history-objects) |
+| [The `navigator` Object](#the-navigator-object) |
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -319,3 +320,37 @@ Readings:
 - [JavaScript History](https://www.javascripttutorial.net/javascript-bom/javascript-history/)
 
 - [JavaScript History Object](https://www.studytonight.com/javascript/javascript-history-object)
+
+## The [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator) Object
+
+In the Document Object Model (DOM), the `navigator` object is used to get information about the user's browser and operating system. This object provides a lot of useful information that can be used to create better user experiences or to handle browser-specific issues.
+
+Here are some common properties of the navigator object:
+
+- `appName`: Returns the name of the browser.
+- `appVersion`: Returns the version number of the browser.
+- `userAgent`: Returns the user agent string that identifies the browser.
+- `language`: Returns the user's preferred language.
+- `platform`: Returns the user's operating system.
+- `plugins`: Returns a list of the plugins installed in the browser.
+- `cookieEnabled`: Returns true if cookies are enabled in the browser.
+
+You can access these properties of the navigator object using dot notation, like this:
+
+```javascript
+// Get the user agent string
+const userAgent = navigator.userAgent;
+
+// Get the name of the browser
+const browserName = navigator.appName;
+```
+
+Note that the `navigator` object is not standardized and different browsers may implement it differently. As a result, you may need to test your code in multiple browsers to ensure compatibility.
+
+Readings:
+
+- [Browser detection using the user agent](https://developer.mozilla.org/en-US/docs/Web/HTTP/Browser_detection_using_the_user_agent)
+
+- [Window: navigator property](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator#example_1_browser_detect_and_return_a_string)
+
+- [JavaScript Navigator](https://www.javascripttutorial.net/javascript-bom/javascript-navigator/)
