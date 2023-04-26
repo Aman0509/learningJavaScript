@@ -11,7 +11,7 @@
 - [More on Objects](More-on-Objects/README.md)
 - [Classes and Object Oriented Programming (OOP)](Classes-and-Object-Oriented-Programming/README.md)
 - [Constructor Functions and Prototypes](Constructor-Functions-and-Prototypes/README.md)
-- [Practice - OOPs, Classes and DOM](Practice-OOPs_Classes_and_DOM/)
+- [Advanced DOM APIs](Advanced-DOM-APIs/README.md)
 
 ## References
 
