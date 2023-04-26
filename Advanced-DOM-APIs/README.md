@@ -11,6 +11,7 @@
 | [Setting Timers and Intervals](#setting-timers-and-intervals) |
 | [The `location` and `history` Objects](#the-location-and-history-objects) |
 | [The `navigator` Object](#the-navigator-object) |
+| [Working with Dates](#working-with-dates) |
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -354,3 +355,44 @@ Readings:
 - [Window: navigator property](https://developer.mozilla.org/en-US/docs/Web/API/Window/navigator#example_1_browser_detect_and_return_a_string)
 
 - [JavaScript Navigator](https://www.javascripttutorial.net/javascript-bom/javascript-navigator/)
+
+## Working with [Dates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+
+In JavaScript, the `Date()` function is used to create a new Date object, which represents a specific date and time.
+
+Here are some common methods of the `Date` object:
+
+- [`getDate()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getDate): Returns the day of the month (from 1-31).
+- [`getMonth()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getMonth): Returns the month (from 0-11).
+- [`getFullYear()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getFullYear): Returns the year (four digits).
+- [`getHours()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getHours): Returns the hour (from 0-23).
+- [`getMinutes()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getMinutes): Returns the minutes (from 0-59).
+- [`getSeconds()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getSeconds): Returns the seconds (from 0-59).
+- [`getTime()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/getTime): Returns the number of milliseconds since January 1, 1970, 00:00:00 UTC.
+
+Here's an example of how to create a new `Date` object and get the current date and time:
+
+```javascript
+// Create a new Date object
+const currentDate = new Date();
+
+// Get the current year
+const currentYear = currentDate.getFullYear();
+
+// Get the current month
+const currentMonth = currentDate.getMonth();
+
+// Get the current day
+const currentDay = currentDate.getDate();
+
+// Get the current hour
+const currentHour = currentDate.getHours();
+
+// Get the current minute
+const currentMinute = currentDate.getMinutes();
+
+// Get the current second
+const currentSecond = currentDate.getSeconds();
+```
+
+Note that the `Date()` function uses the local time zone of the user's computer. If you need to work with a specific time zone or date format, you may need to use a library like `moment.js` or perform manual calculations.
