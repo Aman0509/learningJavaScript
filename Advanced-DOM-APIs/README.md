@@ -6,6 +6,7 @@
 | [Getting Element Box Dimension](#getting-element-box-dimension) |
 | [Working with Element Sizes and Positions](#working-with-element-sizes-and-positions) |
 | [Handling Scrolling](#handling-scrolling) |
+| [Working with `<template>` tag](#working-with-template-tag) |
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -140,3 +141,58 @@ There are several scrolling methods available in the Document Object Model (DOM)
 5. [`window.innerHeight`](https://developer.mozilla.org/en-US/docs/Web/API/Window/innerHeight) - This property returns the height of the browser window's viewport in pixels. It can be used to determine how much of the document is currently visible on the screen.
 
 These are some of the most commonly used scrolling methods in the DOM, but there are other methods available as well, depending on the specific use case.
+
+## Working with [`<template>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template) tag
+
+The `<template>` tag is an HTML5 tag that allows developers to declare content that can be reused in different parts of the document without being displayed on the page. It can be used to create a template of HTML content that can be cloned and inserted into the DOM using JavaScript.
+
+Here's an example of how to use the `<template>` tag:
+
+```HTML
+<!-- Declare a template for a list item -->
+<template id="list-item-template">
+  <li class="list-item">
+    <span class="item-name"></span>
+    <span class="item-price"></span>
+  </li>
+</template>
+
+<!-- Create a list and insert some items using the template -->
+<ul id="shopping-list"></ul>
+
+<script>
+  // Get a reference to the template
+  const template = document.querySelector('#list-item-template');
+
+  // Clone the template and update its content
+  const item1 = template.content.cloneNode(true);
+  item1.querySelector('.item-name').textContent = 'Apples';
+  item1.querySelector('.item-price').textContent = '$2.99';
+
+  // Append the item to the shopping list
+  const shoppingList = document.querySelector('#shopping-list');
+  shoppingList.appendChild(item1);
+
+  // Clone the template again for another item
+  const item2 = template.content.cloneNode(true);
+  item2.querySelector('.item-name').textContent = 'Oranges';
+  item2.querySelector('.item-price').textContent = '$3.99';
+
+  // Append the second item to the shopping list
+  shoppingList.appendChild(item2);
+</script>
+```
+
+In this example, we first declare a template for a list item using the `<template>` tag. The template contains HTML markup for a list item with two spans for the item name and price.
+
+We then use JavaScript to get a reference to the template using its ID, and clone the template to create a new list item. We update the content of the cloned item by setting the text content of the name and price spans.
+
+Finally, we append the cloned item to a shopping list by selecting the list element using its ID and calling the appendChild() method to add the item to the end of the list. We repeat this process to add a second item to the list.
+
+Using the `<template>` tag allows us to create reusable templates for HTML content that can be cloned and inserted into the DOM as needed. This can be useful for creating dynamic content or for separating content from presentation.
+
+Readings:
+
+- [HTML template Tag](https://www.geeksforgeeks.org/html-template-tag/)
+
+- [Document: importNode() method](https://developer.mozilla.org/en-US/docs/Web/API/Document/importNode)
