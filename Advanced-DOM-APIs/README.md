@@ -8,6 +8,7 @@
 | [Handling Scrolling](#handling-scrolling) |
 | [Working with `<template>` tag](#working-with-template-tag) |
 | [Loading Script Dynamically](#loading-script-dynamically) |
+| [Setting Timers and Intervals](#setting-timers-and-intervals) |
 
 Below topics will be covered and for its practical application, [Planner Project](project_planner/) will be used as reference where concept of classes and functions are demonstrated:
 
@@ -229,3 +230,41 @@ In this example, we add an event listener for the `load` event on the `script` e
 > **Note**
 >
 > Adding scripts dynamically can be a powerful feature, but it's important to use it carefully. If you're dynamically rendering user-created scripts, you need to be especially cautious, as this could make your website vulnerable to attacks like cross-site scripting. This type of attack involves injecting malicious code into your website's code, and we'll be discussing it in more detail in the security section later in the course. To avoid these kinds of attacks, it's crucial that you don't dynamically add a script based on user-entered content, or if you must do so, be sure to validate and sanitize the content thoroughly before executing it.
+
+## Setting Timers and Intervals
+
+You can use timers and intervals to execute code after a set amount of time has elapsed. Here's how you can set a timer and an interval using the DOM:
+
+### Setting a timer using [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)
+
+```javascript
+// Set a timer to execute some code after 3 seconds
+const timer = setTimeout(() => {
+  // Code to be executed after 3 seconds
+}, 3000);
+```
+
+In this example, `setTimeout` is used to set a timer that will execute the function after 3 seconds (3000 milliseconds) have elapsed. The function can contain any code you want to execute after the specified time.
+
+### Setting an interval using [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)
+
+```javascript
+// Set an interval to execute some code every 2 seconds
+const interval = setInterval(() => {
+  // Code to be executed every 2 seconds
+}, 2000);
+```
+
+In this example, `setInterval` is used to set an interval that will execute the function every 2 seconds (2000 milliseconds). Again, the function can contain any code you want to execute at regular intervals.
+
+To clear a timer or interval, you can use the `clearTimeout` or `clearInterval` methods respectively. For example:
+
+```javascript
+// Clear the timer
+clearTimeout(timer);
+
+// Clear the interval
+clearInterval(interval);
+```
+
+In this example, `clearTimeout` is used to cancel the timer and prevent the code from executing after the specified time. `clearInterval` works similarly for intervals.

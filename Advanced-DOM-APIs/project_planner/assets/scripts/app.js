@@ -158,7 +158,15 @@ class App {
 		const finishedProjectsList = new ProjectList('finished');
 		activeProjectsList.setSwitchHandlerFunction(finishedProjectsList.addProject.bind(finishedProjectsList));
 		finishedProjectsList.setSwitchHandlerFunction(activeProjectsList.addProject.bind(activeProjectsList));
-		document.getElementById('start-analytics').addEventListener('click', this.startAnalytics);
+
+		/*
+		This is an example of how JavaScript can execute code asynchronously via setTimeout() and setInterval(), a topic we haven't covered yet. When you set a timer in JavaScript, it won't pause the execution of your entire script. Instead, the browser registers the timer in the background and manages it, so your script can continue to run normally without interruption. When the timer expires, the browser will execute the registered function. It's important to understand that this process doesn't pause script execution, and the browser takes care of managing the timer in the background. This ensures that your script can continue to run without any pauses or disruptions.
+		*/
+		// document.getElementById('start-analytics').addEventListener('click', this.startAnalytics);
+		const timerId = setTimeout(this.startAnalytics, 3000);
+
+		// If you click on `Stop Analytics` button before 3 seconds, the action will not be happened
+		document.getElementById('stop-analytics').addEventListener('click', () => {clearTimeout(timerId);})
 	}
 
 	// This is just a random function to demonstrate about adding a JS dynamically on some event
