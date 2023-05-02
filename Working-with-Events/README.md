@@ -5,6 +5,7 @@
 | [Introduction to Events in JavaScript](#introduction-to-events-in-javascript) |
 | [Different Ways of Listening to Events](#different-ways-of-listening-to-events) |
 | [Removing Event Listeners](#removing-event-listeners) |
+| [The Event Object](#the-event-object) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -208,3 +209,33 @@ Readings:
 - [You’ve Got Options for Removing Event Listeners](https://www.macarthur.me/posts/options-for-removing-event-listeners)
 
 - [How to remove an event Listener in JavaScript? ](https://linuxhint.com/remove-event-listener-javascript/)
+
+## The [`Event`](https://developer.mozilla.org/en-US/docs/Web/API/Event/Event) Object
+
+An `Event` object is created whenever an event is triggered, such as a button click or a form submission. The `Event` object contains information about the event, such as the type of event, the target element that triggered the event, and any additional data associated with the event.
+
+Here's an example of using the `Event` object to log information about a button click event:
+
+```javascript
+// Get the button element
+const button = document.querySelector('button');
+
+// Add a click event listener to the button
+button.addEventListener('click', function(event) {
+  // Log information about the event
+  console.log('Event type:', event.type);
+  console.log('Target element:', event.target);
+});
+```
+
+In this example, the `addEventListener()` method is used to add a click event listener to a button element. The second argument to the `addEventListener()` method is an anonymous function that takes an Event object as its argument.
+
+Inside the anonymous function, information about the `Event` object is logged to the console. The `event.type` property is used to log the type of event (in this case, `'click'`), and the `event.target` property is used to log the target element that triggered the event (in this case, the button element).
+
+By using the `Event` object, you can access a variety of properties and methods to help you handle events in JavaScript. For example, you can use the event.`preventDefault()` method to prevent the default behavior of an event (such as submitting a form), or you can use the `event.stopPropagation()` method to stop an event from propagating up the DOM tree.
+
+Readings:
+
+- [Javascript: let’s meet the event object](https://medium.com/launch-school/javascript-lets-talk-about-events-572ecce968d0)
+
+- [JavaScript Event Objects Tutorial](https://www.nickmccullum.com/javascript/javascript-event-objects/)
