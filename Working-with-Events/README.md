@@ -7,6 +7,7 @@
 | [Removing Event Listeners](#removing-event-listeners) |
 | [The Event Object](#the-event-object) |
 | [Supported Event Types](#supported-event-types) |
+| [Working with `preventDefault()`](#working-with-preventdefault) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -353,3 +354,39 @@ Here are the steps to use [`getEventListeners()`](https://developer.chrome.com/d
 Alternatively, you can refer to the official documentation of the DOM element to check the event types it supports. For example, the official documentation of the `input` element lists the following events: `input`, `change`, `focus`, `blur`, `select`, `keydown`, `keyup`, `keypress`.
 
 > ***Checkout all other events types [here](https://developer.mozilla.org/en-US/docs/Web/Events)***
+
+## Working with [`preventDefault()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
+
+`preventDefault()` is a method in the DOM that is used to prevent the default behavior of an event. For example, if you want to prevent a form from submitting when a submit button is clicked, you can use `preventDefault()` method to stop the default form submission behavior.
+
+Here's an example of using `preventDefault()` method to prevent a form from submitting:
+
+```HTML
+<form id="myForm">
+  <input type="text" name="username">
+  <button type="submit">Submit</button>
+</form>
+```
+
+```javascript
+const form = document.getElementById('myForm');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+  console.log('Form submitted');
+});
+```
+
+In this example, we first create a `form` element with an input field and a submit button. We then add an event listener to the form element using the `addEventListener()` method with the `submit` event.
+
+Inside the event listener function, we call the `preventDefault()` method on the `event` object to prevent the default form submission behavior. We also log a message to the console to indicate that the form was submitted.
+
+Now, when the user clicks on the submit button, the `submit` event is triggered, but the default form submission behavior is prevented, and only the message is logged to the console.
+
+`preventDefault()` method can be useful in many scenarios, such as preventing links from navigating to another page, preventing form submissions, and preventing the default behavior of keyboard shortcuts.
+
+Readings:
+
+- [What is `event.preventDefault()` in JavaScript?](https://www.educative.io/answers/what-is-eventpreventdefault-in-javascript)
+
+- [Prevent Default and Form Events](https://wesbos.com/javascript/05-events/prevent-default-and-form-events)
