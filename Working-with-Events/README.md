@@ -6,6 +6,7 @@
 | [Different Ways of Listening to Events](#different-ways-of-listening-to-events) |
 | [Removing Event Listeners](#removing-event-listeners) |
 | [The Event Object](#the-event-object) |
+| [Supported Event Types](#supported-event-types) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -239,3 +240,116 @@ Readings:
 - [Javascript: let’s meet the event object](https://medium.com/launch-school/javascript-lets-talk-about-events-572ecce968d0)
 
 - [JavaScript Event Objects Tutorial](https://www.nickmccullum.com/javascript/javascript-event-objects/)
+
+## Supported Event Types
+
+There are many other event types exists other than `click` event. For example,
+
+- [`mouseenter` event](https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event)
+
+  The `mouseenter` event is a type of mouse event that is triggered when the mouse cursor enters a specific element. This event is similar to the [`mouseover`](https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event) event, but with a few key differences. Specifically, the `mouseenter` event does not bubble up the DOM tree like the [`mouseover`](https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event) event does, and it only triggers when the mouse cursor enters the element itself, not any of its child elements.
+
+  Here's an example of using the `mouseenter` event in JavaScript:
+
+  ```HTML
+  <div id="box">Mouse over me!</div>
+  ```
+
+  ```javascript
+  const box = document.getElementById('box');
+
+  box.addEventListener('mouseenter', function(event) {
+    box.style.backgroundColor = 'blue';
+  });
+
+  box.addEventListener('mouseleave', function(event) {
+    box.style.backgroundColor = 'white';
+  });
+  ```
+
+  In this example, we first get a reference to a `div` element with the ID of `box`. We then add two event listeners to this element using the `addEventListener()` method. The first event listener listens for the `mouseenter` event and changes the background color of the `div` element to blue when triggered. The second event listener listens for the [`mouseleave`](https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event) event and changes the background color back to white when triggered.
+
+  When the mouse cursor enters the `div` element, the `mouseenter` event is triggered, and the background color of the `div` element is changed to blue. When the mouse cursor leaves the `div` element, the `mouseleave` event is triggered, and the background color is changed back to white.
+
+  Note that the `mouseenter` event is only triggered when the mouse cursor enters the `div` element itself, and not any of its child elements. This can be useful in cases where you want to trigger an event only when the mouse cursor enters a specific area of an element, and not when it enters any of its child elements.
+
+- [`scroll` event](https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll)
+
+  The `scroll` event is triggered when an element's scrollbar is scrolled, either by using the mouse wheel, trackpad, arrow keys, or other methods.
+
+  Here's an example of using the `scroll` event in JavaScript:
+
+  ```HTML
+  <div id="container" style="height: 300px; overflow-y: scroll;">
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vehicula ipsum ac eros varius, sit amet bibendum arcu venenatis. Sed sollicitudin, purus vitae placerat ullamcorper, nisi tortor semper mauris, quis tempor lectus est et metus. Nullam ut orci quis velit ullamcorper pretium. Nam tristique placerat leo, ac aliquam dolor pretium quis.
+    </p>
+    <p>
+      Nullam sed nulla euismod, laoreet metus sed, luctus mi. Vestibulum sed feugiat libero, quis varius ex. Vivamus eleifend justo ut turpis pellentesque, vitae ullamcorper dolor scelerisque. Sed non eros vel velit consectetur posuere. In hac habitasse platea dictumst. Fusce porttitor finibus turpis vel rutrum.
+    </p>
+    <p>
+      Donec in massa justo. Integer a aliquet nisl. Nam ultrices lacus et leo maximus, at semper turpis fringilla. Ut sed elit quam. Pellentesque accumsan auctor ipsum, nec molestie nibh. Nullam ac nulla nunc. Proin lacinia justo et ligula congue, eget consequat ex varius.
+    </p>
+  </div>
+  ```
+
+  ```javascript
+  const container = document.getElementById('container');
+
+  container.addEventListener('scroll', function(event) {
+    console.log('Scroll position:', container.scrollTop);
+  });
+  ```
+
+  ### Example: Basic Infinite Scrolling
+
+  Let's have fun with the `scroll` event and create a list which you can `scroll` infinitely (explanations below)!
+
+  You can run this code snippet on any page, just make sure that you can scroll vertically (either by adding enough dummy content, by adding some styles that add a lot of height to some elements or by shrinking the browser window vertically).
+
+  ```javascript
+  let curElementNumber = 0;
+ 
+  function scrollHandler() {
+      const distanceToBottom = document.body.getBoundingClientRect().bottom;
+  
+      if (distanceToBottom < document.documentElement.clientHeight + 150) {
+          const newDataElement = document.createElement('div');
+          curElementNumber++;
+          newDataElement.innerHTML = `<p>Element ${curElementNumber}</p>`;
+          document.body.append(newDataElement);
+      }
+  }
+  
+  window.addEventListener('scroll', scrollHandler);
+  ```
+
+  So what's happening here?
+
+  At the very bottom, we register the `scrollHandler` function as a handler for the `scroll` event on our window object.
+
+  Inside that function, we first of all measure the total distance between our viewport (top left corner of what we currently see) and the end of the page (not just the end of our currently visible area) => Stored in `distanceToBottom`.
+
+  For example, if our browser window has a height of `500px`, then distanceToBottom could be `684px`, assuming that we got some content we can scroll to.
+
+  Next, we compare the distance to the bottom of our overall content (`distanceToBottom`) to the window height + a certain threshold (in this example `150px`). `document.documentElement.clientHeight` is preferable to `window.innerHeight` because it respects potential scroll bars.
+
+  If we have less than `150px` to the end of our page content, we make it into the if-block (where we append new data).
+
+  Inside of the if-statement, we then create a new `<div>` element and populate it with a `<p>` element which in turn outputs an incrementing counter value.
+
+### How to know which event type is applicable to a specific DOM element?
+
+To know which event types are applicable to a specific DOM element, you can check the official documentation or use the [`getEventListeners()`](https://developer.chrome.com/docs/devtools/console/utilities/#getEventListeners-function) method in the browser console.
+
+Here are the steps to use [`getEventListeners()`](https://developer.chrome.com/docs/devtools/console/utilities/#getEventListeners-function) method in the browser console:
+
+- Open the browser console by pressing F12 or right-clicking on the webpage and selecting "Inspect" or "Inspect Element".
+- Select the "Elements" or "Inspector" tab.
+- Click on the element that you want to check the events for.
+- In the right-hand panel, select the "Event Listeners" tab.
+- The list of event types and their corresponding event listeners will be displayed.
+
+Alternatively, you can refer to the official documentation of the DOM element to check the event types it supports. For example, the official documentation of the `input` element lists the following events: `input`, `change`, `focus`, `blur`, `select`, `keydown`, `keyup`, `keypress`.
+
+> ***Checkout all other events types [here](https://developer.mozilla.org/en-US/docs/Web/Events)***

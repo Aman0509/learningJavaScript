@@ -7,16 +7,16 @@ const buttons = document.querySelectorAll('button');
 // }
 
 // const buttonClickHandler = () => {
-//     alert('Button was clicked!');
+// 	alert('Button was clicked!');
 // }
 
 const buttonClickHandler = event => {
 	console.log(event);
-	event.target.disabled=true;
+	// event.target.disabled=true;
 }
 
 const anotherButtonClickHandler= () => {
-    console.log('This was clicked!');
+  console.log('This was clicked!');
 }
 
 // Disadvantage of `on` property method is that you can assign multiple functions to an event
@@ -31,6 +31,14 @@ const anotherButtonClickHandler= () => {
 // 	button.removeEventListener('click', anotherButtonClickHandler)
 // }, 3000);
 
+// buttons.forEach(btn => {
+// 	btn.addEventListener('click', buttonClickHandler);
+// });
+
 buttons.forEach(btn => {
-	btn.addEventListener('click', buttonClickHandler);
+	btn.addEventListener('mouseenter', buttonClickHandler);
+});
+
+window.addEventListener('scroll', event => {
+	console.log(event);
 });
