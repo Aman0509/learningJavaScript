@@ -1,4 +1,4 @@
-const buttons = document.querySelectorAll('button');
+const button = document.querySelector('button');
 
 /* Using the `on` property */
 
@@ -50,3 +50,27 @@ form.addEventListener('submit', event => {
 	event.preventDefault();
 	console.log(event);
 });
+
+const div = document.querySelector('div');
+
+// Bubbling Phase
+div.addEventListener('click', event => {
+	console.log('CLICKED DIV');
+	console.log(event);
+});
+
+button.addEventListener('click', event => {
+	console.log('CLICKED BUTTON');
+	console.log(event);
+});
+
+// Capturing Event
+// div.addEventListener('click', event => {
+// 	console.log('CLICKED DIV');
+// 	console.log(event);
+// }, true);
+
+// button.addEventListener('click', event => {
+// 	console.log('CLICKED BUTTON');
+// 	console.log(event);
+// });

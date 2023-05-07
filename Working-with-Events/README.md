@@ -8,6 +8,7 @@
 | [The Event Object](#the-event-object) |
 | [Supported Event Types](#supported-event-types) |
 | [Working with `preventDefault()`](#working-with-preventdefault) |
+| [Understanding 'Capturing' & 'Bubbling' Phases](#understanding-capturing--bubbling-phases) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -390,3 +391,65 @@ Readings:
 - [What is `event.preventDefault()` in JavaScript?](https://www.educative.io/answers/what-is-eventpreventdefault-in-javascript)
 
 - [Prevent Default and Form Events](https://wesbos.com/javascript/05-events/prevent-default-and-form-events)
+
+## Understanding 'Capturing' & 'Bubbling' Phases
+
+When an event is triggered on an element in the DOM, the event goes through two phases: the capturing phase and the bubbling phase. These phases determine the order in which event handlers are executed when an event is triggered on an element that is a descendant of another element.
+
+In the capturing phase, the event starts from the top of the DOM tree and moves down to the target element. In the bubbling phase, the event starts from the target element and moves up to the top of the DOM tree. During each phase, event handlers can be executed on each element.
+
+Here's an example that illustrates the capturing and bubbling phases:
+
+```HTML
+<div id="outer">
+  <div id="inner">
+    Click me
+  </div>
+</div>
+```
+
+```javascript
+const outer = document.getElementById('outer');
+const inner = document.getElementById('inner');
+
+// Demonstrating Capturing Event
+outer.addEventListener('click', function() {
+  console.log('Capturing phase - outer');
+}, true);
+
+// Demonstrating Capturing Event
+inner.addEventListener('click', function() {
+  console.log('Capturing phase - inner');
+}, true);
+
+// Demonstrating Bubbling Event
+outer.addEventListener('click', function() {
+  console.log('Bubbling phase - outer');
+});
+
+// Demonstrating Bubbling Event
+inner.addEventListener('click', function() {
+  console.log('Bubbling phase - inner');
+});
+```
+
+In this example, we have an outer and an inner `div` element. We add event listeners to each element to log messages to the console during the capturing and bubbling phases of the `click` event.
+
+When the user clicks on the inner `div` element, the following messages will be logged to the console in order:
+
+```
+Capturing phase - outer
+Capturing phase - inner
+Bubbling phase - inner
+Bubbling phase - outer
+```
+
+As we can see, during the capturing phase, the event handlers are executed in the order of the DOM tree hierarchy, from top to bottom. During the bubbling phase, the event handlers are executed in the opposite order, from bottom to top.
+
+It's important to note that not all events have both capturing and bubbling phases. For example, the `focus` and `blur` events do not have a capturing phase. The order of event handlers for these events is determined solely by the order in which they are attached to the element.
+
+Readings:
+
+- [Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
+
+- [Deep dive into JavaScript event bubbling and capturing](https://blog.logrocket.com/deep-dive-into-event-bubbling-and-capturing/)
