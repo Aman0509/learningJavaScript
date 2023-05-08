@@ -103,8 +103,9 @@ const list = document.querySelector('ul');
 
 // Event delegation will work unexpectedly when in our example, list items are nested
 
-list.addEventListener('click', event => {
+list.addEventListener('click', function(event) {
  event.target.closest('li').classList.toggle('highlight');
  // Triggering button programmatically
  button.click();
+ console.log(this);
 });

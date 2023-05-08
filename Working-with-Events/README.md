@@ -12,6 +12,7 @@
 | [Event Propagation and `stopPropagation()`](#event-propagation-and-stoppropagation) |
 | [Using Event Delegation](#using-event-delegation) |
 | [Triggering DOM Elements Programmatically](#triggering-dom-elements-programmatically) |
+| [Event Handler Functions and `this`](#event-handler-functions-and-this) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -666,3 +667,38 @@ Let's say from an event, there is a need to trigger another event. For example,
 ```
 
 It has two buttons - "Click to know me!" and "I click other buttons" - and a script that adds an event listener to each button. When the "Click to know me!" button is clicked, it logs a message to the console. When the "I click other buttons" button is clicked, it logs a different message to the console and then programmatically triggers a click event on the "Click to know me!" button using the [`click()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click) method. Overall, the code works as expected.
+
+## Event Handler Functions and `this`
+
+When an event is triggered and an event handler function is called, the `this` keyword inside the function refers to the DOM element that the event was triggered on. This is useful when we want to access or manipulate properties of the element inside the event handler.
+
+For example, suppose we have a button element with an event listener that changes its background color to blue when clicked:
+
+```HTML
+<button id="myButton">Click me!</button>
+
+<script>
+  const myButton = document.getElementById('myButton');
+  myButton.addEventListener('click', function() {
+    this.style.backgroundColor = 'blue';
+  });
+</script>
+```
+
+In this example, the `this` keyword inside the event handler function refers to the button element, so we can access and manipulate its `style` property to change its background color.
+
+In case of nested DOM elements, the value of `this` inside an event handler function will depend on how the function is called. If the event handler function is bound to the innermost element, `this` will refer to that element. If it is bound to an ancestor element that contains the nested elements, `this` will refer to the ancestor element.
+
+For example, consider the following HTML structure:
+
+```HTML
+<div class="outer">
+  <div class="inner"></div>
+</div>
+```
+
+If an event handler is bound to the `div.outer` element, and the user clicks on the `div.inner` element, the value of `this` inside the event handler will still refer to the `div.outer` element. If the event handler is bound to the `div.inner` element, `this` will refer to the `div.inner` element.
+
+It is important to keep in mind the event bubbling and capturing phase as well when considering the value of `this` in nested elements.
+
+It's important to note that when using arrow functions as event handler functions, the `this` keyword behaves differently. Arrow functions inherit the `this` value of the enclosing lexical scope, which is often the global object or the object that the arrow function is defined in. Therefore, if we use an arrow function as an event handler, the `this` keyword will not refer to the DOM element that the event was triggered on.
