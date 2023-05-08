@@ -10,6 +10,7 @@
 | [Working with `preventDefault()`](#working-with-preventdefault) |
 | [Understanding 'Capturing' & 'Bubbling' Phases](#understanding-capturing--bubbling-phases) |
 | [Event Propagation and `stopPropagation()`](#event-propagation-and-stoppropagation) |
+| [Using Event Delegation](#using-event-delegation) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -585,3 +586,50 @@ If we replace the `stopPropagation()` method with `stopImmediatePropagation()`, 
 Readings:
 
 - [StopPropagation vs. StopImmediatePropagation in JavaScript](https://betterprogramming.pub/stoppropagation-vs-stopimmediatepropagation-in-javascript-27b9f8ce79b5)
+
+## Using Event Delegation
+
+Event delegation is a technique in JavaScript where instead of attaching event listeners to each individual element in the DOM, you attach a single event listener to a parent element and use it to handle events that occur on its child elements.
+
+When an event occurs on a child element, it first bubbles up through the DOM tree until it reaches the parent element. The parent element can then use event delegation to handle the event by checking the `target` property of the event object to determine which child element triggered the event. This allows you to handle events on dynamically created elements that were not present in the DOM when the page first loaded.
+
+Here is an example of event delegation in action:
+
+```HTML
+<ul id="list">
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+
+<button id="add-item">Add Item</button>
+
+<script>
+  const list = document.getElementById('list');
+
+  list.addEventListener('click', (event) => {
+    if (event.target.nodeName === 'LI') {
+      console.log(`Clicked on ${event.target.textContent}`);
+    }
+  });
+
+  const addItemButton = document.getElementById('add-item');
+  addItemButton.addEventListener('click', () => {
+    const newItem = document.createElement('li');
+    newItem.textContent = `Item ${list.children.length + 1}`;
+    list.appendChild(newItem);
+  });
+</script>
+```
+
+In this example, we have a list of items and a button to add new items to the list. Instead of attaching a click event listener to each individual list item, we attach a single event listener to the parent `ul` element using event delegation.
+
+When the `click` event occurs on a list item, the event bubbles up to the `ul` element, which uses event delegation to handle the event. It checks the `target` property of the event object to determine which list item was clicked and logs a message to the console.
+
+When the "Add Item" button is clicked, a new list item is created and appended to the `ul` element. Because the event listener is attached to the `ul` element, it automatically handles events on the new list item without requiring any additional event listener attachment.
+
+Readings:
+
+- [Event Delegation in JavaScript](https://www.freecodecamp.org/news/event-delegation-javascript/)
+
+- [JavaScript Event Delegation: A Beginner's Guide](https://dmitripavlutin.com/javascript-event-delegation/)

@@ -76,3 +76,33 @@ button.addEventListener('click', event => {
 // 	console.log('CLICKED BUTTON');
 // 	console.log(event);
 // });
+
+/*
+Event Delegation
+
+Scenario - We have list of items and we want to change its color to red when clicked and if it is already red then revert.
+
+*/
+
+// Approach 1 - Brute Force (Demerits - Can get cumbersome and can impact performance)
+
+// const listItems = document.querySelectorAll('li');
+
+// listItems.forEach(listItem => {
+// 	listItem.addEventListener('click', event => {
+// 		event.target.classList.toggle('highlight');
+// 	})
+// });
+
+// Approach 2 - Event Delegation
+
+const list = document.querySelector('ul');
+// list.addEventListener('click', event => {
+// 	event.target.classList.toggle('highlight');
+// });
+
+// Event delegation will work unexpectedly when in our example, list items are nested
+
+list.addEventListener('click', event => {
+ event.target.closest('li').classList.toggle('highlight');
+});
