@@ -11,6 +11,7 @@
 | [Understanding 'Capturing' & 'Bubbling' Phases](#understanding-capturing--bubbling-phases) |
 | [Event Propagation and `stopPropagation()`](#event-propagation-and-stoppropagation) |
 | [Using Event Delegation](#using-event-delegation) |
+| [Triggering DOM Elements Programmatically](#triggering-dom-elements-programmatically) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -633,3 +634,35 @@ Readings:
 - [Event Delegation in JavaScript](https://www.freecodecamp.org/news/event-delegation-javascript/)
 
 - [JavaScript Event Delegation: A Beginner's Guide](https://dmitripavlutin.com/javascript-event-delegation/)
+
+## Triggering DOM Elements Programmatically
+
+There may be situations where you not only need to listen to an event, but also trigger an event programmatically. An example will be demonstrated of such scenario in later modules. For now, let's take a glimpse of how this can be done.
+
+Let's say from an event, there is a need to trigger another event. For example,
+
+```HTML
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Triggering DOM Events Programatically</title>
+</head>
+<body>
+  <button id="know-me">Click to know me!</button>
+  <button id="trigger">I click another buttons</button>
+  <script>
+    const knowMeBtn = document.getElementById('know-me');
+    const triggerBtn = document.getElementById('trigger');
+    knowMeBtn.addEventListener('click', () => {
+      console.log("Hello! My name is Foo and I work at bar ;D");
+    });
+    triggerBtn.addEventListener('click', () => {
+      console.log('Hehehehe! I click other buttons...');
+      knowMeBtn.click();
+    });
+  </script>
+</body>
+</html>
+```
+
+It has two buttons - "Click to know me!" and "I click other buttons" - and a script that adds an event listener to each button. When the "Click to know me!" button is clicked, it logs a message to the console. When the "I click other buttons" button is clicked, it logs a different message to the console and then programmatically triggers a click event on the "Click to know me!" button using the [`click()`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/click) method. Overall, the code works as expected.
