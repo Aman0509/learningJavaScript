@@ -9,6 +9,7 @@
 | [Supported Event Types](#supported-event-types) |
 | [Working with `preventDefault()`](#working-with-preventdefault) |
 | [Understanding 'Capturing' & 'Bubbling' Phases](#understanding-capturing--bubbling-phases) |
+| [Event Propagation and `stopPropagation()`](#event-propagation-and-stoppropagation) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -453,3 +454,134 @@ Readings:
 - [Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
 - [Deep dive into JavaScript event bubbling and capturing](https://blog.logrocket.com/deep-dive-into-event-bubbling-and-capturing/)
+
+## Event Propagation and [`stopPropagation()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation)
+
+Now, this entire process of having multiple listeners for the same event because the event does not just trigger on the element itself but also on ancestors, that's called propagation.
+
+Event propagation is the process of propagating an event from its source to its target in the Document Object Model (DOM) tree. Event propagation can occur in two ways: bubbling and capturing which we have discussed earlier.
+
+Event propagation can be controlled by calling the [`stopPropagation()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation) method on the event object. When this method is called, the event is prevented from propagating any further. For example, if a button is clicked and the [`stopPropagation()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation) method is called on the event object inside one of the event listeners, the event will not be triggered on any parent elements of the button.
+
+Here's an example that demonstrates event propagation:
+
+```HTML
+<div id="outer">
+  <div id="inner">
+    <button id="button">Click me</button>
+  </div>
+</div>
+```
+
+```javascript
+const outer = document.getElementById('outer');
+const inner = document.getElementById('inner');
+const button = document.getElementById('button');
+
+outer.addEventListener('click', function() {
+  console.log('Outer element clicked');
+});
+
+inner.addEventListener('click', function() {
+  console.log('Inner element clicked');
+});
+
+button.addEventListener('click', function(event) {
+  console.log('Button clicked');
+  event.stopPropagation();
+});
+```
+
+In this example, we have an outer `div` element, an inner `div` element, and a button element. We add event listeners to each element to log messages to the console when they are clicked. We also call the `stopPropagation()` method on the event object when the button is clicked.
+
+When the user clicks on the button, the following messages will be logged to the console:
+
+```
+Button clicked
+```
+
+As we can see, the `click` event first triggers on the button, However, because we called the `stopPropagation()` method inside the event listener for the button, the event is not propagated any further up the DOM tree.
+
+**[`stopImmediatePropagation()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation)**
+
+The `stopImmediatePropagation()` method is similar to `stopPropagation()`, but it not only stops the propagation of the current event, it also prevents any further listeners of the same event from being executed.
+
+Here's an example:
+
+```HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>
+    stopPropagation() & stopImmediatePropagation()
+  </title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #one {
+      width: 300px;
+      height: 300px;
+      background-color: orange;
+    }
+    #two {
+      width: 200px;
+      height: 200px;
+      background-color: lightblue;
+    }
+    #three {
+      width: 100px;
+      height: 100px;
+      background-color: pink;
+    }
+  </style>
+</head>
+<body>
+  <h1>Event Methods</h1>
+  <div id="one"> 1
+    <div id="two"> 2
+      <div id="three">
+          3
+      </div>
+    </div>
+  </div>
+  <script>
+    function div1(e) {
+      this.style.backgroundColor = 'red';
+    }
+    function div2(e) {
+      this.style.backgroundColor = 'blue';
+      e.stopPropagation(); // Stop the event from bubbling up to parent elements
+      // e.stopImmediatePropagation(); // Stop the event from bubbling up to parent elements and prevent other event handlers from being called
+    }
+    function div2_2(e) {
+      this.style.width = '250px';
+
+    }
+    function div3(e) {
+      this.style.backgroundColor = 'green';
+    }
+    const divOne = document.getElementById("one");
+    const divTwo = document.getElementById("two");
+    const divThree = document.getElementById("three");
+    divOne.addEventListener('click', div1);
+    divTwo.addEventListener('click', div2);
+    divTwo.addEventListener('click', div2_2);
+    divThree.addEventListener('click', div3);
+  </script>
+</body>
+</html>
+```
+
+In this example, we have three nested `div` elements with different background colors. When we click on the innermost div (with id "three"), the `click` event will be triggered and will propagate up to its parent elements (divs with ids "two" and "one"). We have attached event listeners to each of these elements, which will change their background colors when the `click` event is triggered.
+
+The event listener attached to the div with id "two" uses the `stopPropagation()` method to stop the event from bubbling up to its parent element (div with id "one"). As a result, the event listener attached to the div with id "one" is not triggered, and its background color remains unchanged.
+
+If we replace the `stopPropagation()` method with `stopImmediatePropagation()`, then the event listener attached to the div with id "two" will also prevent other event handlers from being called. In this case, the second event listener attached to the div with id "two" will not be triggered, and the width of the div with id "two" will not be changed.
+
+> Note
+> Some events in the DOM do not propagate. These events are known as non-bubbling events or non-propagating events. These events cannot be captured or bubble up the DOM tree. Examples of non-bubbling events include focus, blur, load, unload, reset, submit, change, input etc. Check official docs for more information.
+
+Readings:
+
+- [StopPropagation vs. StopImmediatePropagation in JavaScript](https://betterprogramming.pub/stoppropagation-vs-stopimmediatepropagation-in-javascript-27b9f8ce79b5)
