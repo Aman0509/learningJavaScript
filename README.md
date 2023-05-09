@@ -12,6 +12,7 @@
 - [Classes and Object Oriented Programming (OOP)](Classes-and-Object-Oriented-Programming/README.md)
 - [Constructor Functions and Prototypes](Constructor-Functions-and-Prototypes/README.md)
 - [Advanced DOM APIs](Advanced-DOM-APIs/README.md)
+- [Working with Events](Working-with-Events/README.md)
 
 ## References
 
