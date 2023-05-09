@@ -13,6 +13,7 @@
 | [Using Event Delegation](#using-event-delegation) |
 | [Triggering DOM Elements Programmatically](#triggering-dom-elements-programmatically) |
 | [Event Handler Functions and `this`](#event-handler-functions-and-this) |
+| [Drag and Drop Events](#drag-and-drop-events) |
 
 ## [Introduction to Events in JavaScript](https://drive.google.com/uc?export=view&id=1tfi-wZ9BYL2wISnyZ2JCcutRPApHpyCV)
 
@@ -702,3 +703,59 @@ If an event handler is bound to the `div.outer` element, and the user clicks on 
 It is important to keep in mind the event bubbling and capturing phase as well when considering the value of `this` in nested elements.
 
 It's important to note that when using arrow functions as event handler functions, the `this` keyword behaves differently. Arrow functions inherit the `this` value of the enclosing lexical scope, which is often the global object or the object that the arrow function is defined in. Therefore, if we use an arrow function as an event handler, the `this` keyword will not refer to the DOM element that the event was triggered on.
+
+## [Drag and Drop Events](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API)
+
+<img src="https://drive.google.com/uc?export=view&id=1kkXlf52mdwARgPsNL_8UIbvpMOatWQfi" height="400" width="800" alt="academind slide">
+
+- To make elements draggable:
+
+  - Mark them by adding the [`draggable`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/draggable) attribute or setting the [`draggable`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/draggable) property on the DOM elements to `true`.
+  - Both the attribute or the property need to be set to `true`.
+
+- Listen to the [`dragstart`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragstart_event) event on the draggable element, which is triggered when a user starts dragging the element.
+
+  - In the event listener, you can interact with the event object to describe the drag operation, such as copying or moving.
+  - You can also append data to the event to make sure that the drag and drop operation works together.
+
+- To mark the areas where an item can be dropped, add an event listener to the element where the other element can be dropped:
+  - Add a listener to the [`dragenter`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragenter_event) and [`dragover`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragover_event) events.
+  - Call [`preventDefault()`](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault) in the event listeners to allow a drop operation.
+  - Optionally listen to the [`dragleave`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragleave_event) event if you want to update the UI.
+
+- Listen to the [`drop`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/drop_event) event on the same element where you listened to [`dragenter`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragenter_event) and [`dragover`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragover_event).
+  - The drop event is only triggered if you prevented the default in dragenter and dragover, and the item is then dropped onto that same element.
+  - In the [`drop`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/drop_event) event, you can do whatever you want to do upon a drop.
+
+- Optionally, listen to the [`dragend`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragend_event) event on the dragged element itself, where you could update the UI or some data.
+  - The [`dragend`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dragend_event) event is always fired even if the drop is cancelled.
+  - You will get some property on the event object which tells you whether the drop was successful or not.
+
+You can check whether a [`drop`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/drop_event) operation succeeded or not by listening to the `drop` event and checking the `dataTransfer.dropEffect` property of the event object.
+
+When the drop event fires, the `dataTransfer.dropEffect` property will contain one of the following string values:
+
+- "none" if the drop operation was not allowed on the drop target
+- "copy" if the dragged item was copied to the drop target
+- "move" if the dragged item was moved to the drop target
+- "link" if the dragged item was linked to the drop target
+
+You can use this value to determine whether the drop operation succeeded or not and take the appropriate action in your code.
+
+Some Useful Attributes and Methods:
+
+- [event.dataTransfer](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer)
+
+- [DataTransfer: setData() method](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/setData)
+
+- [DataTransfer: effectAllowed property](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/effectAllowed)
+
+- [DataTransfer: getData() method](https://developer.mozilla.org/en-US/docs/Web/API/DataTransfer/getData)
+
+Readings:
+
+- [Drag-And-Drop Events In JavaScript](https://blog.openreplay.com/drag-and-drop-events-in-javascript/)
+
+- [JavaScript Drag and Drop](https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/)
+
+- [Recommended Drag Types](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types)
