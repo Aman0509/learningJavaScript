@@ -1,4 +1,4 @@
-# Learning JavaScript
+# <img src="https://media.tenor.com/6ceOmdT7SHkAAAAi/emoji-emojis.gif" heigth=40 width=40> Learning JavaScript <img src="https://media.tenor.com/6ceOmdT7SHkAAAAi/emoji-emojis.gif" height=40 width=40>
 
 ## Contents
 
@@ -17,3 +17,4 @@
 ## References
 
 - [JavaScript - The Complete Guide 2023 (Beginner + Advanced) by Academind (Maximilian Schwarzmüller)](https://www.udemy.com/share/102aa23@cPr9PmFpr0y6VaininP_4S-uboOKmC7wiYBKtS28JItRDgZyS8j6yIOJY2G0mSeE/)
+- [ChatGPT](https://chat.openai.com/)
