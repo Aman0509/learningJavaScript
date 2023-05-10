@@ -74,3 +74,39 @@ In this example, we have defined a `Person` class that has two attributes `name`
 The OOP paradigm allows us to model real-world entities and their interactions in code, making it easier to understand and maintain complex systems. It also enables us to reuse code by creating and extending classes, making development more efficient.
 
 Checkout [here](summary-with-code/oops.js) for another simple example.
+
+## Functional Programming in Practice
+
+Functional programming is a programming paradigm that emphasizes the use of functions to solve problems. In functional programming, the focus is on creating small, reusable functions that do one thing well and can be combined to solve complex problems.
+
+One example of functional programming is the use of higher-order functions, which are functions that take other functions as arguments or return functions as their result. This allows for more abstract and reusable code.
+
+Here is an example of functional programming in JavaScript:
+
+```javascript
+// A function that takes a list of numbers and returns the sum
+function sum(numbers) {
+  return numbers.reduce((acc, curr) => acc + curr, 0);
+}
+
+// A function that takes a list of numbers and returns a new list
+// where each number is doubled
+function double(numbers) {
+  return numbers.map(num => num * 2);
+}
+
+// A higher-order function that takes a function and a list of numbers,
+// and applies the function to each number in the list
+function apply(func, numbers) {
+  return numbers.map(func);
+}
+
+const numbers = [1, 2, 3, 4, 5];
+
+const result1 = sum(numbers); // returns 15
+const result2 = double(numbers); // returns [2, 4, 6, 8, 10]
+
+const result3 = apply(num => num ** 2, numbers); // returns [1, 4, 9, 16, 25]
+```
+
+In this example, the `sum` and `double` functions are simple, reusable functions that each do one thing well. The `apply` function is a higher-order function that takes a function and applies it to each item in a list. By using these small, reusable functions and higher-order functions, we can create more abstract and reusable code that can solve complex problems.
