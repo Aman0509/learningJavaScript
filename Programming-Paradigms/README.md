@@ -4,6 +4,7 @@
 | :--- |
 | [What are Programming Paradigms?](#what-are-programming-paradigms) |
 | [Procedural Programming in Practice](#procedural-programming-in-practice) |
+| [Object Oriented Programming in Practice](#object-oriented-programming-in-practice) |
 
 ## What are Programming Paradigms?
 
@@ -43,3 +44,33 @@ In this example, the `calculateArea` function takes the radius of the circle as 
 This example demonstrates how procedural programming focuses on breaking down a problem into smaller steps or procedures that can be performed in a sequence to solve the problem.
 
 Checkout [here](summary-with-code/procedural.js) for another simple example.
+
+## Object Oriented Programming in Practice
+
+Object-Oriented Programming (OOP) is a programming paradigm that revolves around the concept of objects. An object is a self-contained entity that consists of both data (attributes) and behavior (methods).
+
+In OOP, everything is an object, and objects communicate with each other to perform a specific task. OOP also follows the principle of encapsulation, which means that the data and methods of an object are hidden from the outside world and can only be accessed through well-defined interfaces.
+
+Here's an example of OOP paradigm in JavaScript:
+
+```javascript
+class Person {
+  constructor(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  
+  sayHello() {
+    console.log(`Hello, my name is ${this.name} and I am ${this.age} years old.`);
+  }
+}
+
+let john = new Person("John", 30);
+john.sayHello();
+```
+
+In this example, we have defined a `Person` class that has two attributes `name` and `age` and a method `sayHello()`. We then create an instance of the `Person` class using the `new` keyword and call the `sayHello()` method on it.
+
+The OOP paradigm allows us to model real-world entities and their interactions in code, making it easier to understand and maintain complex systems. It also enables us to reuse code by creating and extending classes, making development more efficient.
+
+Checkout [here](summary-with-code/oops.js) for another simple example.
