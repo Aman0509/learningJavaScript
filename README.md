@@ -14,6 +14,7 @@
 - [Advanced DOM APIs](Advanced-DOM-APIs/README.md)
 - [Working with Events](Working-with-Events/README.md)
 - [Advanced Function Concepts](Advanced-Function-Concepts/README.md)
+- [Programming Paradigms](Programming-Paradigms/README.md)
 
 ## References
 
