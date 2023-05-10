@@ -50,3 +50,15 @@ income = createTaxCalculator(745334);
 
 console.log(income(5));
 console.log(income(10));
+
+/* Closures */
+
+let userName = 'John';
+
+function greetUser() {
+    console.log('Hello Mr. ' + userName + '!');
+}
+
+userName = 'Wick';
+
+greetUser(); // Hello Mr. Wick!

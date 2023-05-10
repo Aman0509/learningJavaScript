@@ -4,6 +4,11 @@
 | :--- |
 | [Pure Functions and Side-Effect](#pure-functions-and-its-side-effect) |
 | [Factory Functions](#factory-functions) |
+| [Closures](#closures) |
+
+&nbsp;
+
+:abacus: [Understand with Code](summary-with-code/app.js)
 
 ## [Pure Functions and Side-Effects](https://drive.google.com/uc?export=view&id=1J1QRcr3UMC-h4zeQhgv6INAfitnKWa2_)
 
@@ -97,3 +102,90 @@ Readings:
 - [What are factory functions in JavaScript ?](https://www.geeksforgeeks.org/what-are-factory-functions-in-javascript/)
 
 - [JavaScript Factory Functions](https://www.javascripttutorial.net/javascript-factory-functions/)
+
+## [Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+
+In JavaScript, a closure is created when a function is defined inside another function and the inner function accesses variables from the outer function's scope. The inner function has access to the outer function's variables, parameters, and even other inner functions, even after the outer function has returned. This behavior is possible because of how JavaScript handles scope and variable declaration.
+
+Here's an example to illustrate closures in JavaScript:
+
+```javascript
+function createCounter() {
+  let count = 0;
+
+  function increment() {
+    count++;
+    console.log(count);
+  }
+
+  return increment;
+}
+
+const counter = createCounter();
+
+counter(); // logs 1
+counter(); // logs 2
+counter(); // logs 3
+```
+
+In this example, `createCounter()` is a function that returns another function called `increment()`. Inside `createCounter()`, we define a variable called `count` and initialize it to 0. We also define `increment()`, which increments `count` by 1 and logs its value to the console.
+
+We then return `increment()`, which means that calling `createCounter()` actually returns the `increment()` function. We assign this function to a variable called `counter`, which allows us to call `increment()` as many times as we want.
+
+When we call `counter()` for the first time, it logs `1` to the console. This is because `counter()` is actually calling the `increment()` function that was defined inside `createCounter()`. This inner function has access to the `count` variable that was defined in the outer function's scope, so it can increment and log its value.
+
+When we call `counter()` again, it logs `2` to the console, because the `count` variable is still accessible to the `increment()` function. We can call `counter()` as many times as we want, and the value of `count` will continue to increment and be logged to the console.
+
+This is an example of a closure in JavaScript, because the `increment()` function has access to the `count` variable even after `createCounter()` has returned. The inner function "closes over" the outer function's scope and remembers its variables, allowing us to create a counter that persists between function calls.
+
+> All functions in JavaScript are closures. This is because every function in JavaScript has access to the variables and parameters of its outer or parent scope, even after the outer function has returned.
+
+### Closures and Memory Management
+
+If every function logs all surrounding variables, it could potentially lead to a negative impact on memory, especially in large applications with many variables. A function may log in many variables that it doesn't actually use, but since the function closes over them, JavaScript won't get rid of them.
+
+This could result in a memory issue, but modern JavaScript engines are designed to optimize this behavior by tracking variable usage. If a variable isn't used by any functions or elsewhere in the code, the engine will safely dispose of it. This way, you don't need to manually reset all unused variables as the engine will handle it for you. The JavaScript engines are intelligent and efficient enough to optimize this process without affecting your program's stability.
+
+Readings:
+
+- [Learn JavaScript Closures with Code Examples](https://www.freecodecamp.org/news/lets-learn-javascript-closures-66feb44f6a44/)
+
+- [JavaScript Closures](https://www.javascripttutorial.net/javascript-closure/)
+
+### Immediately Invoked Function Expression (IIFE)
+
+In JavaScript, especially in older scripts, you sometimes find a pattern described as **IIFEs**. **IIFE** stands for "Immediately Invoked Function Expression" and the pattern you might find looks like this (directly in a script file):
+
+```javascript
+(function() {
+    var age = 30;
+    console.log(age); // 30
+})()
+
+console.log(age); // Error: "age is not defined"
+```
+
+What's that?
+
+We see a function expression which calls itself (please note the `()` right after the function).
+
+It's NOT a function declaration because it's wrapped in `()`. That happens on purpose since you can't immediately execute function declarations.
+
+**But why would you write some code?**
+
+Please note that the snippet uses `var`, not `let` or `const`. Remember that `var` does not use block scope but only differ between global and function scope.
+
+As a consequence, it was hard to control where variables were available. Variables outside of function always were available globally. Well, IIFEs solve that problem since the script (or parts of it) essentially are wrapped in a function and function scope is used.
+
+**Nowadays, this is not really required anymore.** With `let` and `const` we got block scope and if you want to restrict where variables are available (outside of functions, `if` statements, `for` loops etc, where you automatically have scoped variables since these structures create blocks), you can simply wrap the code that should have scoped variables with `{}`.
+
+```javascript
+{
+    const age = 30;
+    console.log(age); // 30
+}
+
+console.log(age); // Error: "age is not defined"
+```
+
+Not something you see too often but something that is possible.
