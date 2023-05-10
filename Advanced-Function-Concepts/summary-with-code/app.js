@@ -36,3 +36,17 @@ function printHobbies(hobbies) {
 
 printHobbies(hobbies);
 console.log(hobbies);
+
+/* Factory Functions */
+
+function createTaxCalculator(income) {
+    function calculateTax(taxPercent) {
+        return (income*taxPercent)/100;
+    }
+    return calculateTax;
+}
+
+income = createTaxCalculator(745334);
+
+console.log(income(5));
+console.log(income(10));
