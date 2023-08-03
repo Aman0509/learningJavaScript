@@ -312,7 +312,7 @@ As we know, this is going to fail since there is no such method `printRating()` 
 Now, since the object is already created, we would want to adjust it's prototype. We can do this by using global [`Object`](https://developer.mozilla.org/en-US/docs/Glossary/Global_object) method [`setPrototypeOf()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf).
 
 ```javascript
-Object.setPropertyOf(course, {
+Object.setPrototypeOf(course, {
   printRating: function(){
     console.log(`${this.rating}/5`);
   }
