@@ -7,6 +7,7 @@
 | [The BigInt Type](#the-bigint-type) |
 | [The Global "Number" & "Math" Objects](#the-global-number--math-objects) |
 | [Tagged Templates](#tagged-templates) |
+| [Introducing Regular Expressions ("RegEx")](#introducing-regular-expressions-regex) |
 
 ## How [`Numbers`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Work and Behave in JS
 
@@ -368,3 +369,94 @@ Readings:
 - [Tagged Template Literals](https://wesbos.com/tagged-template-literals)
 
 - [Magic of Tagged Templates Literals in JavaScript?](https://patelhemil.medium.com/magic-of-tagged-templates-literals-in-javascript-e0e2379b1ffc)
+
+## Introducing Regular Expressions ("RegEx")
+
+Regular expressions, often referred to as regex or RegExp, are powerful tools for pattern matching and text manipulation in JavaScript. A regular expression is a sequence of characters that defines a search pattern. You can use regex to search, match, and replace strings based on specific patterns. In JavaScript, you can work with regular expressions using the `RegExp` object or by using regex literals.
+
+Here are some fundamental concepts and examples to get started with regular expressions in JavaScript:
+
+### Creating a Regular Expression
+
+You can create a regular expression using the `RegExp` constructor or by using regex literals enclosed in forward slashes (`/pattern/`).
+
+Using `RegExp` constructor:
+
+```javascript
+const regex = new RegExp("pattern");
+```
+
+Using regex literals:
+
+```javascript
+const regexLiteral = /pattern/;
+```
+
+### Matching Patterns
+
+You can use the [`test()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test) method of the RegExp object to check if a string matches a given pattern.
+
+```javascript
+const regex = /apple/;
+const text = "I like apples.";
+
+console.log(regex.test(text)); // Output: true
+```
+
+- Matching with [`exec()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/exec)
+
+    The `exec()` method of the RegExp object can be used to find matches and capture groups in a string.
+
+    ```javascript
+    const regex = /(\d{3})-(\d{3})/;
+    const phoneNumber = "555-123";
+
+    const result = regex.exec(phoneNumber);
+    console.log(result); // Output: ["555-123", "555", "123", index: 0, input: "555-123", groups: undefined]
+    ```
+
+- Matching with [`match()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match)
+
+    You can use the `match()` method on a string to find matches for a regular expression.
+
+    ```javascript
+    const regex = /\d{3}/g;
+    const text = "The year is 2023.";
+
+    const matches = text.match(regex);
+    console.log(matches); // Output: ["202", "3"]
+    ```
+
+- Replacing with [`replace()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace)
+
+    The `replace()` method allows you to replace occurrences of a pattern in a string with another value.
+
+    ```javascript
+    const regex = /apple/g;
+    const text = "I like apples. Apples are delicious.";
+
+    const replacedText = text.replace(regex, "orange");
+    console.log(replacedText); // Output: "I like oranges. Oranges are delicious."
+    ```
+
+- Character Classes and Quantifiers
+
+    Regular expressions allow you to define character classes using square brackets (`[]`) and use quantifiers to specify the number of occurrences of a pattern.
+
+    ```javascript
+    const regex = /[aeiou]/g;
+    const text = "JavaScript is awesome.";
+
+    const vowels = text.match(regex);
+    console.log(vowels); // Output: ["a", "i", "a", "e", "o", "e"]
+    ```
+
+These are some basic concepts to get started with regular expressions in JavaScript. Regular expressions can be quite complex and powerful, and mastering them can significantly improve your text processing and pattern matching capabilities. You can find more information and advanced features in the [MDN Web Docs for Regular Expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions) in JavaScript.
+
+Readings:
+
+- [How to Use Regular Expressions in JavaScript?](https://www.freecodecamp.org/news/regular-expressions-for-beginners/)
+
+- [JavaScript Regex](https://www.programiz.com/javascript/regex)
+
+- [Regular Expressions Introduction | REGEX DEMYSTIFIED](https://www.youtube.com/watch?v=0LKdKixl5Ug&list=PL55RiY5tL51ryV3MhCbH8bLl7O_RZGUUE)
