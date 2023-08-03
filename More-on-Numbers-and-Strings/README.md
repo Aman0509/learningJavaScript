@@ -4,6 +4,7 @@
 | :--- |
 | [How `Numbers` Work and Behave in JS](#how-numbers-work-and-behave-in-js) |
 | [Floating Point (Im)Precision](#floating-point-imprecision) |
+| [The BigInt Type](#the-bigint-type) |
 
 ## How [`Numbers`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Work and Behave in JS
 
@@ -86,3 +87,49 @@ Readings:
 - [2ality – JavaScript and more](https://2ality.com/2012/04/number-encoding.html)
 
 - [Dealing with float precision in Javascript](https://stackoverflow.com/questions/11695618/dealing-with-float-precision-in-javascript)
+
+## The BigInt Type
+
+In JavaScript, `BigInt` is a built-in data type introduced in ECMAScript 2020 (ES11) to represent integers of arbitrary precision. Prior to `BigInt`, JavaScript natively supported only 64-bit floating-point numbers, which have a maximum safe integer value of 2^53 - 1. Any integer larger than this limit would lose precision and could lead to incorrect results.
+
+`BigInt` is designed to address this limitation by allowing you to work with integers of any size, limited only by the available memory of the system. It can represent integers with an arbitrary number of digits, and it does not suffer from the same precision issues as regular numbers (often referred to as `Number` type).
+
+Here's how you can create a `BigInt`:
+
+```javascript
+const bigIntNumber = 1234567890123456789012345678901234567890n;
+```
+
+Note the "n" suffix at the end of the number, which tells JavaScript that this is a `BigInt` literal. If you try to assign a value directly to a variable without the "n" suffix, it will be treated as a regular `Number`, and you might lose precision:
+
+```javascript
+const wrongBigInt = 1234567890123456789012345678901234567890; // This will be treated as a regular Number.
+```
+
+You can perform various mathematical operations with `BigInt` in the same way you would with regular numbers:
+
+```javascript
+const a = 1234567890n;
+const b = 9876543210n;
+
+const sum = a + b; // 11111111100n
+const difference = b - a; // 8641975320n
+const product = a * b; // 12193263111263526900n
+const quotient = b / a; // 8n (integer division, fractional part is discarded)
+const remainder = b % a; // 690123430n
+```
+
+However, it's important to note that `BigInt` and regular `Number` cannot be mixed in arithmetic operations. When using `BigInt`, the operands should be `BigInt` as well:
+
+```javascript
+const c = 42;
+const sumOfMixedTypes = a + c; // Error: Cannot mix BigInt and other types, conversion not allowed.
+```
+
+`BigInt` cannot be used with certain built-in methods like `Math.sqrt`, `Math.sin`, etc., as those methods expect regular `Number` types. For these cases, you might need to convert the `BigInt` to a regular `Number` before performing the operation.
+
+Readings:
+
+- [BigInt - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+
+- [BigInt - JavaScript.Info](https://javascript.info/bigint)
