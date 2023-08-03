@@ -6,6 +6,7 @@
 | [Floating Point (Im)Precision](#floating-point-imprecision) |
 | [The BigInt Type](#the-bigint-type) |
 | [The Global "Number" & "Math" Objects](#the-global-number--math-objects) |
+| [Tagged Templates](#tagged-templates) |
 
 ## How [`Numbers`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Work and Behave in JS
 
@@ -308,3 +309,62 @@ Some commonly used `Math's` methods:
     console.log(Math.PI); // Output: 3.141592653589793
     console.log(Math.E); // Output: 2.718281828459045
     ```
+
+## [Tagged Templates](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)
+
+A Tagged Template is a feature that allows you to customize how template literals (strings with embedded expressions) are processed. When you use a tagged template, you can apply a function (the tag) to the template literal, and this function has the ability to modify the resulting string based on the interpolated values and the template itself.
+
+***To create a tagged template, you place the function name (the tag) immediately before the template literal using backticks (``).***
+
+Here's the syntax:
+
+```javascript
+function tagFunction(strings, ...values) {
+  // Custom logic to process the strings and values
+  // Return the modified string
+}
+
+const result = tagFunction`template literal with embedded ${values}`;
+```
+
+The `tagFunction` takes two arguments:
+
+1. `strings`: An array containing the template literal's static parts (text without interpolated values).
+
+2. `...values`: The values of the interpolated expressions.
+
+Let's see an example to illustrate how tagged templates work:
+
+```javascript
+function upperCaseTag(strings, ...values) {
+  let result = "";
+  for (let i = 0; i < strings.length; i++) {
+    result += strings[i];
+    if (i < values.length) {
+      result += String(values[i]).toUpperCase();
+    }
+  }
+  return result;
+}
+
+const name = "Alice";
+const age = 30;
+
+const output = upperCaseTag`Hello, my name is ${name} and I am ${age} years old.`;
+
+console.log(output); // Hello, my name is ALICE and I am 30 years old.
+```
+
+In the above example, we defined a `upperCaseTag` function as the tag for the template literal. This function iterates over the `strings` array and appends each static part to the `result` string. If there is a corresponding value at that index, it converts the value to uppercase and appends it to the `result` string.
+
+When we use the `upperCaseTag` function with the template literal, it modifies the interpolated values (name and age) to be in uppercase.
+
+Tagged templates are powerful because they allow you to customize how template literals are processed and can be used for various purposes like internationalization, escaping HTML, or other custom formatting requirements.
+
+Readings:
+
+- [Tagged templates - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates)
+
+- [Tagged Template Literals](https://wesbos.com/tagged-template-literals)
+
+- [Magic of Tagged Templates Literals in JavaScript?](https://patelhemil.medium.com/magic-of-tagged-templates-literals-in-javascript-e0e2379b1ffc)
