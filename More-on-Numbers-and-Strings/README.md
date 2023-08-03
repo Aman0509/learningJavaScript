@@ -5,6 +5,7 @@
 | [How `Numbers` Work and Behave in JS](#how-numbers-work-and-behave-in-js) |
 | [Floating Point (Im)Precision](#floating-point-imprecision) |
 | [The BigInt Type](#the-bigint-type) |
+| [The Global "Number" & "Math" Objects](#the-global-number--math-objects) |
 
 ## How [`Numbers`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) Work and Behave in JS
 
@@ -133,3 +134,177 @@ Readings:
 - [BigInt - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 
 - [BigInt - JavaScript.Info](https://javascript.info/bigint)
+
+## The Global "Number" & "Math" Objects
+
+Some commonly used `Number's` attributes:
+
+- [`Number.MAX_VALUE`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_VALUE): This attribute represents the maximum positive value that can be represented in JavaScript.
+
+    ```javascript
+    console.log(Number.MAX_VALUE); // Output: 1.7976931348623157e+308
+    ```
+
+- [`Number.MIN_VALUE`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_VALUE): This attribute represents the smallest positive value greater than 0 that can be represented in JavaScript.
+
+    ```javascript
+    console.log(Number.MIN_VALUE); // Output: 5e-324
+    ```
+
+- [`Number.POSITIVE_INFINITY`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/POSITIVE_INFINITY): his attribute represents positive infinity, which is a special value representing a number that is too large to be represented in JavaScript.
+
+    ```javascript
+    console.log(Number.POSITIVE_INFINITY); // Output: Infinity
+    ```
+
+- [`Number.NEGATIVE_INFINITY`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/NEGATIVE_INFINITY): This attribute represents negative infinity, which is a special value representing a number that is too small (negative) to be represented in JavaScript.
+
+    ```javascript
+    console.log(Number.NEGATIVE_INFINITY); // Output: -Infinity
+    ```
+
+- [`Number.EPSILON`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON): This attribute represents the smallest positive value that can be added to 1 to get a value different from 1. It is useful for performing approximate comparisons.
+
+    ```javascript
+    console.log(Number.EPSILON); // Output: 2.220446049250313e-16
+    ```
+
+- [`Number.NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/NaN): This attribute represents the "Not-a-Number" value, which is the result of an operation that cannot produce a meaningful numeric value.
+
+    ```javascript
+    console.log(Number.NaN); // Output: NaN
+    ```
+
+- [`Number.MIN_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MIN_SAFE_INTEGER) and [`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER): These attributes represent the minimum and maximum safe integer values that can be represented in JavaScript without losing precision. Safe integers are within the range [-2^53, 2^53].
+
+    ```javascript
+    console.log(Number.MIN_SAFE_INTEGER); // Output: -9007199254740991
+    console.log(Number.MAX_SAFE_INTEGER); // Output: 9007199254740991
+    ```
+
+Some commonly used `Number's` methods:
+
+- [`Number.parseInt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/parseInt) and [`Number.parseFloat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/parseFloat): These methods parse a string and convert it into an integer or floating-point number, respectively.
+
+    ```javascript
+    const numString = "42";
+    const parsedInt = Number.parseInt(numString); // Output: 42 (as a number, not a string)
+    const parsedFloat = Number.parseFloat("3.14"); // Output: 3.14 (as a number, not a string)
+    ```
+
+    > Note: Also, checkout the difference between `Number()` and `parseInt()` [here](https://dev.to/darkmavis1980/you-should-stop-using-parseint-nbf)
+
+- [`Number.toFixed()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed): This method formats a number to a fixed number of decimal places and returns a string representation.
+
+    ```javascript
+    const num = 3.14159;
+    const formatted = num.toFixed(2); // Output: "3.14"
+    ```
+
+- [`Number.toPrecision()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toPrecision): This method formats a number to a specified length and returns a string representation, including the necessary precision.
+
+    ```javascript
+    const num = 1234.56789;
+    const formatted = num.toPrecision(5); // Output: "1234.6"
+    ```
+
+- [`Number.toString()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toString): This method converts a number to a string representation.
+
+    ```javascript
+    const num = 42;
+    const strNum = num.toString(); // Output: "42"
+    ```
+
+- [`Number.isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN): This method determines if a value is `NaN` (Not-a-Number).
+
+    ```javascript
+    const value1 = 5 / "hello"; // NaN
+    const value2 = "123"; // Not NaN
+    console.log(Number.isNaN(value1)); // Output: true
+    console.log(Number.isNaN(value2)); // Output: false
+    ```
+
+- [`Number.isFinite()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite): This method determines if a value is a finite number.
+
+    ```javascript
+    const finiteNum = 42;
+    const infiniteNum = Infinity;
+    console.log(Number.isFinite(finiteNum)); // Output: true
+    console.log(Number.isFinite(infiniteNum)); // Output: false
+    ```
+
+- [`Number.isInteger()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger): This method checks if a value is an integer (whole number).
+
+    ```javascript
+    const integerNum = 42;
+    const floatNum = 3.14;
+    console.log(Number.isInteger(integerNum)); // Output: true
+    console.log(Number.isInteger(floatNum)); // Output: false
+    ```
+
+Some commonly used `Math's` methods:
+
+- [`Math.abs()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs): This method returns the absolute value of a number.
+
+    ```javascript
+    console.log(Math.abs(-5)); // Output: 5
+    ```
+
+- [`Math.ceil()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil): This method rounds a number up to the nearest integer.
+
+    ```javascript
+    console.log(Math.ceil(3.14)); // Output: 4
+    ```
+
+- [`Math.floor()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor): This method rounds a number down to the nearest integer.
+
+    ```javascript
+    console.log(Math.floor(3.14)); // Output: 3
+    ```
+
+- [`Math.round()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round): This method rounds a number to the nearest integer.
+
+    ```javascript
+    console.log(Math.round(3.5)); // Output: 4
+    console.log(Math.round(3.4)); // Output: 3
+    ```
+
+- [`Math.max()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) and [`Math.min()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/min): These methods return the maximum and minimum values, respectively, from a list of arguments.
+
+    ```javascript
+    console.log(Math.max(10, 20, 5, 30)); // Output: 30
+    console.log(Math.min(10, 20, 5, 30)); // Output: 5
+    ```
+
+- [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random): This method generates a random floating-point number between 0 (inclusive) and 1 (exclusive).
+
+    ```javascript
+    console.log(Math.random()); // Output: Random value between 0 (inclusive) and 1 (exclusive)
+    ```
+
+- [`Math.pow()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/pow): This method raises a number to a specified power.
+
+    ```javascript
+    console.log(Math.pow(2, 3)); // Output: 8 (2^3)
+    ```
+
+- [`Math.sqrt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sqrt): This method calculates the square root of a number.
+
+    ```javascript
+    console.log(Math.sqrt(16)); // Output: 4 (sqrt(16) = 4)
+    ```
+
+- [`Math.sin()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/sin), [`Math.cos()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/cos) and [`Math.tan()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/tan): These methods calculate the trigonometric sine, cosine, and tangent of an angle (in radians).
+
+    ```javascript
+    console.log(Math.sin(Math.PI / 6)); // Output: 0.5 (sin(π/6) = 0.5)
+    console.log(Math.cos(Math.PI / 3)); // Output: 0.5 (cos(π/3) = 0.5)
+    console.log(Math.tan(Math.PI / 4)); // Output: 1 (tan(π/4) = 1)
+    ```
+
+- [`Math.PI`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/PI) and [`Math.E`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/E): These properties hold the values of π (pi) and Euler's number (e).
+
+    ```javascript
+    console.log(Math.PI); // Output: 3.141592653589793
+    console.log(Math.E); // Output: 2.718281828459045
+    ```
