@@ -6,6 +6,7 @@
 | [Understanding Asynchronous Code Execution ("Async Code")](#understanding-asynchronous-code-execution-async-code) |
 | [Blocking Code and The "Event Loop"](#blocking-code-and-the-event-loop) |
 | [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order) |
+| [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -225,3 +226,41 @@ As before, if we have code following the `getCurrentPosition` call, such as logg
 Thus, even if `getCurrentPosition` executes instantly, any code following it will always run before the success or error callback functions. This behavior illustrates how asynchronous operations work, ensuring that code within the callback functions cannot execute before the code outside the callback, as the browser follows the event loop and message queue pattern.
 
 Upon reloading the page, clicking "Track Me," and then blocking access, we observe that the "Getting position..." log is displayed instantly, showcasing the non-blocking nature of JavaScript.
+
+## Multiple Callbacks and setTimeout(0)
+
+For the purpose of learning, let's introduce a 2-second timer before displaying the response. To achieve this, an additional anonymous function is required within the existing callback. Inside this nested function, the `posData` can be accessed and logged. This is made possible due to the concept of closure, where the function is nested within another, allowing access to variables within the outer function.
+
+```javascript
+const button = document.querySelector('button');
+
+function trackUserHandler() {
+  navigator.geolocation.getCurrentPosition(
+    posData => {
+      setTimeout(
+        () => {
+          console.log(posData);
+        }, 2000
+      );
+  }, error => {
+    console.log(error);
+  });
+  setTimeout(
+    () => {
+      console.log("Timer done");
+    }, 0);
+  console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+However, the logging of `posData` is delayed by 2 seconds due to the timer, introduced for illustrative purposes. This situation results in a callback within another callback, both of which are part of the broader `trackUserHandler` callback. As this nesting of callbacks becomes more complex, the code's readability and maintenance can become challenging over time.
+
+To check the functionality, I save the changes, reload the page, click "Track Me," grant access, and observe the sequence. The location retrieval takes a moment, and after an additional 2 seconds, the position data is displayed.
+
+This example serves to demonstrate the possibility of nesting asynchronous operations. The timer is initiated only after the location retrieval is completed, that is, once the outer callback function executes. Notably, when dealing with timers, it's essential to understand that setting a timer of zero doesn't guarantee immediate execution. The browser's execution route via the message queue and the event loop introduces a minimal time delay.
+
+As an experiment, if I set a timer of zero immediately before the `console.log("Getting position...")` line, the result is intriguing. Reloading the page and clicking "Track Me," I observe that "Getting position..." logs first, followed by "Timer done," even though the timer is set to zero. This behavior occurs because the execution flow requires the browser to pass through the message queue and the event loop, ultimately leading to the sequence I described.
+
+In essence, the minimum time for executing a callback is defined by the timer value, but it's not a guaranteed time. The browser and JavaScript attempt to execute the function at the specified minimum time, but it's subject to the state of the call stack. If the call stack is occupied, that task will be prioritized. As a result, the sequence is influenced by the passage through the message queue and event loop, with the call stack's status playing a pivotal role.
