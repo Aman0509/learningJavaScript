@@ -5,6 +5,7 @@
 | [Understanding Synchronous Code Execution ("Sync Code")](#understanding-synchronous-code-execution-sync-code) |
 | [Understanding Asynchronous Code Execution ("Async Code")](#understanding-asynchronous-code-execution-async-code) |
 | [Blocking Code and The "Event Loop"](#blocking-code-and-the-event-loop) |
+| [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -187,3 +188,40 @@ Now, here's the interesting part. The event loop, which is like a watchful manag
 Only when our lengthy task is finished and we log the result to the console, the call stack becomes empty. At this moment, the event loop says, "Alright, now that we're free, let's tackle that task from the message queue." That's why you see the "clicked" message appearing in the console only after the result has been logged.
 
 This knowledge is quite valuable. Understanding what's happening behind the scenes helps you write your code in a way that makes sense. For instance, you might notice that even if you registered an event first, an async task (like handling a click) might not happen before other code because JavaScript doesn't wait around. Instead of blocking JavaScript while waiting, the browser takes on tasks like event listeners or other expectedly time-consuming operations, so your JavaScript code remains responsive and never gets stuck.
+
+## Sync + Async Code - The Execution Order
+
+Consider this scenario where we have the `trackUserHandler` function. Instead of merely logging that a click occurred, our goal is to retrieve the user's location.
+
+```javascript
+const button = document.querySelector('button');
+
+function trackUserHandler() {
+  navigator.geolocation.getCurrentPosition(posData => {
+    console.log(posData);
+  }, error => {
+    console.log(error);
+  });
+  console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+We can achieve this by utilizing the [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator) object along with the [`geolocation API`](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API). This built-in API enables us to interact with the browser to obtain the user's location through the getCurrentPosition method.
+
+The [`getCurrentPosition`](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition) method takes three potential parameters: a success callback function, which executes when the position is successfully fetched; an error callback function, executed when the position retrieval encounters an issue; and an options object for configuration. In our case, we are employing an anonymous arrow function as the success callback, where the `posData` (position data) is logged.
+
+As the second argument of `getCurrentPosition`, we specify the error callback. This callback logs the error encountered during position retrieval. We could also include a third argument, an options object to configure settings like a timeout.
+
+When we reload the page and click "Track Me," we are prompted to grant access to our location. Upon allowing access, the API works to determine the location. Subsequently, we can expand the output to display the coordinates obtained.
+
+To simulate an error scenario, we reload the page and click "Track Me" again. By blocking access, we encounter an error object.
+
+This demonstrates how these callback functions operate. Similar to the behavior with `addEventListener`, `getCurrentPosition` delegates the task to the browser. Once completed, the browser adds the task to the event loop for execution within our code.
+
+As before, if we have code following the `getCurrentPosition` call, such as logging to the console, it will execute prior to printing either success or error messages. This is because our code is executed immediately and sent to the browser, while the browser adds the `getCurrentPosition` callback tasks to the event loop. The event loop only processes these tasks when the call stack is empty.
+
+Thus, even if `getCurrentPosition` executes instantly, any code following it will always run before the success or error callback functions. This behavior illustrates how asynchronous operations work, ensuring that code within the callback functions cannot execute before the code outside the callback, as the browser follows the event loop and message queue pattern.
+
+Upon reloading the page, clicking "Track Me," and then blocking access, we observe that the "Getting position..." log is displayed instantly, showcasing the non-blocking nature of JavaScript.
