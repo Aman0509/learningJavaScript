@@ -7,6 +7,7 @@
 | [Blocking Code and The "Event Loop"](#blocking-code-and-the-event-loop) |
 | [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order) |
 | [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0) |
+| [Getting Started with Promises](#getting-started-with-promises) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -264,3 +265,101 @@ This example serves to demonstrate the possibility of nesting asynchronous opera
 As an experiment, if I set a timer of zero immediately before the `console.log("Getting position...")` line, the result is intriguing. Reloading the page and clicking "Track Me," I observe that "Getting position..." logs first, followed by "Timer done," even though the timer is set to zero. This behavior occurs because the execution flow requires the browser to pass through the message queue and the event loop, ultimately leading to the sequence I described.
 
 In essence, the minimum time for executing a callback is defined by the timer value, but it's not a guaranteed time. The browser and JavaScript attempt to execute the function at the specified minimum time, but it's subject to the state of the call stack. If the call stack is occupied, that task will be prioritized. As a result, the sequence is influenced by the passage through the message queue and event loop, with the call stack's status playing a pivotal role.
+
+## Getting Started with Promises
+
+We've covered a lot about working with asynchronous code, which is crucial knowledge for anyone diving into JavaScript web development. It's like a key tool you can't do without.
+
+Now, let's shift our attention to something important: making our code easier to understand. In our previous code snippet, you may find the complexity and confusion in terms of reading.
+
+When we end up with situations where callbacks are nested inside one another (like in our example), it's called "callback hell." This term captures the difficulty of reading and organizing such code. It's hard to keep track of what's happening inside what, and figuring out which parts can talk to each other becomes a puzzle.
+
+This kind of complex code isn't fun to work with. But guess what? JavaScript comes to the rescue with a solution called "promises." It's like a cleaner and more organized way to handle these situations.
+
+<img src="https://drive.google.com/uc?export=view&id=1Imx6Zn-yw0z82WJTY89vn_uKoqiAHvMA" width="600" height="390" alt="academind slide">
+
+***A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) in JavaScript is an object that represents the eventual completion or failure of an asynchronous operation. It's a way to handle asynchronous code in a more organized and readable manner. Promises provide a structured approach to managing callbacks, making it easier to work with complex asynchronous operations.***
+
+Here's how promises work:
+
+1. **State**: A promise can be in one of three states:
+
+  - **Pending**: The asynchronous operation is ongoing and the promise is waiting for its completion.
+  - **Fulfilled**: The operation has completed successfully, and the promise has a result value.
+  - **Rejected**: The operation encountered an error or failure, and the promise has a reason for the failure.
+
+2. **Chaining**: Promises can be chained together, allowing you to perform a sequence of asynchronous operations in a more linear and readable way. This is particularly useful when you have multiple asynchronous tasks that depend on each other (a basic example is shown in image above).
+
+3. **Error Handling**: Promises have built-in mechanisms for error handling. You can attach `.catch()` to handle errors that occur during the promise chain.
+
+Coming back to our example used previously, let's update it to show the usage of `Promise`.
+
+```javascript
+const button = document.querySelector('button');
+
+// Wrapping setTimeout() inside `setTimer()` function and it returns Promise object.
+// This Promise object will now handle the success or failure outcomes.
+// So, point here is, since these web API methods (setTimeout() and navigator.geolocation.getCurrentPosition())
+// does not support Promise object but only callbacks, hence, for demonstration,
+// they are wrap under Promise object.
+
+const setTimer = (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+function trackUserHandler() {
+  navigator.geolocation.getCurrentPosition(
+    posData => {
+      setTimer(2000).then(data => {
+        console.log(data, posData);
+      });
+  }, error => {
+    console.log(error);
+  });
+  setTimer(1000).then(() => {
+    console.log('Timer Done!');
+  });
+  console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+Let's break down what's happening here. Unfortunately, `setTimeout()` and `getCurrentPosition()` functions don't directly work with promises, which are a modern way of handling asynchronous operations. Promises make it easier to manage and write code that involves waiting for something to finish, like a timer or getting a user's location.
+
+So, let's say we want to use promises with `setTimeout()` to make it more manageable. Here's how we do it step by step:
+
+1. We create a new function called `setTimer()` that takes a duration argument.
+
+2. Inside `setTimer()`, we create a new Promise. A promise is like a special container that holds the result of an asynchronous operation.
+
+3. We use `setTimeout()` inside the promise. When the timer is done (after the given duration), we resolve the promise with a message like "Done!".
+
+4. We return the promise. This way, when we use `setTimer()`, we can wait for the timer to finish and get the result using the promise's `then` method.
+
+5. We have a function called `trackUserHandler()` that's triggered when a button is clicked.
+
+6. Inside `trackUserHandler()`, we use `getCurrentPosition()` to get the user's location. However, we wrap this whole process inside a `setTimer(2000)` promise. This means we'll wait for both the timer and the location fetching to finish.
+
+7. If the location is fetched successfully, we log the location data along with the "Done!" message.
+
+8. Then, we use `setTimer(1000)` to wait for another timer before logging "Timer Done!".
+
+9. Finally, we log "Getting position..." immediately.
+
+In essence, we're making sure our code doesn't wait around for timers or location fetching. *Instead, we're using promises to manage these operations, making our code more efficient and easier to read.*
+
+The concept of promises might seem a bit tricky at first, but it's a powerful tool that helps us write better asynchronous code. It's like telling JavaScript, "Hey, wait for this to finish, and then do something with the result."
+
+Readings:
+
+- [JavaScript Promises In 10 Minutes](https://www.youtube.com/watch?v=DHvZLI7Db8E)
+
+- [JavaScript Promise Tutorial – How to Resolve or Reject Promises in JS](https://www.freecodecamp.org/news/javascript-promise-tutorial-how-to-resolve-or-reject-promises-in-js/)
+
+- [JavaScript Promise and Promise Chaining](https://www.programiz.com/javascript/promise)
