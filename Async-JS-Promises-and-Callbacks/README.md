@@ -8,6 +8,7 @@
 | [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order) |
 | [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0) |
 | [Getting Started with Promises](#getting-started-with-promises) |
+| [Chaining Multiple Promises](#chaining-multiple-promises) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -280,6 +281,23 @@ This kind of complex code isn't fun to work with. But guess what? JavaScript com
 
 ***A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) in JavaScript is an object that represents the eventual completion or failure of an asynchronous operation. It's a way to handle asynchronous code in a more organized and readable manner. Promises provide a structured approach to managing callbacks, making it easier to work with complex asynchronous operations.***
 
+*Syntax - [Promise() constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise)*
+
+```
+let promise = new Promise(function(resolve, reject){
+     //do something
+});
+```
+
+*Parameters*
+
+- The promise constructor takes only one argument which is a callback function.
+
+- The callback function takes two arguments, `resolve` and `reject`. Both, `resolve` and `reject` are actually functions.
+
+  - Perform operations inside the callback function and if everything went well then call `resolve`.
+  - If desired operations do not go well then call reject.
+
 Here's how promises work:
 
 1. **State**: A promise can be in one of three states:
@@ -363,3 +381,56 @@ Readings:
 - [JavaScript Promise Tutorial – How to Resolve or Reject Promises in JS](https://www.freecodecamp.org/news/javascript-promise-tutorial-how-to-resolve-or-reject-promises-in-js/)
 
 - [JavaScript Promise and Promise Chaining](https://www.programiz.com/javascript/promise)
+
+## Chaining Multiple Promises
+
+Let's now also wrap `navigator.geolocation.getCurrentPosition()` around promise object and then demonstrate the promise chaining.
+
+```javascript
+const button = document.querySelector('button');
+
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(success => {
+      resolve(success);
+    }, error => {
+      // will implement later
+    }, opts);
+  });
+  return promise;
+};
+
+const setTimer = (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+function trackUserHandler() {
+  let positionData;
+  getPosition()
+    .then(posData => {  // If we are returning anything inside a Promise then it will have the 'Pending' state
+      positionData = posData;
+      return setTimer(2000); // Return type can be any data type
+    })
+    .then(data => {
+      console.log(data, positionData);
+    });
+
+  setTimer(1000).then(() => {
+    console.log('Timer Done!');
+  });
+  console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+Readings:
+
+- [JavaScript Promise Chaining](https://www.geeksforgeeks.org/javascript-promise-chaining/)
+
+- [JavaScript Promise Chain - The art of handling promises](https://blog.greenroots.info/javascript-promise-chain-the-art-of-handling-promises)

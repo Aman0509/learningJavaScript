@@ -6,6 +6,18 @@ const output = document.querySelector('p');
 // So, point here is, since these web API methods (setTimeout() and navigator.geolocation.getCurrentPosition())
 // does not support Promise object but only callbacks, hence, for demonstration, they are encapsulated under
 // Promise object.
+
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(success => {
+      resolve(success);
+    }, error => {
+      // will implement later
+    }, opts);
+  });
+  return promise;
+};
+
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -16,14 +28,15 @@ const setTimer = (duration) => {
 };
 
 function trackUserHandler() {
-  navigator.geolocation.getCurrentPosition(
-    posData => {
-      setTimer(2000).then(data => {
-        console.log(data, posData);
-      });
-  }, error => {
-    console.log(error);
-  });
+  let positionData;
+  getPosition()
+    .then(posData => {
+      positionData = posData;
+      return setTimer(2000);
+    })
+    .then(data => {
+      console.log(data, positionData);
+    });
   setTimer(1000).then(() => {
     console.log('Timer Done!');
   });
