@@ -15,6 +15,7 @@
 - [Working with Events](Working-with-Events/README.md)
 - [Advanced Function Concepts](Advanced-Function-Concepts/README.md)
 - [More on Numbers and Strings](More-on-Numbers-and-Strings/README.md)
+- [Async JavaScript: Promises and Callbacks](Async-JS-Promises-and-Callbacks/README.md)
 
 ## References
 
