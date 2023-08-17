@@ -4,6 +4,7 @@
 | :--- |
 | [Understanding Synchronous Code Execution ("Sync Code")](#understanding-synchronous-code-execution-sync-code) |
 | [Understanding Asynchronous Code Execution ("Async Code")](#understanding-asynchronous-code-execution-async-code) |
+| [Blocking Code and The "Event Loop"](#blocking-code-and-the-event-loop) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -101,3 +102,88 @@ Readings:
 - [How does asynchronous JavaScript work behind the scenes?](https://dev.to/vinaykishore/how-does-asynchronous-javascript-work-behind-the-scenes-4bjl#:~:text=Asynchronous%20code%3A&text=I.e.%2C%20the%20code%20is%20executed,task%20to%20finish%20its%20work.)
 
 - [How JavaScript works: Event loop and the rise of Async programming + 5 ways to better coding with async/await](https://medium.com/sessionstack-blog/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5)
+
+## Blocking Code and The "Event Loop"
+
+Now that we have a fundamental understanding of how the browser handles lengthier tasks, let's delve into something intriguing.
+
+Suppose, we have below code:
+
+```javascript
+const button = document.querySelector('button');
+const output = document.querySelector('p');
+
+function trackUserHandler() {
+  console.log('Clicked!');
+}
+
+button.addEventListener('click', trackUserHandler);
+
+let result = 0;
+
+// Blocking Code
+for (let i = 0; i < 100000000; i++) {
+    result += i;
+}
+
+console.log(result); // Output: 4999999950000000
+```
+
+When you run it, you'll get the output, but it might take a bit longer because of the big number used in the for loop.
+
+Now, let's see what happens when we try clicking the button before the result appears. You'll notice that the "clicked" message only shows up after the result becomes visible. When I reload and click the button rapidly, nothing happens right away. Instead, all the clicks only take effect once the loop finishes its task.
+
+***Now in this scenario, we can observe single threading in action.***
+
+We've set up this event listener(`button.addEventListener('click', trackUserHandler);`) and passed control to the browser. As a result, this event listener doesn't obstruct JavaScript's flow. However, the `loop` here doesn't have the option to be handed over to the browser. It runs, causing JavaScript execution to halt until this operation is completed, as only one operation can be executed at a time.
+
+This helps prove the point I mentioned earlier in the slide. Something interesting to note is that the task we handed over can only perform its function after the loop has completed.
+
+Think of it like this: When the loop is running, JavaScript is focused on that task alone. If we click during the loop, the browser acknowledges the click and knows it should call a specific function. However, since that function is a JavaScript function, it waits until the loop finishes.
+
+This behavior is important to understand—it's how JavaScript manages both async and sync code. It's made possible through something called the event loop.
+
+| | |
+| --- | --- |
+| <img src="https://drive.google.com/uc?export=view&id=1_RVq8lE8nv59MNG11VesivUP_WQq3i4S" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1JRSXQ2gDKNlefjNJXq6-z1fwUaiJnBe5" alt="academind slide"> |
+
+So, what exactly is the event loop? Essentially, the event loop is a mechanism that assists us in managing asynchronous code. It's particularly useful for handling callback functions, which are commonly employed in scenarios involving asynchronous code.
+
+Let's imagine this set up as shown in 2nd image.
+
+We have our code and our stack. On the left side of this code, you'll notice two functions being defined. Then, a timer is set, and after the timer completes, we call the `showAlert()` function, which is the second function defined here. Additionally, we invoke the `greet()` function after the timer which executes `console.log()`.
+
+As this code executes, the stack, which is a part of the JavaScript engine, carries out certain tasks. It's important to note that certain other tasks are offloaded to the browser. The browser provides a bridge, enabling communication between our JavaScript code and specific browser APIs to delegate some tasks.
+
+Here's what unfolds:
+
+1. The two functions, `greet()` and `showAlert()` are created.
+2. The built-in `setTimeout()` function is called. It communicates with the browser API to set up a timer there, which the browser manages. JavaScript's execution completes this step and doesn't block other code execution.
+
+The next step doesn't involve the immediate execution of the `showAlert()` function. Despite the 2-second timer, JavaScript doesn't wait for it. Instead, JavaScript moves on to the next line, executing the `greet()` function. The `greet()` function's execution begins right after the `setTimeout()` is done, and the timer's management is handed off to the browser. The `console.log()` within the `greet()` function is also executed, wrapping up the code on the left.
+
+At some point, the timer completes. Let's assume this happens while the `console.log()` within `greet()` is being executed. Although this process occurs quickly, it still takes a few milliseconds. Let's say, as we're in the midst of executing `console.log()`, the timer concludes. Now, to alert our JavaScript engine that the `showAlert()` function registered as a callback for the timer, should be executed, a ***[Message Queue](https://stackoverflow.com/questions/22827311/what-does-it-mean-by-message-queue-in-this-link)*** comes into play. This queue, maintained by the browser and linked to JavaScript, holds code that's waiting to execute when time allows. The `showAlert()` function is registered as a to-do task in this queue.
+
+It's important to note that the `showAlert()` function doesn't execute at this point; it's merely queued as a to-do task. Currently, the only executed functions in JavaScript are `greet()` and the `console.log()` within it.
+
+With that in mind, let's fast-forward. The `console.log()` within `greet()` is executed, concluding the `greet()` function and leaving the call stack empty again.
+
+Now comes the critical part: we need to bring the `showAlert()` task from the message queue into our call stack for execution. ***This is where the event loop steps in***. The event loop, along with the message queue, is inherent to browsers and most JavaScript environments, including **Node.js**. It's important to understand that the event loop isn't part of the JavaScript engine; rather, it's an element of the host environment where JavaScript is utilized.
+
+The event loop's role is to synchronize the call stack in the engine with waiting messages. It continuously monitors whether the stack is empty and if there are pending tasks. When the stack is empty, the event loop triggers, pushing any waiting messages or to-do functions into the call stack.
+
+The event loop remains in a waiting state until the call stack is empty. Once this condition is met, it activates, moving the callback function (or waiting message) into the call stack for active execution. As a result, the message queue becomes empty, and the function starts running in our JavaScript code.
+
+In this case, the `showAlert()` function executes, which calls the built-in `alert()` function on the left side. Upon completion, the call stack is empty once again.
+
+*This entire process, involving the event loop and the browser's handling of our code and callback functions, follows a pattern commonly used for asynchronous operations.*
+
+Now, coming back to our previous code snippet, with the `addEventListener()` part, what we're doing is giving a task to the browser. We're saying, "Hey browser, when a click happens, run this function." Then, we continue working in JavaScript. Now, there's this lengthy task (loop one) which basically occupies our call stack (basically, here, message conveyed is that loop is not the part of any function but then also it is stacked), it's not part of a function here but it therefore is basically running in an anonymous function you could say, in a big anonymous function that wraps everything if you will.
+
+While this task is going on, our JavaScript engine's task list isn't empty. If we click the button or reload the page while this task is still running, the browser notes that we want to do something in response to that click. It adds this task to our "to-do" list, which we can call the message queue.
+
+Now, here's the interesting part. The event loop, which is like a watchful manager, notices that our task list (call stack) isn't clear yet – there's still work being done. So, the event loop patiently waits until our task list is completely empty.
+
+Only when our lengthy task is finished and we log the result to the console, the call stack becomes empty. At this moment, the event loop says, "Alright, now that we're free, let's tackle that task from the message queue." That's why you see the "clicked" message appearing in the console only after the result has been logged.
+
+This knowledge is quite valuable. Understanding what's happening behind the scenes helps you write your code in a way that makes sense. For instance, you might notice that even if you registered an event first, an async task (like handling a click) might not happen before other code because JavaScript doesn't wait around. Instead of blocking JavaScript while waiting, the browser takes on tasks like event listeners or other expectedly time-consuming operations, so your JavaScript code remains responsive and never gets stuck.
