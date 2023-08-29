@@ -10,6 +10,7 @@
 | [Getting Started with Promises](#getting-started-with-promises) |
 | [Chaining Multiple Promises](#chaining-multiple-promises) |
 | [Promise Error Handling](#promise-error-handling) |
+| [Promise States & "finally"](#promise-states--finally) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -413,7 +414,7 @@ const setTimer = (duration) => {
 function trackUserHandler() {
   let positionData;
   getPosition()
-    .then(posData => {  // If we are returning anything inside a Promise then it will have the 'Pending' state
+    .then(posData => {  // If we are returning anything inside a Promise then it will have the 'Pending' state. This is because the Promise is still waiting for the returned value to be resolved or rejected.
       positionData = posData;
       return setTimer(2000); // Return type can be any data type
     })
@@ -566,3 +567,38 @@ Readings:
 - [Error handling with promises](https://javascript.info/promise-error-handling)
 
 - [Promise Error Handling](https://www.javascripttutorial.net/es6/promise-error-handling/)
+
+## Promise States & "finally"
+
+You learned about the different promise states:
+
+- **PENDING (Promise is doing work, neither `then()` nor `catch()` executes at this moment)** - This is the initial state of a Promise. It means that the asynchronous operation initiated by the Promise is still ongoing. The Promise is waiting for the result to be resolved or rejected.
+
+- **RESOLVED (Promise is resolved => then() executes)** - A Promise transitions to the "Fulfilled" state when the asynchronous operation is successfully completed. This means that the promised value is available and can be accessed using the .then() method.
+
+- **REJECTED (Promise was rejected => catch() executes)** - If an error occurs during the asynchronous operation, the Promise transitions to the "Rejected" state. This indicates that the promised value cannot be obtained due to an error. You can handle the error using the `.catch()` method or a second argument in the `.then()` method.
+
+***When you have another `then()` block after a `catch()` or `then()` block, the promise re-enters PENDING mode (keep in mind: `then()` and `catch()` always return a new promise - either not resolving to anything or resolving to what you return inside of `then()`). Only if there are no more `then()` blocks left, it enters a new, final mode: SETTLED.***
+
+Once SETTLED, you can use a special block - [`finally()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally) - to do final cleanup work. `finally()` is reached no matter if you resolved or rejected before.
+
+Here's an example:
+
+```javascript
+somePromiseCreatingCode()
+    .then(firstResult => {
+        return 'done with first promise';
+    })
+    .catch(err => {
+        // would handle any errors thrown before
+        // implicitly returns a new promise - just like then()
+    })
+    .finally(() => {
+        // the promise is settled now - finally() will NOT return a new promise!
+        // you can do final cleanup work here
+    });
+```
+
+Readings:
+
+- [JavaScript Promises – The promise.then, promise.catch and promise.finally Methods Explained](https://www.freecodecamp.org/news/javascript-promise-methods/)
