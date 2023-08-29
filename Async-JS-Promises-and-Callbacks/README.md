@@ -8,9 +8,11 @@
 | [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order) |
 | [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0) |
 | [Getting Started with Promises](#getting-started-with-promises) |
+| [Asynchronous Code Execution in Promises](#asynchronous-code-execution-in-promises) |
 | [Chaining Multiple Promises](#chaining-multiple-promises) |
 | [Promise Error Handling](#promise-error-handling) |
 | [Promise States & "finally"](#promise-states--finally) |
+| [Async/Await](#asyncawait) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -384,6 +386,24 @@ Readings:
 
 - [JavaScript Promise and Promise Chaining](https://www.programiz.com/javascript/promise)
 
+## Asynchronous Code Execution in Promises
+
+Promises in JavaScript enable asynchronous behavior by leveraging the event loop and a concept called "callbacks." To understand how promises work asynchronously, let's break down the process:
+
+1. **Creation of a Promise:** When you create a promise using the `new Promise()` constructor, you're defining a task that may take some time to complete. The promise has three possible states: pending, resolved, or rejected.
+
+2. **Executor Function:** The Promise constructor takes an executor function as an argument. This function typically contains the code that performs the asynchronous task, like fetching data from a server. This function receives two parameters: `resolve` and `reject`. These are functions provided by JavaScript that allow you to signal that the task is completed (resolved) or encountered an error (rejected).
+
+3. **Event Loop:** JavaScript uses an event loop to manage asynchronous operations. The event loop continuously checks the execution stack and the callback queue. When the execution stack is empty, the event loop picks tasks from the callback queue and executes them.
+
+4. **Execution of Asynchronous Code:** When you perform an asynchronous operation, like making an HTTP request, the JavaScript engine doesn't wait for the result. Instead, it registers a callback function to be executed when the operation completes.
+
+5. **Promise State Transition:** Inside the executor function, when the asynchronous task completes successfully, you call the `resolve` function, which transitions the promise's state from pending to resolved. If an error occurs, you call the `reject` function, transitioning the state to rejected.
+
+6. **Consuming the Promise:** Outside the promise creation, you use the `.then()` method to attach a callback function. This callback function will be placed in the callback queue by the promise when the promise's state transitions to resolved. The event loop eventually picks up this callback and executes it, allowing you to work with the resolved value.
+
+In summary, promises run code asynchronously by using the event loop and callbacks. When an asynchronous operation is encountered, the code continues to execute, and a promise is created to manage the outcome of that operation. The promise transitions between different states based on the outcome of the asynchronous task, and the callback registered with `.then()` is executed once the promise resolves.
+
 ## Chaining Multiple Promises
 
 Let's now also wrap `navigator.geolocation.getCurrentPosition()` around promise object and [`then`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) demonstrate the promise chaining.
@@ -602,3 +622,140 @@ somePromiseCreatingCode()
 Readings:
 
 - [JavaScript Promises – The promise.then, promise.catch and promise.finally Methods Explained](https://www.freecodecamp.org/news/javascript-promise-methods/)
+
+## Async/Await
+
+Promises are a crucial concept in JavaScript, especially in modern JavaScript which we're learning here. They're extensively used, even more so when dealing with async operations like HTTP requests. As you work on various projects involving async code, you'll frequently encounter promises.
+
+Now, there's an alternative to this approach that modern JavaScript offers, which is quite important to grasp. This approach still involves promises but allows you to omit the `then` and `catch` methods. This makes the code resemble synchronous code more closely—similar to what you write without promises. This approach is known as [`async`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)/[`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await).
+
+What is `async`/`await` all about? It's used only with functions, and those functions must be marked as `async`. ***By adding the `async` keyword before the function declaration, the function transforms into one that automatically returns a promise.*** This wrapping into a promise is done internally, even though you don't explicitly use the `return` statement. This is a subtle but significant change.
+
+Adding the `async` keyword transforms the function into a promise without changing the way JavaScript works. Any call to `then` will now operate on this promise. Inside this wrapped promise, we gain access to the `await` keyword. Adding `await` in front of a promise makes the execution wait for that promise to resolve or reject. The next line of code only executes once the promise is resolved.
+
+In essence, `async`/`await` doesn't alter JavaScript's non-blocking nature. Instead, it transforms the code to work with promises in a way that appears synchronous. It doesn't block code execution; it's more like code transformation that preserves JavaScript's asynchronous nature. So, you're reaping the benefits of more readable code without changing the core behavior of JavaScript.
+
+```javascript
+const button = document.querySelector('button');
+
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(success => {
+      resolve(success);
+    }, error => {
+      reject(error);
+    }, opts);
+  });
+  return promise;
+};
+
+const setTimer = (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+async function trackUserHandler() {
+  // let positionData;
+  const posData = await getPosition();
+  const timerData = await setTimer(2000);
+  console.log(timerData, posData);
+  //   .then(posData => {
+  //     positionData = posData;
+  //     return setTimer(2000);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
+  //   .then(data => {
+  //     console.log(data, positionData);
+  //   });
+
+  // setTimer(1000).then(() => {
+  //   console.log('Timer Done!');
+  // });
+  // console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+Mentioning another example for more understanding.
+
+Consider a scenario where you want to fetch user data from an API and then log the user's name. We'll first implement this using Promises and then refactor it using Async and Await.
+
+**Using Promises:**
+
+```javascript
+function fetchUserData() {
+  return new Promise((resolve, reject) => {
+    // Simulate fetching user data from an API
+    setTimeout(() => {
+      const userData = { id: 1, name: "John Doe" };
+      resolve(userData);
+    }, 1000);
+  });
+}
+
+fetchUserData()
+  .then(user => {
+    console.log(user.name);
+  })
+  .catch(error => {
+    console.error("Error fetching user data:", error);
+  });
+```
+
+**Using Async and Await:**
+
+```javascript
+async function fetchUserData() {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const userData = { id: 1, name: "John Doe" };
+      resolve(userData);
+    }, 1000);
+  });
+}
+
+async function logUserName() {
+  try {
+    const user = await fetchUserData();
+    console.log(user.name);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  }
+}
+
+logUserName();
+console.log("test");
+
+// Output
+// test
+// John Doe
+```
+
+In the second example using Async and Await:
+
+1. We declare the `fetchUserData` function as `async` to indicate that it contains asynchronous operations.
+
+2. Inside `fetchUserData`, we use a `setTimeout` to simulate fetching user data from an API. We return a promise that resolves with the user data.
+
+3. The `logUserName` function is also declared as `async`.
+
+4. Inside `logUserName`, we use the `await` keyword before calling `fetchUserData()`. This tells JavaScript to pause the execution of the function until the promise from `fetchUserData` resolves. This makes the code appear more synchronous, as if you're waiting for the result of a regular function call.
+
+5. If the promise is resolved, the value returned from the promise is assigned to the `user` variable, and we can then log the user's name.
+
+6. If an error occurs during the `fetchUserData` promise, the catch block will catch the error and log an error message.
+
+In summary, `async` and `await` provide a cleaner and more intuitive way to work with asynchronous operations compared to handling callbacks and chaining promises. The code structure resembles synchronous code, making it easier to understand and maintain asynchronous workflows.
+
+Readings:
+
+- [How Async Javascript works (Callback Hell, Promises, Async Await, Call Stack and more)](https://www.youtube.com/watch?v=1Z7FjG--F20)
+
+- [JavaScript async/await](https://www.javascripttutorial.net/es-next/javascript-async-await/)
