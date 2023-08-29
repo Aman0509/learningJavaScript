@@ -9,6 +9,7 @@
 | [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0) |
 | [Getting Started with Promises](#getting-started-with-promises) |
 | [Chaining Multiple Promises](#chaining-multiple-promises) |
+| [Promise Error Handling](#promise-error-handling) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -384,7 +385,7 @@ Readings:
 
 ## Chaining Multiple Promises
 
-Let's now also wrap `navigator.geolocation.getCurrentPosition()` around promise object and then demonstrate the promise chaining.
+Let's now also wrap `navigator.geolocation.getCurrentPosition()` around promise object and [`then`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) demonstrate the promise chaining.
 
 ```javascript
 const button = document.querySelector('button');
@@ -434,3 +435,134 @@ Readings:
 - [JavaScript Promise Chaining](https://www.geeksforgeeks.org/javascript-promise-chaining/)
 
 - [JavaScript Promise Chain - The art of handling promises](https://blog.greenroots.info/javascript-promise-chain-the-art-of-handling-promises)
+
+## Promise Error Handling
+
+Previously, we observed promise chaining in action, and it's important to highlight that you're not limited to returning promises within the chaining sequence. You can return any data, and it will be automatically converted into a promise and wrapped accordingly.
+
+The core concept of promise chaining allows you to execute steps sequentially. For instance, the second step will only trigger once the preceding one, represented by the promise, is resolved. This step is reached when the promise is fulfilled, and anything returned here – which is transformed into a promise if not already – will proceed to the next step. This framework of connecting steps is quite powerful.
+
+Now, let's delve into handling errors, as issues can arise. Consider our previous example where we're obtaining position data and handling errors in our enhanced promise version. In cases such as permissions not being granted(in browser for giving your location), we'd like to elevate the error handling from our prior approach, as we've transitioned to using promises.
+
+```javascript
+const button = document.querySelector('button');
+
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(success => {
+      resolve(success);
+    }, error => {
+      reject(error);
+    }, opts);
+  });
+  return promise;
+};
+
+const setTimer = (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+function trackUserHandler() {
+  let positionData;
+  getPosition()
+    .then(posData => {
+      positionData = posData;
+      return setTimer(2000);
+    }, err => {
+      console.log(err);
+    })
+    .then(data => {
+      console.log(data, positionData);
+    });
+
+  setTimer(1000).then(() => {
+    console.log('Timer Done!');
+  });
+  console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+This is facilitated using the second argument of the promise constructor's configuration function, specifically the reject parameter. By invoking reject within the error callback, we can funnel our error object into the rejection process. This marks the promise as unsuccessful – not resolved or pending, but in a failed state. Errors are distinctively managed; they don't fit within the regular `then` functions. Rather, `then` accepts two arguments.
+
+The first function handles success when the promise is resolved, while the second argument takes care of failures, situations where the promise doesn't resolve but rejects instead. In our example, the error object is expected as the second parameter of the then method. You're free to name it as needed, and this function can be used for logging the error or performing other operations, such as sending the error data to a server.
+
+By implementing these principles, when you revisit your code and reload the page, you'll notice that if you choose to block geolocation, the corresponding error message appears. The error is captured and presented as part of your code execution.
+
+When working with promises, you might think that adding a second function as an argument takes away some of the benefits promises offer. Even though this second function is not nested, having multiple functions in a row might seem a bit messy. But don't worry, there's a different way to handle this – it's called the [`catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch) method.
+
+You can use the `catch` method to manage errors in a promise chain. You can put it anywhere in the chain, right after a function that returns a promise, or after any `then` block. Where you place it doesn't really matter.
+
+In our example, you can add the `catch` method after the first `then` block and then continue with another `then` block. Both of these blocks are part of the same promise chain. This is where you can handle errors.
+
+When you use the `catch` method, it works similarly to putting a function as the second argument in a `then` block. It's just another way to handle errors that occur anywhere in the promise chain before the `catch` block.
+
+In a more complex chain, if any promise fails, both approaches will catch the error. But if you have a series of `then` blocks, only the ones after the failed promise will be skipped until you reach a `catch` block or another second argument that handles errors.
+
+Unlike `then` blocks, the `catch` method won't stop the whole chain. It only deals with errors that happened before it. When a promise fails before reaching the `catch` block, the error will be caught in the block and its code will run. However, the next `then` blocks will keep running as usual.
+
+```javascript
+const button = document.querySelector('button');
+
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(success => {
+      resolve(success);
+    }, error => {
+      reject(error);
+    }, opts);
+  });
+  return promise;
+};
+
+const setTimer = (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+function trackUserHandler() {
+  let positionData;
+  getPosition()
+    .then(posData => {
+      positionData = posData;
+      return setTimer(2000);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .then(data => {
+      console.log(data, positionData);
+    });
+
+  setTimer(1000).then(() => {
+    console.log('Timer Done!');
+  });
+  console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+Where you put the `catch` block determines how it works. To stop the entire promise chain when an error occurs, place the `catch` block at the end of all `then` blocks. This ensures that if a promise fails, the remaining 'then' blocks are skipped and the chain is caught by the `catch` block.
+
+If you put the `catch` block in the middle of the chain, it will catch the error and then the following `then` blocks will run. It won't stop the whole chain, but it's a flexible way to handle errors without crashing your application.
+
+Additionally, the `catch` block lets you return new data. This can be a promise or anything else that will be wrapped in a promise. This works similarly to the `then` method. Any `then` blocks after the `catch` block will run as the promise goes back to being pending after the `catch` block runs.
+
+In short, the `catch` method is a useful way to handle errors in promise chains. Where you put it and how it works lets you manage errors in different ways while still keeping the promise's asynchronous behavior.
+
+Readings:
+
+- [Error handling with promises](https://javascript.info/promise-error-handling)
+
+- [Promise Error Handling](https://www.javascripttutorial.net/es6/promise-error-handling/)
