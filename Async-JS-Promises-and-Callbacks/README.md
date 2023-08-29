@@ -15,6 +15,7 @@
 | [Async/Await](#asyncawait) |
 | [Async/Await & Error Handling](#asyncawait--error-handling) |
 | [Async/Await vs Raw Promises](#asyncawait-vs-raw-promises) |
+| [Few Important Promise Methods](#few-important-promise-methods) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -920,3 +921,47 @@ However, if you try to use `await` outside of a function, it will result in a sy
 ```
 
 So, to leverage the benefits of async/await, you need to structure your code within functions.
+
+## Few Important Promise Methods
+
+1. **[`Promise.race()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race)**: This method takes an array of promises and returns a new promise that resolves or rejects as soon as the first promise in the array resolves or rejects, whichever happens first.
+
+    Useful when you want to perform multiple asynchronous operations and only need the result of the fastest one.
+
+    ```javascript
+    const promise1 = new Promise(resolve => setTimeout(resolve, 1000, 'one'));
+    const promise2 = new Promise(resolve => setTimeout(resolve, 500, 'two'));
+
+    Promise.race([promise1, promise2])
+      .then(result => console.log('Race Result:', result))
+      .catch(error => console.error('Race Error:', error));
+    // Output: Race Result: two (since promise2 resolves faster)
+    ```
+
+2. **[`Promise.all()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)**: This method takes an array of promises and returns a new promise that resolves when all promises in the array have resolved, or rejects if any promise in the array rejects.
+
+    Useful when you want to wait for multiple asynchronous operations to complete before proceeding.
+
+    ```javascript
+    const promise1 = new Promise(resolve => setTimeout(resolve, 1000, 'one'));
+    const promise2 = new Promise(resolve => setTimeout(resolve, 500, 'two'));
+
+    Promise.all([promise1, promise2])
+      .then(results => console.log('All Results:', results))
+      .catch(error => console.error('All Error:', error));
+    // Output: All Results: ['one', 'two'] (both promises resolve)
+    ```
+
+3. **[`Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)**: This method takes an array of promises and returns a new promise that resolves with an array of results, each corresponding to the input promises. The results contain information about whether each promise was fulfilled or rejected.
+
+    Useful when you want to wait for all promises to settle (either resolve or reject) without stopping on rejection.
+
+    ```javascript
+    const promise1 = new Promise(resolve => setTimeout(resolve, 1000, 'one'));
+    const promise2 = new Promise((resolve, reject) => setTimeout(reject, 500, 'error'));
+
+    Promise.allSettled([promise1, promise2])
+      .then(results => console.log('All Settled Results:', results))
+      .catch(error => console.error('All Settled Error:', error));
+    // Output: All Settled Results: [{ status: 'fulfilled', value: 'one' }, { status: 'rejected', reason: 'error' }]
+    ```
