@@ -14,6 +14,7 @@
 | [Promise States & "finally"](#promise-states--finally) |
 | [Async/Await](#asyncawait) |
 | [Async/Await & Error Handling](#asyncawait--error-handling) |
+| [Async/Await vs Raw Promises](#asyncawait-vs-raw-promises) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -830,3 +831,92 @@ Everything inside the `try` block will execute only if the initial step succeeds
 Remember, the line following the try-catch block always runs, irrespective of whether we're in the `try` or `catch` block. For instance, in this code, two variables are utilized within the try block, and their values are logged afterward.
 
 This is how errors are appropriately managed in an async await setup, substituting the catch approach with the try-catch construct. It's important to understand that if one operation fails, subsequent steps are skipped, much like the behavior of catch. Conversely, if both operations succeed, we bypass the catch and consistently execute the subsequent line.
+
+## Async/Await vs Raw Promises
+
+Async/await provides a different way to handle code compared to using the `then` and `catch` blocks. Which one you use depends on what you find more comfortable.
+
+*One thing to notice in async await is that `async` and `await` can make you think that the steps are happening one after the other, like regular JavaScript code. But actually, asynchronous operations, including async code, are handled by the browser separately. The browser takes care of them in the background and gives control back when they're done. Async/await doesn't change this; it just changes how things are written.*
+
+Understanding this difference is important. Async await can make your code shorter, but it might seem like things happen in a certain order when they don't.
+
+When it comes to performance, async await might be a bit better in modern browsers. But the difference is usually not big and might not matter for all cases.
+
+***One real downside you can have with async/await though is that you can't run tasks simultaneously inside of the same function.***
+
+In our example, when we used `then` and `catch` with `getPosition`, then code after it which is, `setTimer` and `console.log` will be executed right away.
+
+```javascript
+function trackUserHandler() {
+  let positionData;
+  getPosition()
+    .then(posData => {
+      positionData = posData;
+      return setTimer(2000);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+    .then(data => {
+      console.log(data, positionData);
+    });
+
+  // From here, code will be executed right away in sync manner
+  setTimer(1000).then(() => {
+    console.log('Timer Done!');
+  });
+  console.log("Getting position...");
+}
+```
+
+However, with `async`/`await`, if you run below code, you will see that `Timer Done!` and `Getting position...` will be logged after JS done with logging `timerData` and `posData`.
+
+But why does this occur?
+
+It's due to the use of `await`. Rather than halting the code's execution, what happens is that all these actions are essentially enclosed within their individual `then` blocks behind the scenes. As a result, this part also has its own associated `then` block, meaning it only runs once the preceding action is complete.
+
+```javascript
+async function trackUserHandler() {
+  let posData;
+  let timerData;
+  try {
+    posData = await getPosition();
+    timerData = await setTimer(2000);
+  } catch(error) {
+    console.log(error);
+  }
+  console.log(timerData, posData);
+  // from here, code will be executed in async manner
+  setTimer(1000).then(() => {
+    console.log('Timer Done!');
+  });
+  console.log("Getting position...");
+}
+```
+
+So, if you have a function where you want to initiate multiple tasks at the same time without waiting for each one to finish before starting the next, this approach might not be the best. Currently, we're observing a distinct behavior from what we had before.
+
+***Another drawback or important point to consider is that the usage of `async`/`await` is restricted to functions.***
+
+This means that you can't use the `await` keyword outside of a function or in the global scope. In other words, you can't use `await` directly in the main body of your script; it must be inside a function. This is because `async`/`await` is designed to work with asynchronous operations, and those operations are typically performed within functions.
+
+For example, you can create an `async` function like this:
+
+```javascript
+async function fetchData() {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  return data;
+}
+```
+
+In this case, the `await` keyword can be used within the `fetchData` function to pause its execution until asynchronous operations, like fetching data from an API, are completed.
+
+However, if you try to use `await` outside of a function, it will result in a syntax error. For instance, the following code will not work:
+
+```javascript
+// This will result in a syntax error
+// const response = await fetch('https://api.example.com/data');
+```
+
+So, to leverage the benefits of async/await, you need to structure your code within functions.
