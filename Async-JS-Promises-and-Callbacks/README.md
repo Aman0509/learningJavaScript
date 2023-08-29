@@ -13,6 +13,7 @@
 | [Promise Error Handling](#promise-error-handling) |
 | [Promise States & "finally"](#promise-states--finally) |
 | [Async/Await](#asyncawait) |
+| [Async/Await & Error Handling](#asyncawait--error-handling) |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -759,3 +760,73 @@ Readings:
 - [How Async Javascript works (Callback Hell, Promises, Async Await, Call Stack and more)](https://www.youtube.com/watch?v=1Z7FjG--F20)
 
 - [JavaScript async/await](https://www.javascripttutorial.net/es-next/javascript-async-await/)
+
+## Async/Await & Error Handling
+
+Async await provides a concise way to write code, but it lacks error handling in our previous example. So, how can we address this issue using `async`/`await`?
+
+Since `async`/`await` appears like regular synchronous code due to its underlying transformation, we can employ the familiar synchronous error handling technique we learned earlier: ***the try-catch block.***
+
+Below is our updated example:
+
+```javascript
+const button = document.querySelector('button');
+
+const getPosition = (opts) => {
+  const promise = new Promise((resolve, reject) => {
+    navigator.geolocation.getCurrentPosition(success => {
+      resolve(success);
+    }, error => {
+      reject(error);
+    }, opts);
+  });
+  return promise;
+};
+
+const setTimer = (duration) => {
+  const promise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Done!');
+    }, duration);
+  });
+  return promise;
+};
+
+async function trackUserHandler() {
+  // let positionData;
+  let posData;
+  let timerData;
+  try {
+    posData = await getPosition();
+    timerData = await setTimer(2000);
+  } catch(error) {
+    console.log(error);
+  }
+  console.log(timerData, posData);
+  //   .then(posData => {
+  //     positionData = posData;
+  //     return setTimer(2000);
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   })
+  //   .then(data => {
+  //     console.log(data, positionData);
+  //   });
+
+  // setTimer(1000).then(() => {
+  //   console.log('Timer Done!');
+  // });
+  // console.log("Getting position...");
+}
+
+button.addEventListener('click', trackUserHandler);
+```
+
+If an error arises, we catch it in the `catch` block. Here, we can choose to print the error or handle it in any desired manner.
+
+Everything inside the `try` block will execute only if the initial step succeeds. If the first promise rejects, the subsequent line won't be executed; instead, we'll move to the `catch` block. If the first promise resolves but the following one rejects, the `catch` block is invoked.
+
+Remember, the line following the try-catch block always runs, irrespective of whether we're in the `try` or `catch` block. For instance, in this code, two variables are utilized within the try block, and their values are logged afterward.
+
+This is how errors are appropriately managed in an async await setup, substituting the catch approach with the try-catch construct. It's important to understand that if one operation fails, subsequent steps are skipped, much like the behavior of catch. Conversely, if both operations succeed, we bypass the catch and consistently execute the subsequent line.
