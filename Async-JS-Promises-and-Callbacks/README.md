@@ -965,3 +965,7 @@ So, to leverage the benefits of async/await, you need to structure your code wit
       .catch(error => console.error('All Settled Error:', error));
     // Output: All Settled Results: [{ status: 'fulfilled', value: 'one' }, { status: 'rejected', reason: 'error' }]
     ```
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> More on Numbers and Strings](../More-on-Numbers-and-Strings/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../README.md)

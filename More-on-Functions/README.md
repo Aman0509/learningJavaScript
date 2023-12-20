@@ -631,3 +631,7 @@ Readings:
 - [JavaScript bind()](https://www.javascripttutorial.net/javascript-bind/)
 
 - [Function binding](https://javascript.info/bind)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Working with Control Structures](../Control-Structures/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Document Object Model(DOM) <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../DOM/README.md)

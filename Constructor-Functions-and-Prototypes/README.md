@@ -388,3 +388,7 @@ console.log(myObject.b); // outputs 2
 ```
 
 In this example, we create a new object called `myPrototype` with a property `a` set to `1`. We then create a new object called `myObject` using `Object.create()`, passing in `myPrototype` as the prototype object. We then use `Object.defineProperties()` to define the `b` property of `myObject` with a value of `2` and a `writable` property set to `true`. We can then access the `b` property of `myObject`, which outputs `2`.
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Classes and Object Oriented Programming (OOP)](../Classes-and-Object-Oriented-Programming/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Advanced DOM APIs <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Advanced-DOM-APIs/README.md)

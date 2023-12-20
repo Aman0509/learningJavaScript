@@ -893,3 +893,7 @@ console.log(person.lastName); // Output: Smith
 To set the value of the `fullName` property, we simply call it as a method on the person object and pass a new value to it, as shown in the example.
 
 Getters and setters are useful for encapsulating and protecting the internal state of an object, as well as providing a convenient and flexible API for accessing and modifying its properties.
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> More on Arrays and Iterables](../More-on-Arrays-and-Iterables/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Classes and Object Oriented Programming (OOP) <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Classes-and-Object-Oriented-Programming/README.md)

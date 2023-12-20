@@ -107,3 +107,7 @@ Readings:
 - [What is ECMAScript? - Stack Overflow](https://stackoverflow.com/questions/4269150/what-is-ecmascript)
 
 - [What is ECMAScript?](https://codedamn.com/news/javascript/what-is-ecmascript)
+
+* * *
+
+[<img align="center" src="../images/home.png" height="20" width="20"/> Index](../README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Basics <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Basics/README.md)

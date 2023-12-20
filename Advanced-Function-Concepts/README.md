@@ -189,3 +189,7 @@ console.log(age); // Error: "age is not defined"
 ```
 
 Not something you see too often but something that is possible.
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Working with Events](../Working-with-Events/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[More on Numbers and Strings <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../More-on-Numbers-and-Strings/README.md)

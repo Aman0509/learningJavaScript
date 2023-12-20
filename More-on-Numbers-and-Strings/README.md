@@ -460,3 +460,7 @@ Readings:
 - [JavaScript Regex](https://www.programiz.com/javascript/regex)
 
 - [Regular Expressions Introduction | REGEX DEMYSTIFIED](https://www.youtube.com/watch?v=0LKdKixl5Ug&list=PL55RiY5tL51ryV3MhCbH8bLl7O_RZGUUE)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Advanced Function Concepts](../Advanced-Function-Concepts/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Async JavaScript: Promises and Callbacks <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Async-JS-Promises-and-Callbacks/README.md)
