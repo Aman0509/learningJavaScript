@@ -4,6 +4,7 @@
 | :-------------------------------------------------------- |
 | [What & Why](#what--why)                                  |
 | [More Background about Http](#more-background-about-http) |
+| [Getting Started with HTTP](#getting-started-with-http)   |
 
 ## [What & Why](https://drive.google.com/uc?export=view&id=18MZto3hCXlh6x1PZIgKVotxtfF23MSWh)
 
@@ -58,6 +59,129 @@ Now that we understand the bigger picture, let's zoom in on how HTTP requests wo
   - `PUT/PATCH`: Update data (PUT replaces entirely, PATCH updates a part).
   - `DELETE`: Remove data.
 - The server also specifies accepted data formats (e.g., JSON, FormData).
+
+## Getting Started with HTTP
+
+### Using [`XMLHttpRequest()`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_XMLHttpRequest)
+
+`XMLHttpRequest()` is a JavaScript object used to interact with servers asynchronously. It allows you to send HTTP requests (such as `GET`, `POST`, `PUT`, `DELETE`) to a server and handle the responses without reloading the page.
+
+**`GET` Request**
+
+```javascript
+// Create a new XMLHttpRequest object
+var xhr = new XMLHttpRequest();
+
+// Set the responseType property to 'json'
+xhr.responseType = "json";
+
+// Configure the GET request
+xhr.open("GET", "https://api.example.com/data", true);
+
+// Set up a callback function to handle the response
+xhr.onload = function () {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    // Request was successful
+    // Response data will be automatically parsed as JSON
+    console.log(xhr.response);
+  } else {
+    // Error handling
+    console.error("Request failed with status:", xhr.status);
+  }
+};
+
+// Send the request
+xhr.send();
+```
+
+**`POST` Request**
+
+```javascript
+// Create a new XMLHttpRequest object
+var xhr = new XMLHttpRequest();
+
+// Configure the POST request
+xhr.open("POST", "https://api.example.com/data", true);
+xhr.setRequestHeader("Content-Type", "application/json");
+
+// Set up a callback function to handle the response
+xhr.onload = function () {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    // Request was successful
+    console.log(xhr.responseText);
+  } else {
+    // Error handling
+    console.error("Request failed with status:", xhr.status);
+  }
+};
+
+// Data to be sent in the request body
+var data = JSON.stringify({ key: "value" });
+
+// Send the request with the data
+xhr.send(data);
+```
+
+**`DELETE` Request**
+
+```javascript
+// Create a new XMLHttpRequest object
+var xhr = new XMLHttpRequest();
+
+// Configure the DELETE request
+xhr.open("DELETE", "https://api.example.com/data/123", true);
+
+// Set up a callback function to handle the response
+xhr.onload = function () {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    // Request was successful
+    console.log("Data deleted successfully");
+  } else {
+    // Error handling
+    console.error("Request failed with status:", xhr.status);
+  }
+};
+
+// Send the request
+xhr.send();
+```
+
+**Network Related Error Handling**
+
+When error occurs in following scenarios occurs during processing of the request, `onerror` event handler property can be used to handle.
+
+- Establishing connection
+- Sending the request (necessary data is included in request or not)
+- Waiting for response (request timed out)
+
+```javascript
+// Create a new XMLHttpRequest object
+var xhr = new XMLHttpRequest();
+
+// Configure the request
+xhr.open("GET", "https://api.example.com/data", true);
+
+// Set up a callback function to handle the response
+xhr.onload = function () {
+  if (xhr.status >= 200 && xhr.status < 300) {
+    // Request was successful
+    console.log(xhr.responseText);
+  } else {
+    // Error handling
+    console.error("Request failed with status:", xhr.status);
+  }
+};
+
+// Set up error handling for the request
+xhr.onerror = function () {
+  console.error("Request failed"); // This function will be called if an error occurs during the request
+};
+
+// Send the request
+xhr.send();
+```
+
+These are just the few ways to handle http requests using `XMLHttpRequest()`. To know more about it, refer official docs [here](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_XMLHttpRequest).
 
 ---
 
