@@ -1,14 +1,16 @@
 const listElement = document.querySelector(".posts");
 const postTemplate = document.getElementById("single-post");
+const form = document.querySelector("#new-post form");
+const fetchButton = document.querySelector("#available-posts button");
 
-function sendHttpRequest(method, url) {
+function sendHttpRequest(method, url, data) {
   const promise = new Promise((resolve, reject) => {
     //MLHttpRequest (XHR) is a JavaScript class that allows a browser to send HTTP requests to a web server.
     // It is a JavaScript API that provides methods for sending network requests between a browser and a server.
     const xhr = new XMLHttpRequest();
 
     // defining request type and endpoint
-    xhr.open("GET", "https://jsonplaceholder.typicode.com/posts");
+    xhr.open(method, url);
 
     // if you define like this, it will internally parse JSON into JS datatype
     // so, you need not to handle that
@@ -21,7 +23,7 @@ function sendHttpRequest(method, url) {
     };
 
     // sending request to endpoint
-    xhr.send();
+    xhr.send(JSON.stringify(data));
   });
   return promise;
 }
@@ -40,4 +42,25 @@ async function fetchPosts() {
   }
 }
 
-fetchPosts();
+async function createPosts(title, content) {
+  const userId = Math.random();
+  const post = {
+    title: title,
+    body: content,
+    userId: userId,
+  };
+  const responseData = await sendHttpRequest(
+    "POST",
+    "https://jsonplaceholder.typicode.com/posts",
+    post
+  );
+}
+
+fetchButton.addEventListener("click", fetchPosts);
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const enteredTitle = event.currentTarget.querySelector("#title").value;
+  const enteredContent = event.currentTarget.querySelector("#content").value;
+
+  createPosts(enteredTitle, enteredContent);
+});
