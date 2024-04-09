@@ -5,46 +5,49 @@ const fetchButton = document.querySelector("#available-posts button");
 const postList = document.querySelector("ul");
 
 function sendHttpRequest(method, url, data) {
-  const promise = new Promise((resolve, reject) => {
-    //MLHttpRequest (XHR) is a JavaScript class that allows a browser to send HTTP requests to a web server.
-    // It is a JavaScript API that provides methods for sending network requests between a browser and a server.
-    const xhr = new XMLHttpRequest();
+  // const promise = new Promise((resolve, reject) => {
+  //   //MLHttpRequest (XHR) is a JavaScript class that allows a browser to send HTTP requests to a web server.
+  //   // It is a JavaScript API that provides methods for sending network requests between a browser and a server.
+  //   const xhr = new XMLHttpRequest();
 
-    // defining request type and endpoint
-    xhr.open(method, url);
+  //   // defining request type and endpoint
+  //   xhr.open(method, url);
 
-    // if you define like this, it will internally parse JSON into JS datatype
-    // so, you need not to handle that
-    xhr.responseType = "json";
+  //   // if you define like this, it will internally parse JSON into JS datatype
+  //   // so, you need not to handle that
+  //   xhr.responseType = "json";
 
-    // Converting response text into JS native data type
-    xhr.onload = function () {
-      if (xhr.response >= 200 && xhr.response < 300) {
-        resolve(xhr.response);
-      } else {
-        reject(new Error("Something went wrong!"));
-      }
-      // const listOfPosts = JSON.parse(xhr.response); // will convert json to JS object
-    };
+  //   // Converting response text into JS native data type
+  //   xhr.onload = function () {
+  //     if (xhr.response >= 200 && xhr.response < 300) {
+  //       resolve(xhr.response);
+  //     } else {
+  //       reject(new Error("Something went wrong!"));
+  //     }
+  //     // const listOfPosts = JSON.parse(xhr.response); // will convert json to JS object
+  //   };
 
-    // error handling; `onerror` event in XMLHttpRequest() triggers when there is a network level failure.
-    // This can happen when: The request cannot be issued, The server returns an error code,
-    // and A denied cross-domain request.
-    xhr.onerror = function () {
-      reject(new Error("Failed to send request"));
-    };
+  //   // error handling; `onerror` event in XMLHttpRequest() triggers when there is a network level failure.
+  //   // This can happen when: The request cannot be issued, The server returns an error code,
+  //   // and A denied cross-domain request.
+  //   xhr.onerror = function () {
+  //     reject(new Error("Failed to send request"));
+  //   };
 
-    // sending request to endpoint
-    xhr.send(JSON.stringify(data));
+  //   // sending request to endpoint
+  //   xhr.send(JSON.stringify(data));
+  // });
+  // return promise;
+  return fetch(url).then((response) => {
+    return response.json();
   });
-  return promise;
 }
 
 async function fetchPosts() {
   try {
     const responseData = await sendHttpRequest(
       "GET",
-      "https://jsonplaceholder.typicode.com/postsssss"
+      "https://jsonplaceholder.typicode.com/posts"
     );
     const listOfPosts = responseData;
     for (const post of listOfPosts) {
