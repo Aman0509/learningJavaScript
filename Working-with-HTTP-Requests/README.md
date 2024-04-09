@@ -7,6 +7,7 @@
 | [Getting Started with HTTP](#getting-started-with-http)           |
 | [Adding Request Headers](#adding-request-headers)                 |
 | [Handling Errors in `fetch()` API](#handling-errors-in-fetch-api) |
+| [`XMLHttpRequest()` vs `fetch()`](#xmlhttprequest-vs-fetch)       |
 
 ## [What & Why](https://drive.google.com/uc?export=view&id=18MZto3hCXlh6x1PZIgKVotxtfF23MSWh)
 
@@ -311,6 +312,23 @@ Readings:
 
 - [Fetch API, do you really know how to handle errors?](https://dev.to/dionarodrigues/fetch-api-do-you-really-know-how-to-handle-errors-2gj0)
 - [Error handling with the Fetch API](https://rapidapi.com/guides/error-handling-fetch)
+
+## `XMLHttpRequest()` vs `fetch()`
+
+| **Basis**                        | **`XMLHttpRequest()`**                                                                                                                                                                                                                                                                                                                             | **`fetch()`**                                                                                                                                                       |
+| :------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Syntax**                       | Uses a constructor function to create an XMLHttpRequest object.                                                                                                                                                                                                                                                                                    | Uses a function to create a Promise that resolves to a Response object.                                                                                             |
+| **Promises vs Callbacks**        | Uses event callbacks (such as `onload`, `onreadystatechange`, `onerror`) to handle the response asynchronously.                                                                                                                                                                                                                                    | Uses Promises and the `.then()` method to handle asynchronous operations, making it more modern and easier to work with than callbacks.                             |
+| **Request/Response Abstraction** | Exposes lower-level APIs for configuring and sending requests (e.g., `open()`, `setRequestHeader()`, `send()`).                                                                                                                                                                                                                                    | Provides a higher-level abstraction that simplifies the process of making requests and handling responses.                                                          |
+| **Support for Headers and Body** | Requires explicit setting of request headers using `setRequestHeader()`.                                                                                                                                                                                                                                                                           | Allows headers to be set directly in the options object passed to the function. The request body can be set directly as a parameter of the `fetch()` function call. |
+| **Cross-Origin Requests**        | Both `XMLHttpRequest()` and `fetch()` support cross-origin requests (CORS) but handle them slightly differently. `fetch()` follows the CORS specification more closely, automatically including cookies and credentials in cross-origin requests by default, whereas `XMLHttpRequest()` requires explicit configuration for cross-origin requests. |
+| **Browser Support**              | Supported by all modern browsers as well as older versions of Internet Explorer.                                                                                                                                                                                                                                                                   | Supported by most modern browsers, but not supported in Internet Explorer without a polyfill.                                                                       |
+| **Error Handling**               | Requires setting event handlers for different stages of the request lifecycle (e.g., `onload`, `onerror`, `ontimeout`) to handle errors.                                                                                                                                                                                                           | Provides a simpler way to handle errors using the `.catch()` method on the Promise returned by the `fetch()` call.                                                  |
+
+Readings:
+
+- [XMLHttpRequest vs Fetch: Which One Reigns Supreme in Modern Web Development?](https://apidog.com/blog/xmlhttprequest-vs-fetch/#:~:text=Unlike%20XMLHttpRequest%2C%20which%20was%20initially,is%20its%20promise%2Dbased%20approach.)
+- [Fetch API - Replacement for XMLHttpRequest (XHR)](https://www.atatus.com/blog/fetch-api-replacement-for-xmlhttprequest-xhr/)
 
 ---
 
