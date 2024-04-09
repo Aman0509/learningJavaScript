@@ -23,6 +23,7 @@ function sendHttpRequest(method, url, data) {
   //     if (xhr.response >= 200 && xhr.response < 300) {
   //       resolve(xhr.response);
   //     } else {
+  //			 // console.log(xhr.response); // in case, if during error some error info is given by server in response body
   //       reject(new Error("Something went wrong!"));
   //     }
   //     // const listOfPosts = JSON.parse(xhr.response); // will convert json to JS object
@@ -43,9 +44,21 @@ function sendHttpRequest(method, url, data) {
     method: method,
     body: JSON.stringify(data),
     headers: { "Content-Type": "application/json" },
-  }).then((response) => {
-    return response.json();
-  });
+  })
+    .then((response) => {
+      if (response.status >= 200 && response.status <= 300) {
+        return response.json();
+      } else {
+        return response.json().then((errData) => {
+          console.log(errData);
+          throw new Error("Something went wrong - server side");
+        });
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      throw new Error("Something went wrong!");
+    });
 }
 
 async function fetchPosts() {
