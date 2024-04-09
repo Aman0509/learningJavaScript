@@ -1,11 +1,12 @@
 # Working with HTTP Requests
 
-| Contents                                                  |
-| :-------------------------------------------------------- |
-| [What & Why](#what--why)                                  |
-| [More Background about Http](#more-background-about-http) |
-| [Getting Started with HTTP](#getting-started-with-http)   |
-| [Adding Request Headers](#adding-request-headers)         |
+| Contents                                                          |
+| :---------------------------------------------------------------- |
+| [What & Why](#what--why)                                          |
+| [More Background about Http](#more-background-about-http)         |
+| [Getting Started with HTTP](#getting-started-with-http)           |
+| [Adding Request Headers](#adding-request-headers)                 |
+| [Handling Errors in `fetch()` API](#handling-errors-in-fetch-api) |
 
 ## [What & Why](https://drive.google.com/uc?export=view&id=18MZto3hCXlh6x1PZIgKVotxtfF23MSWh)
 
@@ -275,6 +276,41 @@ xhr.send(JSON.stringify({ key: "value" }));
 
 - We're using `setRequestHeader()` to set the `"Content-Type"` header to indicate that the request body is in JSON format.
 - We're also setting the `"Authorization"` header to include a bearer token for authentication.
+
+## Handling Errors in `fetch()` API
+
+To handle errors in the `fetch()` API, you can use the `.catch()` method on the Promise returned by `fetch()`. This method allows you to catch any errors that occur during the network request. Here's how you can handle errors with `fetch()`:
+
+```javascript
+fetch("https://api.example.com/data")
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    // Process the successful response
+    console.log("Data:", data);
+  })
+  .catch((error) => {
+    // Handle any errors that occurred during the request
+    console.error("Fetch error:", error);
+  });
+```
+
+In this example:
+
+- The `.then()` method is used to process the response if the request is successful. Inside this callback, we first check if the response.ok property is true, which indicates that the response status code is in the range 200-299 (indicating success). If it's not, we throw an error using `throw new Error()`.
+
+- If the request is successful and the response status is within the success range, the `.then()` method is used again to parse the response body as JSON using `response.json()`.
+
+- If any errors occur during the request (such as network errors, server errors, or errors parsing the response), they will be caught by the `.catch()` method. Inside this callback, you can handle the error as needed, such as logging it to the console or displaying an error message to the user.
+
+Readings:
+
+- [Fetch API, do you really know how to handle errors?](https://dev.to/dionarodrigues/fetch-api-do-you-really-know-how-to-handle-errors-2gj0)
+- [Error handling with the Fetch API](https://rapidapi.com/guides/error-handling-fetch)
 
 ---
 
