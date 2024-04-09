@@ -183,6 +183,55 @@ xhr.send();
 
 These are just the few ways to handle http requests using `XMLHttpRequest()`. To know more about it, refer official docs [here](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_XMLHttpRequest).
 
+### Using [`fetch()`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) API
+
+The Fetch API is a modern JavaScript champion for making asynchronous HTTP requests. It offers a cleaner and more intuitive way to communicate with web servers compared to its predecessor, XMLHttpRequest (XHR).
+
+```javascript
+// Example URL for demonstration
+const apiUrl = "https://jsonplaceholder.typicode.com/posts";
+
+// GET Request
+fetch(apiUrl)
+  .then((response) => response.json())
+  .then((data) => console.log("GET Response:", data));
+
+// POST Request
+const postData = {
+  title: "Sample Title",
+  body: "Sample Body",
+  userId: 1,
+};
+
+fetch(apiUrl, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify(postData),
+})
+  .then((response) => response.json())
+  .then((data) => console.log("POST Response:", data));
+
+// DELETE Request
+const postIdToDelete = 1;
+
+fetch(`${apiUrl}/${postIdToDelete}`, {
+  method: "DELETE",
+}).then((response) => {
+  if (response.ok) {
+    console.log("DELETE Success");
+  } else {
+    console.error("DELETE Error:", response.status);
+  }
+});
+```
+
+- We use `fetch()` to send requests to the URL `'https://jsonplaceholder.typicode.com/posts'`, a fake REST API provided by JSONPlaceholder for testing purposes.
+- For the GET request, we call `fetch(apiUrl)` to retrieve data from the server. The response is converted to JSON format using `.json()` method.
+- For the POST request, we specify the method as `'POST'`, set the `Content-Type` header to `'application/json'`, and provide the request body as JSON string using `JSON.stringify(postData)`.
+- For the DELETE request, we specify the method as `'DELETE'` and append the ID of the resource to be deleted to the URL.
+
 ---
 
 [<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Async JavaScript: Promises and Callbacks](../Async-JS-Promises-and-Callbacks/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../README.md)
