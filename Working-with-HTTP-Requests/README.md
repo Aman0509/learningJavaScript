@@ -3,7 +3,7 @@
 | Contents                                                          |
 | :---------------------------------------------------------------- |
 | [What & Why](#what--why)                                          |
-| [More Background about Http](#more-background-about-http)         |
+| [More Background about HTTP](#more-background-about-http)         |
 | [Getting Started with HTTP](#getting-started-with-http)           |
 | [Adding Request Headers](#adding-request-headers)                 |
 | [Handling Errors in `fetch()` API](#handling-errors-in-fetch-api) |
@@ -26,9 +26,9 @@ Therefore, understanding APIs and HTTP requests (GET, POST) is crucial for effec
 
 Readings:
 
--[How the Web Works](https://academind.com/tutorials/how-the-web-works)
+- [How the Web Works](https://academind.com/tutorials/how-the-web-works)
 
-## [More Background about Http](https://drive.google.com/uc?export=view&id=1CbUrjEutmX7leotpQyU4_P0JENZyWTLo)
+## [More Background about HTTP](https://drive.google.com/uc?export=view&id=1CbUrjEutmX7leotpQyU4_P0JENZyWTLo)
 
 Now that we understand the bigger picture, let's zoom in on how HTTP requests work.
 
