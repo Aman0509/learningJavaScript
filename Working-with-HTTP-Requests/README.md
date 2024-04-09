@@ -5,6 +5,7 @@
 | [What & Why](#what--why)                                  |
 | [More Background about Http](#more-background-about-http) |
 | [Getting Started with HTTP](#getting-started-with-http)   |
+| [Adding Request Headers](#adding-request-headers)         |
 
 ## [What & Why](https://drive.google.com/uc?export=view&id=18MZto3hCXlh6x1PZIgKVotxtfF23MSWh)
 
@@ -231,6 +232,49 @@ fetch(`${apiUrl}/${postIdToDelete}`, {
 - For the GET request, we call `fetch(apiUrl)` to retrieve data from the server. The response is converted to JSON format using `.json()` method.
 - For the POST request, we specify the method as `'POST'`, set the `Content-Type` header to `'application/json'`, and provide the request body as JSON string using `JSON.stringify(postData)`.
 - For the DELETE request, we specify the method as `'DELETE'` and append the ID of the resource to be deleted to the URL.
+
+## Adding Request Headers
+
+In HTTP communication, request headers are a collection of key-value pairs attached to an HTTP request that provide additional information to the server about the request itself or the client making the request. They act like instructions or metadata for the server to understand how to handle the request. Here are some common request headers:
+
+- **Content-Type:** Specifies the format of the data being sent in the request body (e.g., application/json, text/plain).
+- **Authorization:** Used for authentication purposes, often containing credentials like tokens or basic authentication information.
+- **Accept:** Indicates the data formats the client can accept in the response (e.g., application/json, text/html).
+- **Cache-Control:** Controls caching behavior on both client and server sides.
+- **User-Agent:** Identifies the client software making the request (e.g., browser name and version).
+
+### Defining Headers in `fetch()`
+
+In `fetch()`, headers can be defined within an object passed as the second parameter to the function. Here's how you can define headers:
+
+```javascript
+fetch("https://api.example.com/data", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: "Bearer <token>",
+  },
+  body: JSON.stringify({ key: "value" }),
+});
+```
+
+- We're setting the `"Content-Type"` header to indicate that the request body is in JSON format.
+- We're also setting the `Authorization` header to include a bearer token for authentication.
+
+### Defining Headers in `XMLHttpRequest()`:
+
+In `XMLHttpRequest()`, headers are set using the `setRequestHeader()` method. Here's how you can define headers:
+
+```javascript
+var xhr = new XMLHttpRequest();
+xhr.open("POST", "https://api.example.com/data", true);
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Authorization", "Bearer <token>");
+xhr.send(JSON.stringify({ key: "value" }));
+```
+
+- We're using `setRequestHeader()` to set the `"Content-Type"` header to indicate that the request body is in JSON format.
+- We're also setting the `"Authorization"` header to include a bearer token for authentication.
 
 ---
 
