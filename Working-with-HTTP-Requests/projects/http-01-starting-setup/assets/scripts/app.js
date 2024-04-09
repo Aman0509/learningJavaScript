@@ -6,9 +6,10 @@ const postList = document.querySelector("ul");
 
 function sendHttpRequest(method, url, data) {
   // const promise = new Promise((resolve, reject) => {
-  //   //MLHttpRequest (XHR) is a JavaScript class that allows a browser to send HTTP requests to a web server.
+  //   // XMLHttpRequest (XHR) is a JavaScript class that allows a browser to send HTTP requests to a web server.
   //   // It is a JavaScript API that provides methods for sending network requests between a browser and a server.
   //   const xhr = new XMLHttpRequest();
+  //   xhr.setRequestHeader('Content-Type': 'application/json');
 
   //   // defining request type and endpoint
   //   xhr.open(method, url);
@@ -38,11 +39,13 @@ function sendHttpRequest(method, url, data) {
   //   xhr.send(JSON.stringify(data));
   // });
   // return promise;
-  return fetch(url, { method: method, body: JSON.stringify(data) }).then(
-    (response) => {
-      return response.json();
-    }
-  );
+  return fetch(url, {
+    method: method,
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" },
+  }).then((response) => {
+    return response.json();
+  });
 }
 
 async function fetchPosts() {
