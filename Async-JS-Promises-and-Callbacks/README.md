@@ -1,21 +1,21 @@
 # Async JavaScript: Promises and Callbacks
 
-| Contents |
-| :--- |
-| [Understanding Synchronous Code Execution ("Sync Code")](#understanding-synchronous-code-execution-sync-code) |
+| Contents                                                                                                          |
+| :---------------------------------------------------------------------------------------------------------------- |
+| [Understanding Synchronous Code Execution ("Sync Code")](#understanding-synchronous-code-execution-sync-code)     |
 | [Understanding Asynchronous Code Execution ("Async Code")](#understanding-asynchronous-code-execution-async-code) |
-| [Blocking Code and The "Event Loop"](#blocking-code-and-the-event-loop) |
-| [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order) |
-| [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0) |
-| [Getting Started with Promises](#getting-started-with-promises) |
-| [Asynchronous Code Execution in Promises](#asynchronous-code-execution-in-promises) |
-| [Chaining Multiple Promises](#chaining-multiple-promises) |
-| [Promise Error Handling](#promise-error-handling) |
-| [Promise States & "finally"](#promise-states--finally) |
-| [Async/Await](#asyncawait) |
-| [Async/Await & Error Handling](#asyncawait--error-handling) |
-| [Async/Await vs Raw Promises](#asyncawait-vs-raw-promises) |
-| [Few Important Promise Methods](#few-important-promise-methods) |
+| [Blocking Code and The "Event Loop"](#blocking-code-and-the-event-loop)                                           |
+| [Sync + Async Code - The Execution Order](#sync--async-code---the-execution-order)                                |
+| [Multiple Callbacks and setTimeout(0)](#multiple-callbacks-and-settimeout0)                                       |
+| [Getting Started with Promises](#getting-started-with-promises)                                                   |
+| [Asynchronous Code Execution in Promises](#asynchronous-code-execution-in-promises)                               |
+| [Chaining Multiple Promises](#chaining-multiple-promises)                                                         |
+| [Promise Error Handling](#promise-error-handling)                                                                 |
+| [Promise States & "finally"](#promise-states--finally)                                                            |
+| [Async/Await](#asyncawait)                                                                                        |
+| [Async/Await & Error Handling](#asyncawait--error-handling)                                                       |
+| [Async/Await vs Raw Promises](#asyncawait-vs-raw-promises)                                                        |
+| [Few Important Promise Methods](#few-important-promise-methods)                                                   |
 
 ## Understanding Synchronous Code Execution ("Sync Code")
 
@@ -32,14 +32,14 @@ The B block (representing a function call) will take place after A, but it will 
 In our journey through this course, we've encountered this behavior. Take the provided code snippet as an example. In this code, which serves as the starting point for a module, the execution order follows JavaScript's top-to-bottom parsing and execution. First, the code selects a button element and stores it in a constant. Only once this step is finished does the subsequent line execute, performing its intended task. Furthermore, the way function declarations work means that they are processed at the beginning of execution but might execute later in the sequence.
 
 ```javascript
-const button = document.querySelector('button');
-const output = document.querySelector('p');
+const button = document.querySelector("button");
+const output = document.querySelector("p");
 
 function trackUserHandler() {
-  console.log('Clicked!');
+  console.log("Clicked!");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 This ordering is crucial, especially when dealing with event listeners. We depend on this sequence to ensure that the button is selected and available before we add an event listener to it. This reliance on order is upheld by JavaScript's single-threaded nature. In a hypothetical multi-threaded scenario, tasks could potentially occur simultaneously, creating uncertainty about the availability of elements for further operations. However, JavaScript's single-threaded architecture guarantees this order.
@@ -59,17 +59,17 @@ console.log("Start");
 
 // Simulate fetching data from a server
 setTimeout(() => {
-    const data = { id: 1, name: "John Doe" };
-    console.log("Data Received:", data);
+  const data = { id: 1, name: "John Doe" };
+  console.log("Data Received:", data);
 
-    // Update the UI with the received data
-    updateUI(data);
+  // Update the UI with the received data
+  updateUI(data);
 }, 2000); // Simulating a 2-second delay
 
 console.log("End");
 
 function updateUI(data) {
-    console.log("Updating UI with:", data.name);
+  console.log("Updating UI with:", data.name);
 }
 ```
 
@@ -121,20 +121,20 @@ Now that we have a fundamental understanding of how the browser handles lengthie
 Suppose, we have below code:
 
 ```javascript
-const button = document.querySelector('button');
-const output = document.querySelector('p');
+const button = document.querySelector("button");
+const output = document.querySelector("p");
 
 function trackUserHandler() {
-  console.log('Clicked!');
+  console.log("Clicked!");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 
 let result = 0;
 
 // Blocking Code
 for (let i = 0; i < 100000000; i++) {
-    result += i;
+  result += i;
 }
 
 console.log(result); // Output: 4999999950000000
@@ -144,7 +144,7 @@ When you run it, you'll get the output, but it might take a bit longer because o
 
 Now, let's see what happens when we try clicking the button before the result appears. You'll notice that the "clicked" message only shows up after the result becomes visible. When I reload and click the button rapidly, nothing happens right away. Instead, all the clicks only take effect once the loop finishes its task.
 
-***Now in this scenario, we can observe single threading in action.***
+**_Now in this scenario, we can observe single threading in action._**
 
 We've set up this event listener(`button.addEventListener('click', trackUserHandler);`) and passed control to the browser. As a result, this event listener doesn't obstruct JavaScript's flow. However, the `loop` here doesn't have the option to be handed over to the browser. It runs, causing JavaScript execution to halt until this operation is completed, as only one operation can be executed at a time.
 
@@ -154,8 +154,8 @@ Think of it like this: When the loop is running, JavaScript is focused on that t
 
 This behavior is important to understand—it's how JavaScript manages both async and sync code. It's made possible through something called the event loop.
 
-| | |
-| --- | --- |
+|                                                                                                                |                                                                                                                |
+| -------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | <img src="https://drive.google.com/uc?export=view&id=1_RVq8lE8nv59MNG11VesivUP_WQq3i4S" alt="academind slide"> | <img src="https://drive.google.com/uc?export=view&id=1JRSXQ2gDKNlefjNJXq6-z1fwUaiJnBe5" alt="academind slide"> |
 
 So, what exactly is the event loop? Essentially, the event loop is a mechanism that assists us in managing asynchronous code. It's particularly useful for handling callback functions, which are commonly employed in scenarios involving asynchronous code.
@@ -173,13 +173,13 @@ Here's what unfolds:
 
 The next step doesn't involve the immediate execution of the `showAlert()` function. Despite the 2-second timer, JavaScript doesn't wait for it. Instead, JavaScript moves on to the next line, executing the `greet()` function. The `greet()` function's execution begins right after the `setTimeout()` is done, and the timer's management is handed off to the browser. The `console.log()` within the `greet()` function is also executed, wrapping up the code on the left.
 
-At some point, the timer completes. Let's assume this happens while the `console.log()` within `greet()` is being executed. Although this process occurs quickly, it still takes a few milliseconds. Let's say, as we're in the midst of executing `console.log()`, the timer concludes. Now, to alert our JavaScript engine that the `showAlert()` function registered as a callback for the timer, should be executed, a ***[Message Queue](https://stackoverflow.com/questions/22827311/what-does-it-mean-by-message-queue-in-this-link)*** comes into play. This queue, maintained by the browser and linked to JavaScript, holds code that's waiting to execute when time allows. The `showAlert()` function is registered as a to-do task in this queue.
+At some point, the timer completes. Let's assume this happens while the `console.log()` within `greet()` is being executed. Although this process occurs quickly, it still takes a few milliseconds. Let's say, as we're in the midst of executing `console.log()`, the timer concludes. Now, to alert our JavaScript engine that the `showAlert()` function registered as a callback for the timer, should be executed, a **_[Message Queue](https://stackoverflow.com/questions/22827311/what-does-it-mean-by-message-queue-in-this-link)_** comes into play. This queue, maintained by the browser and linked to JavaScript, holds code that's waiting to execute when time allows. The `showAlert()` function is registered as a to-do task in this queue.
 
 It's important to note that the `showAlert()` function doesn't execute at this point; it's merely queued as a to-do task. Currently, the only executed functions in JavaScript are `greet()` and the `console.log()` within it.
 
 With that in mind, let's fast-forward. The `console.log()` within `greet()` is executed, concluding the `greet()` function and leaving the call stack empty again.
 
-Now comes the critical part: we need to bring the `showAlert()` task from the message queue into our call stack for execution. ***This is where the event loop steps in***. The event loop, along with the message queue, is inherent to browsers and most JavaScript environments, including **Node.js**. It's important to understand that the event loop isn't part of the JavaScript engine; rather, it's an element of the host environment where JavaScript is utilized.
+Now comes the critical part: we need to bring the `showAlert()` task from the message queue into our call stack for execution. **_This is where the event loop steps in_**. The event loop, along with the message queue, is inherent to browsers and most JavaScript environments, including **Node.js**. It's important to understand that the event loop isn't part of the JavaScript engine; rather, it's an element of the host environment where JavaScript is utilized.
 
 The event loop's role is to synchronize the call stack in the engine with waiting messages. It continuously monitors whether the stack is empty and if there are pending tasks. When the stack is empty, the event loop triggers, pushing any waiting messages or to-do functions into the call stack.
 
@@ -187,7 +187,7 @@ The event loop remains in a waiting state until the call stack is empty. Once th
 
 In this case, the `showAlert()` function executes, which calls the built-in `alert()` function on the left side. Upon completion, the call stack is empty once again.
 
-*This entire process, involving the event loop and the browser's handling of our code and callback functions, follows a pattern commonly used for asynchronous operations.*
+_This entire process, involving the event loop and the browser's handling of our code and callback functions, follows a pattern commonly used for asynchronous operations._
 
 Now, coming back to our previous code snippet, with the `addEventListener()` part, what we're doing is giving a task to the browser. We're saying, "Hey browser, when a click happens, run this function." Then, we continue working in JavaScript. Now, there's this lengthy task (loop one) which basically occupies our call stack (basically, here, message conveyed is that loop is not the part of any function but then also it is stacked), it's not part of a function here but it therefore is basically running in an anonymous function you could say, in a big anonymous function that wraps everything if you will.
 
@@ -204,18 +204,21 @@ This knowledge is quite valuable. Understanding what's happening behind the scen
 Consider this scenario where we have the `trackUserHandler` function. Instead of merely logging that a click occurred, our goal is to retrieve the user's location.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 function trackUserHandler() {
-  navigator.geolocation.getCurrentPosition(posData => {
-    console.log(posData);
-  }, error => {
-    console.log(error);
-  });
+  navigator.geolocation.getCurrentPosition(
+    (posData) => {
+      console.log(posData);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
   console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 We can achieve this by utilizing the [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator) object along with the [`geolocation API`](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API). This built-in API enables us to interact with the browser to obtain the user's location through the getCurrentPosition method.
@@ -241,27 +244,26 @@ Upon reloading the page, clicking "Track Me," and then blocking access, we obser
 For the purpose of learning, let's introduce a 2-second timer before displaying the response. To achieve this, an additional anonymous function is required within the existing callback. Inside this nested function, the `posData` can be accessed and logged. This is made possible due to the concept of closure, where the function is nested within another, allowing access to variables within the outer function.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 function trackUserHandler() {
   navigator.geolocation.getCurrentPosition(
-    posData => {
-      setTimeout(
-        () => {
-          console.log(posData);
-        }, 2000
-      );
-  }, error => {
-    console.log(error);
-  });
-  setTimeout(
-    () => {
-      console.log("Timer done");
-    }, 0);
+    (posData) => {
+      setTimeout(() => {
+        console.log(posData);
+      }, 2000);
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+  setTimeout(() => {
+    console.log("Timer done");
+  }, 0);
   console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 However, the logging of `posData` is delayed by 2 seconds due to the timer, introduced for illustrative purposes. This situation results in a callback within another callback, both of which are part of the broader `trackUserHandler` callback. As this nesting of callbacks becomes more complex, the code's readability and maintenance can become challenging over time.
@@ -286,9 +288,9 @@ This kind of complex code isn't fun to work with. But guess what? JavaScript com
 
 <img src="https://drive.google.com/uc?export=view&id=1Imx6Zn-yw0z82WJTY89vn_uKoqiAHvMA" width="600" height="390" alt="academind slide">
 
-***A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) in JavaScript is an object that represents the eventual completion or failure of an asynchronous operation. It's a way to handle asynchronous code in a more organized and readable manner. Promises provide a structured approach to managing callbacks, making it easier to work with complex asynchronous operations.***
+**_A [promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) in JavaScript is an object that represents the eventual completion or failure of an asynchronous operation. It's a way to handle asynchronous code in a more organized and readable manner. Promises provide a structured approach to managing callbacks, making it easier to work with complex asynchronous operations._**
 
-*Syntax - [Promise() constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise)*
+_Syntax - [Promise() constructor](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise)_
 
 ```
 let promise = new Promise(function(resolve, reject){
@@ -296,7 +298,7 @@ let promise = new Promise(function(resolve, reject){
 });
 ```
 
-*Parameters*
+_Parameters_
 
 - The promise constructor takes only one argument which is a callback function.
 
@@ -309,9 +311,9 @@ Here's how promises work:
 
 1. **State**: A promise can be in one of three states:
 
-  - **Pending**: The asynchronous operation is ongoing and the promise is waiting for its completion.
-  - **Fulfilled**: The operation has completed successfully, and the promise has a result value.
-  - **Rejected**: The operation encountered an error or failure, and the promise has a reason for the failure.
+- **Pending**: The asynchronous operation is ongoing and the promise is waiting for its completion.
+- **Fulfilled**: The operation has completed successfully, and the promise has a result value.
+- **Rejected**: The operation encountered an error or failure, and the promise has a reason for the failure.
 
 2. **Chaining**: Promises can be chained together, allowing you to perform a sequence of asynchronous operations in a more linear and readable way. This is particularly useful when you have multiple asynchronous tasks that depend on each other (a basic example is shown in image above).
 
@@ -320,7 +322,7 @@ Here's how promises work:
 Coming back to our example used previously, let's update it to show the usage of `Promise`.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 // Wrapping setTimeout() inside `setTimer()` function and it returns Promise object.
 // This Promise object will now handle the success or failure outcomes.
@@ -331,7 +333,7 @@ const button = document.querySelector('button');
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Done!');
+      resolve("Done!");
     }, duration);
   });
   return promise;
@@ -339,20 +341,22 @@ const setTimer = (duration) => {
 
 function trackUserHandler() {
   navigator.geolocation.getCurrentPosition(
-    posData => {
-      setTimer(2000).then(data => {
+    (posData) => {
+      setTimer(2000).then((data) => {
         console.log(data, posData);
       });
-  }, error => {
-    console.log(error);
-  });
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
   setTimer(1000).then(() => {
-    console.log('Timer Done!');
+    console.log("Timer Done!");
   });
   console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 Let's break down what's happening here. Unfortunately, `setTimeout()` and `getCurrentPosition()` functions don't directly work with promises, which are a modern way of handling asynchronous operations. Promises make it easier to manage and write code that involves waiting for something to finish, like a timer or getting a user's location.
@@ -377,7 +381,7 @@ So, let's say we want to use promises with `setTimeout()` to make it more manage
 
 9. Finally, we log "Getting position..." immediately.
 
-In essence, we're making sure our code doesn't wait around for timers or location fetching. *Instead, we're using promises to manage these operations, making our code more efficient and easier to read.*
+In essence, we're making sure our code doesn't wait around for timers or location fetching. _Instead, we're using promises to manage these operations, making our code more efficient and easier to read._
 
 The concept of promises might seem a bit tricky at first, but it's a powerful tool that helps us write better asynchronous code. It's like telling JavaScript, "Hey, wait for this to finish, and then do something with the result."
 
@@ -412,15 +416,19 @@ In summary, promises run code asynchronously by using the event loop and callbac
 Let's now also wrap `navigator.geolocation.getCurrentPosition()` around promise object and [`then`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/then) demonstrate the promise chaining.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 const getPosition = (opts) => {
   const promise = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(success => {
-      resolve(success);
-    }, error => {
-      // will implement later
-    }, opts);
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        // will implement later
+      },
+      opts
+    );
   });
   return promise;
 };
@@ -428,7 +436,7 @@ const getPosition = (opts) => {
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Done!');
+      resolve("Done!");
     }, duration);
   });
   return promise;
@@ -437,21 +445,22 @@ const setTimer = (duration) => {
 function trackUserHandler() {
   let positionData;
   getPosition()
-    .then(posData => {  // If we are returning anything inside a Promise then it will have the 'Pending' state. This is because the Promise is still waiting for the returned value to be resolved or rejected.
+    .then((posData) => {
+      // If we are returning anything inside a Promise then it will have the 'Pending' state. This is because the Promise is still waiting for the returned value to be resolved or rejected.
       positionData = posData;
       return setTimer(2000); // Return type can be any data type
     })
-    .then(data => {
+    .then((data) => {
       console.log(data, positionData);
     });
 
   setTimer(1000).then(() => {
-    console.log('Timer Done!');
+    console.log("Timer Done!");
   });
   console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 Readings:
@@ -469,15 +478,19 @@ The core concept of promise chaining allows you to execute steps sequentially. F
 Now, let's delve into handling errors, as issues can arise. Consider our previous example where we're obtaining position data and handling errors in our enhanced promise version. In cases such as permissions not being granted(in browser for giving your location), we'd like to elevate the error handling from our prior approach, as we've transitioned to using promises.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 const getPosition = (opts) => {
   const promise = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(success => {
-      resolve(success);
-    }, error => {
-      reject(error);
-    }, opts);
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        reject(error);
+      },
+      opts
+    );
   });
   return promise;
 };
@@ -485,7 +498,7 @@ const getPosition = (opts) => {
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Done!');
+      resolve("Done!");
     }, duration);
   });
   return promise;
@@ -494,23 +507,26 @@ const setTimer = (duration) => {
 function trackUserHandler() {
   let positionData;
   getPosition()
-    .then(posData => {
-      positionData = posData;
-      return setTimer(2000);
-    }, err => {
-      console.log(err);
-    })
-    .then(data => {
+    .then(
+      (posData) => {
+        positionData = posData;
+        return setTimer(2000);
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+    .then((data) => {
       console.log(data, positionData);
     });
 
   setTimer(1000).then(() => {
-    console.log('Timer Done!');
+    console.log("Timer Done!");
   });
   console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 This is facilitated using the second argument of the promise constructor's configuration function, specifically the reject parameter. By invoking reject within the error callback, we can funnel our error object into the rejection process. This marks the promise as unsuccessful – not resolved or pending, but in a failed state. Errors are distinctively managed; they don't fit within the regular `then` functions. Rather, `then` accepts two arguments.
@@ -532,15 +548,19 @@ In a more complex chain, if any promise fails, both approaches will catch the er
 Unlike `then` blocks, the `catch` method won't stop the whole chain. It only deals with errors that happened before it. When a promise fails before reaching the `catch` block, the error will be caught in the block and its code will run. However, the next `then` blocks will keep running as usual.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 const getPosition = (opts) => {
   const promise = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(success => {
-      resolve(success);
-    }, error => {
-      reject(error);
-    }, opts);
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        reject(error);
+      },
+      opts
+    );
   });
   return promise;
 };
@@ -548,7 +568,7 @@ const getPosition = (opts) => {
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Done!');
+      resolve("Done!");
     }, duration);
   });
   return promise;
@@ -557,24 +577,24 @@ const setTimer = (duration) => {
 function trackUserHandler() {
   let positionData;
   getPosition()
-    .then(posData => {
+    .then((posData) => {
       positionData = posData;
       return setTimer(2000);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     })
-    .then(data => {
+    .then((data) => {
       console.log(data, positionData);
     });
 
   setTimer(1000).then(() => {
-    console.log('Timer Done!');
+    console.log("Timer Done!");
   });
   console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 Where you put the `catch` block determines how it works. To stop the entire promise chain when an error occurs, place the `catch` block at the end of all `then` blocks. This ensures that if a promise fails, the remaining 'then' blocks are skipped and the chain is caught by the `catch` block.
@@ -601,7 +621,7 @@ You learned about the different promise states:
 
 - **REJECTED (Promise was rejected => catch() executes)** - If an error occurs during the asynchronous operation, the Promise transitions to the "Rejected" state. This indicates that the promised value cannot be obtained due to an error. You can handle the error using the `.catch()` method or a second argument in the `.then()` method.
 
-***When you have another `then()` block after a `catch()` or `then()` block, the promise re-enters PENDING mode (keep in mind: `then()` and `catch()` always return a new promise - either not resolving to anything or resolving to what you return inside of `then()`). Only if there are no more `then()` blocks left, it enters a new, final mode: SETTLED.***
+**_When you have another `then()` block after a `catch()` or `then()` block, the promise re-enters PENDING mode (keep in mind: `then()` and `catch()` always return a new promise - either not resolving to anything or resolving to what you return inside of `then()`). Only if there are no more `then()` blocks left, it enters a new, final mode: SETTLED._**
 
 Once SETTLED, you can use a special block - [`finally()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally) - to do final cleanup work. `finally()` is reached no matter if you resolved or rejected before.
 
@@ -609,17 +629,17 @@ Here's an example:
 
 ```javascript
 somePromiseCreatingCode()
-    .then(firstResult => {
-        return 'done with first promise';
-    })
-    .catch(err => {
-        // would handle any errors thrown before
-        // implicitly returns a new promise - just like then()
-    })
-    .finally(() => {
-        // the promise is settled now - finally() will NOT return a new promise!
-        // you can do final cleanup work here
-    });
+  .then((firstResult) => {
+    return "done with first promise";
+  })
+  .catch((err) => {
+    // would handle any errors thrown before
+    // implicitly returns a new promise - just like then()
+  })
+  .finally(() => {
+    // the promise is settled now - finally() will NOT return a new promise!
+    // you can do final cleanup work here
+  });
 ```
 
 Readings:
@@ -632,22 +652,26 @@ Promises are a crucial concept in JavaScript, especially in modern JavaScript wh
 
 Now, there's an alternative to this approach that modern JavaScript offers, which is quite important to grasp. This approach still involves promises but allows you to omit the `then` and `catch` methods. This makes the code resemble synchronous code more closely—similar to what you write without promises. This approach is known as [`async`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)/[`await`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await).
 
-What is `async`/`await` all about? It's used only with functions, and those functions must be marked as `async`. ***By adding the `async` keyword before the function declaration, the function transforms into one that automatically returns a promise.*** This wrapping into a promise is done internally, even though you don't explicitly use the `return` statement. This is a subtle but significant change.
+What is `async`/`await` all about? It's used only with functions, and those functions must be marked as `async`. **_By adding the `async` keyword before the function declaration, the function transforms into one that automatically returns a promise._** This wrapping into a promise is done internally, even though you don't explicitly use the `return` statement. This is a subtle but significant change.
 
 Adding the `async` keyword transforms the function into a promise without changing the way JavaScript works. Any call to `then` will now operate on this promise. Inside this wrapped promise, we gain access to the `await` keyword. Adding `await` in front of a promise makes the execution wait for that promise to resolve or reject. The next line of code only executes once the promise is resolved.
 
 In essence, `async`/`await` doesn't alter JavaScript's non-blocking nature. Instead, it transforms the code to work with promises in a way that appears synchronous. It doesn't block code execution; it's more like code transformation that preserves JavaScript's asynchronous nature. So, you're reaping the benefits of more readable code without changing the core behavior of JavaScript.
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 const getPosition = (opts) => {
   const promise = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(success => {
-      resolve(success);
-    }, error => {
-      reject(error);
-    }, opts);
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        reject(error);
+      },
+      opts
+    );
   });
   return promise;
 };
@@ -655,7 +679,7 @@ const getPosition = (opts) => {
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Done!');
+      resolve("Done!");
     }, duration);
   });
   return promise;
@@ -683,7 +707,7 @@ async function trackUserHandler() {
   // console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 Mentioning another example for more understanding.
@@ -704,10 +728,10 @@ function fetchUserData() {
 }
 
 fetchUserData()
-  .then(user => {
+  .then((user) => {
     console.log(user.name);
   })
-  .catch(error => {
+  .catch((error) => {
     console.error("Error fetching user data:", error);
   });
 ```
@@ -767,20 +791,24 @@ Readings:
 
 Async await provides a concise way to write code, but it lacks error handling in our previous example. So, how can we address this issue using `async`/`await`?
 
-Since `async`/`await` appears like regular synchronous code due to its underlying transformation, we can employ the familiar synchronous error handling technique we learned earlier: ***the try-catch block.***
+Since `async`/`await` appears like regular synchronous code due to its underlying transformation, we can employ the familiar synchronous error handling technique we learned earlier: **_the try-catch block._**
 
 Below is our updated example:
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector("button");
 
 const getPosition = (opts) => {
   const promise = new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(success => {
-      resolve(success);
-    }, error => {
-      reject(error);
-    }, opts);
+    navigator.geolocation.getCurrentPosition(
+      (success) => {
+        resolve(success);
+      },
+      (error) => {
+        reject(error);
+      },
+      opts
+    );
   });
   return promise;
 };
@@ -788,7 +816,7 @@ const getPosition = (opts) => {
 const setTimer = (duration) => {
   const promise = new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve('Done!');
+      resolve("Done!");
     }, duration);
   });
   return promise;
@@ -801,7 +829,7 @@ async function trackUserHandler() {
   try {
     posData = await getPosition();
     timerData = await setTimer(2000);
-  } catch(error) {
+  } catch (error) {
     console.log(error);
   }
   console.log(timerData, posData);
@@ -822,7 +850,7 @@ async function trackUserHandler() {
   // console.log("Getting position...");
 }
 
-button.addEventListener('click', trackUserHandler);
+button.addEventListener("click", trackUserHandler);
 ```
 
 If an error arises, we catch it in the `catch` block. Here, we can choose to print the error or handle it in any desired manner.
@@ -837,13 +865,13 @@ This is how errors are appropriately managed in an async await setup, substituti
 
 Async/await provides a different way to handle code compared to using the `then` and `catch` blocks. Which one you use depends on what you find more comfortable.
 
-*One thing to notice in async await is that `async` and `await` can make you think that the steps are happening one after the other, like regular JavaScript code. But actually, asynchronous operations, including async code, are handled by the browser separately. The browser takes care of them in the background and gives control back when they're done. Async/await doesn't change this; it just changes how things are written.*
+_One thing to notice in async await is that `async` and `await` can make you think that the steps are happening one after the other, like regular JavaScript code. But actually, asynchronous operations, including async code, are handled by the browser separately. The browser takes care of them in the background and gives control back when they're done. Async/await doesn't change this; it just changes how things are written._
 
 Understanding this difference is important. Async await can make your code shorter, but it might seem like things happen in a certain order when they don't.
 
 When it comes to performance, async await might be a bit better in modern browsers. But the difference is usually not big and might not matter for all cases.
 
-***One real downside you can have with async/await though is that you can't run tasks simultaneously inside of the same function.***
+**_One real downside you can have with async/await though is that you can't run tasks simultaneously inside of the same function._**
 
 In our example, when we used `then` and `catch` with `getPosition`, then code after it which is, `setTimer` and `console.log` will be executed right away.
 
@@ -851,20 +879,20 @@ In our example, when we used `then` and `catch` with `getPosition`, then code af
 function trackUserHandler() {
   let positionData;
   getPosition()
-    .then(posData => {
+    .then((posData) => {
       positionData = posData;
       return setTimer(2000);
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     })
-    .then(data => {
+    .then((data) => {
       console.log(data, positionData);
     });
 
   // From here, code will be executed right away in sync manner
   setTimer(1000).then(() => {
-    console.log('Timer Done!');
+    console.log("Timer Done!");
   });
   console.log("Getting position...");
 }
@@ -883,13 +911,13 @@ async function trackUserHandler() {
   try {
     posData = await getPosition();
     timerData = await setTimer(2000);
-  } catch(error) {
+  } catch (error) {
     console.log(error);
   }
   console.log(timerData, posData);
   // from here, code will be executed in async manner
   setTimer(1000).then(() => {
-    console.log('Timer Done!');
+    console.log("Timer Done!");
   });
   console.log("Getting position...");
 }
@@ -897,7 +925,7 @@ async function trackUserHandler() {
 
 So, if you have a function where you want to initiate multiple tasks at the same time without waiting for each one to finish before starting the next, this approach might not be the best. Currently, we're observing a distinct behavior from what we had before.
 
-***Another drawback or important point to consider is that the usage of `async`/`await` is restricted to functions.***
+**_Another drawback or important point to consider is that the usage of `async`/`await` is restricted to functions._**
 
 This means that you can't use the `await` keyword outside of a function or in the global scope. In other words, you can't use `await` directly in the main body of your script; it must be inside a function. This is because `async`/`await` is designed to work with asynchronous operations, and those operations are typically performed within functions.
 
@@ -905,7 +933,7 @@ For example, you can create an `async` function like this:
 
 ```javascript
 async function fetchData() {
-  const response = await fetch('https://api.example.com/data');
+  const response = await fetch("https://api.example.com/data");
   const data = await response.json();
   return data;
 }
@@ -926,46 +954,48 @@ So, to leverage the benefits of async/await, you need to structure your code wit
 
 1. **[`Promise.race()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race)**: This method takes an array of promises and returns a new promise that resolves or rejects as soon as the first promise in the array resolves or rejects, whichever happens first.
 
-    Useful when you want to perform multiple asynchronous operations and only need the result of the fastest one.
+   Useful when you want to perform multiple asynchronous operations and only need the result of the fastest one.
 
-    ```javascript
-    const promise1 = new Promise(resolve => setTimeout(resolve, 1000, 'one'));
-    const promise2 = new Promise(resolve => setTimeout(resolve, 500, 'two'));
+   ```javascript
+   const promise1 = new Promise((resolve) => setTimeout(resolve, 1000, "one"));
+   const promise2 = new Promise((resolve) => setTimeout(resolve, 500, "two"));
 
-    Promise.race([promise1, promise2])
-      .then(result => console.log('Race Result:', result))
-      .catch(error => console.error('Race Error:', error));
-    // Output: Race Result: two (since promise2 resolves faster)
-    ```
+   Promise.race([promise1, promise2])
+     .then((result) => console.log("Race Result:", result))
+     .catch((error) => console.error("Race Error:", error));
+   // Output: Race Result: two (since promise2 resolves faster)
+   ```
 
 2. **[`Promise.all()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)**: This method takes an array of promises and returns a new promise that resolves when all promises in the array have resolved, or rejects if any promise in the array rejects.
 
-    Useful when you want to wait for multiple asynchronous operations to complete before proceeding.
+   Useful when you want to wait for multiple asynchronous operations to complete before proceeding.
 
-    ```javascript
-    const promise1 = new Promise(resolve => setTimeout(resolve, 1000, 'one'));
-    const promise2 = new Promise(resolve => setTimeout(resolve, 500, 'two'));
+   ```javascript
+   const promise1 = new Promise((resolve) => setTimeout(resolve, 1000, "one"));
+   const promise2 = new Promise((resolve) => setTimeout(resolve, 500, "two"));
 
-    Promise.all([promise1, promise2])
-      .then(results => console.log('All Results:', results))
-      .catch(error => console.error('All Error:', error));
-    // Output: All Results: ['one', 'two'] (both promises resolve)
-    ```
+   Promise.all([promise1, promise2])
+     .then((results) => console.log("All Results:", results))
+     .catch((error) => console.error("All Error:", error));
+   // Output: All Results: ['one', 'two'] (both promises resolve)
+   ```
 
 3. **[`Promise.allSettled()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)**: This method takes an array of promises and returns a new promise that resolves with an array of results, each corresponding to the input promises. The results contain information about whether each promise was fulfilled or rejected.
 
-    Useful when you want to wait for all promises to settle (either resolve or reject) without stopping on rejection.
+   Useful when you want to wait for all promises to settle (either resolve or reject) without stopping on rejection.
 
-    ```javascript
-    const promise1 = new Promise(resolve => setTimeout(resolve, 1000, 'one'));
-    const promise2 = new Promise((resolve, reject) => setTimeout(reject, 500, 'error'));
+   ```javascript
+   const promise1 = new Promise((resolve) => setTimeout(resolve, 1000, "one"));
+   const promise2 = new Promise((resolve, reject) =>
+     setTimeout(reject, 500, "error")
+   );
 
-    Promise.allSettled([promise1, promise2])
-      .then(results => console.log('All Settled Results:', results))
-      .catch(error => console.error('All Settled Error:', error));
-    // Output: All Settled Results: [{ status: 'fulfilled', value: 'one' }, { status: 'rejected', reason: 'error' }]
-    ```
+   Promise.allSettled([promise1, promise2])
+     .then((results) => console.log("All Settled Results:", results))
+     .catch((error) => console.error("All Settled Error:", error));
+   // Output: All Settled Results: [{ status: 'fulfilled', value: 'one' }, { status: 'rejected', reason: 'error' }]
+   ```
 
-* * *
+---
 
-[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> More on Numbers and Strings](../More-on-Numbers-and-Strings/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../README.md)
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> More on Numbers and Strings](../More-on-Numbers-and-Strings/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Working-with-HTTP-Requests/README.md)
