@@ -1,10 +1,10 @@
 # JS Frameworks
 
-| Contents |
-| :--- |
+| Contents                                                                                   |
+| :----------------------------------------------------------------------------------------- |
 | [What is a Framework and Why is it required?](#what-is-a-framework-and-why-is-it-required) |
-| [React.js - A library or Framework?](#reactjs---a-library-or-framework)|
-| [The Idea behind React.js](#the-idea-behind-reactjs) |
+| [React.js - A library or Framework?](#reactjs---a-library-or-framework)                    |
+| [The Idea behind React.js](#the-idea-behind-reactjs)                                       |
 
 ## [What is a Framework and Why is it required?](https://drive.google.com/uc?export=view&id=1DibGc_CizYV9zWBektM83BqMeXuetgn9)
 
@@ -50,7 +50,7 @@ In summary, a library is a collection of pre-written code that can be used for s
 
 According to ChatGPT,
 
-***React.js is often referred to as a library rather than a framework. This is because React is primarily focused on the view layer of an application, allowing developers to build reusable UI components. React provides a declarative syntax for defining how the UI should change over time, but it doesn't dictate how an application should be structured or provide a complete solution for managing application state. Therefore, React is often used in conjunction with other libraries and tools to create a complete web application framework.***
+**_React.js is often referred to as a library rather than a framework. This is because React is primarily focused on the view layer of an application, allowing developers to build reusable UI components. React provides a declarative syntax for defining how the UI should change over time, but it doesn't dictate how an application should be structured or provide a complete solution for managing application state. Therefore, React is often used in conjunction with other libraries and tools to create a complete web application framework._**
 
 Readings:
 
@@ -65,3 +65,7 @@ The idea behind React.js is to provide a high-performance, efficient and flexibl
 React.js uses a Virtual DOM (Document Object Model), which is a lightweight representation of the actual DOM. The Virtual DOM enables React to update only the necessary parts of the UI when changes occur, which makes it highly efficient. React.js also promotes the idea of building UI components that can be easily reused across different parts of an application, which makes it easier to maintain and scale complex applications.
 
 One of the key benefits of React.js is that it allows developers to build complex user interfaces with a minimal amount of code. It also provides a way to write applications that can run both on the client-side (in the browser) and on the server-side (using Node.js). This allows developers to create highly interactive, real-time applications that can be updated in real-time without the need for a full page refresh.
+
+---
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Working with HTTP Requests](../Working-with-JS-Frameworks/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../README.md)
