@@ -411,4 +411,4 @@ Readings:
 
 ---
 
-[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Async JavaScript: Promises and Callbacks](../Async-JS-Promises-and-Callbacks/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Work in Progress... <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../README.md)
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Async JavaScript: Promises and Callbacks](../Async-JS-Promises-and-Callbacks/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[JS Frameworks <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Working-with-JS-Frameworks/README.md)
