@@ -759,3 +759,7 @@ Readings:
 - [JavaScript Drag and Drop](https://www.javascripttutorial.net/web-apis/javascript-drag-and-drop/)
 
 - [Recommended Drag Types](https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Recommended_drag_types)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Advanced DOM APIs](../Advanced-DOM-APIs/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Advanced Function Concepts <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Advanced-Function-Concepts/README.md)

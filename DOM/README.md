@@ -1041,3 +1041,7 @@ Just use:
 ```javascript
 someElement.textContent = someElement.textContent + 'More text!';
 ```
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> More on Functions](../More-on-Functions/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[More on Arrays and Iterables <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../More-on-Arrays-and-Iterables/README.md)

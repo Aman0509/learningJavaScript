@@ -14,6 +14,9 @@
 - [Advanced DOM APIs](Advanced-DOM-APIs/README.md)
 - [Working with Events](Working-with-Events/README.md)
 - [Advanced Function Concepts](Advanced-Function-Concepts/README.md)
+- [More on Numbers and Strings](More-on-Numbers-and-Strings/README.md)
+- [Async JavaScript: Promises and Callbacks](Async-JS-Promises-and-Callbacks/README.md)
+- [Working with HTTP Requests](Working-with-HTTP-Requests/README.md)
 - [Working with JS Frameworks](Working-with-JS-Frameworks/README.md)
 
 ## References

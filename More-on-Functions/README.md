@@ -356,11 +356,42 @@ The default parameter is a way to set default values for function parameters a v
     square(); //25
     ```
 
-- We can have default parameters in any order, and this means we can have non-default parameters after default parameters.
+- When defining functions with parameters, it's essential to understand how default and non-default parameters should be ordered.
+
+    Ordering of Parameters:
+
+    - Default parameters should come after non-default parameters in the function's parameter list.
+    - Non-default parameters precede default parameters in the function's declaration.
+
+    Example:
+
+    ```javascript
+    function exampleFunc(a, b = 5, c) {
+        return a + b + c;
+    }
+    ```
+
+    - `a` is a non-default parameter.
+    - `b` is a default parameter with a default value of `5`.
+    - `c` is also a default parameter but defined after the default parameter `b`.
+
+    When calling a function with default and non-default parameters, you must consider the order:
+
+    ```javascript
+    exampleFunc(1, undefined, 3);
+    ```
+
+    In this function call:
+
+    - `a` receives the value `1` because it's the first parameter.
+    - `b` takes the default value `5` because it's not provided in the call. The undefined argument causes the default to be used.
+    - `c` receives `3` as it's explicitly passed as the third argument.
+
+    Another example:
 
     ```javascript
     function test(a = 10, b, c=100, d) {
-        console.table(a, b, c, d);
+        console.log(a, b, c, d);
     }
     test(undefined, 10); // 10, 10, 100, undefined
     test(100); // 100, undefined, 100 , undefined
@@ -600,3 +631,7 @@ Readings:
 - [JavaScript bind()](https://www.javascripttutorial.net/javascript-bind/)
 
 - [Function binding](https://javascript.info/bind)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Working with Control Structures](../Control-Structures/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Document Object Model(DOM) <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../DOM/README.md)

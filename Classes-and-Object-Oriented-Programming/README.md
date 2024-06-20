@@ -525,3 +525,7 @@ Readings:
 - [JavaScript — Property Descriptor](https://codeburst.io/javascript-object-property-attributes-ac012be317e2)
 
 - [JavaScript Property Descriptors](https://flaviocopes.com/javascript-property-descriptors/)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> More on Objects](../More-on-Objects/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Constructor Functions and Prototypes <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Constructor-Functions-and-Prototypes/README.md)

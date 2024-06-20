@@ -1205,3 +1205,7 @@ Readings:
 - [WeakMap and WeakSet: Understanding JavaScript weak references](https://blog.logrocket.com/weakmap-weakset-understanding-javascript-weak-references/)
 
 - [Map, Set, WeakMap and WeakSet in Javascript](https://medium.com/yemeksepeti-teknoloji/map-set-weakmap-and-weakset-in-javascript-c47e3b120a01)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Document Object Model(DOM)](../DOM/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[More on Objects <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../More-on-Objects/README.md)

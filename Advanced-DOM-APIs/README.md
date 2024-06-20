@@ -447,3 +447,7 @@ try {
 ```
 
 In this example, a custom `Error` object is created by extending the `Error` class and adding a custom name. The error is then thrown and caught using a `try...catch` statement, just like before.
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Constructor Functions and Prototypes](../Constructor-Functions-and-Prototypes/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Working with Events <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Working-with-Events/README.md)

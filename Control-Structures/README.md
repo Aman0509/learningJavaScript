@@ -223,3 +223,7 @@ Readings:
 - [JavaScript try...catch...finally Statement](https://www.programiz.com/javascript/try-catch-finally)
 
 - [JavaScript throw Statement](https://www.programiz.com/javascript/throw)
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Basic](../Basics/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[More on Functions <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../More-on-Functions/README.md)

@@ -905,3 +905,7 @@ There are different algorithms used for garbage collection, such as *reference c
 - Use `setTimeout` or `setInterval` with care, as they can cause memory leaks if not used properly. It's important to clear these timers when they are no longer needed.
 
 By following these best practices, you can ensure that your JavaScript code is efficient and free from memory leaks.
+
+* * *
+
+[<img align="center" src="../images/left_arrow.png" height="20" width="20"/> Introduction](../Introduction/README.md)&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; [<img align="center" src="../images/home.png" height="20" width="20"/> Home](../README.md) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;[Working with Control Structures <img align="center" src="../images/right_arrow.png" height="20" width="20"/>](../Control-Structures/README.md)
