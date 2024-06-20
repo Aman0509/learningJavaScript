@@ -8,6 +8,11 @@
 | [Adding Request Headers](#adding-request-headers)                 |
 | [Handling Errors in `fetch()` API](#handling-errors-in-fetch-api) |
 | [`XMLHttpRequest()` vs `fetch()`](#xmlhttprequest-vs-fetch)       |
+| [Working with `FormData`](#working-with-formdata)                 |
+
+&nbsp;
+
+:notebook_with_decorative_cover: [Projects](projects/)
 
 ## [What & Why](https://drive.google.com/uc?export=view&id=18MZto3hCXlh6x1PZIgKVotxtfF23MSWh)
 
@@ -329,6 +334,80 @@ Readings:
 
 - [XMLHttpRequest vs Fetch: Which One Reigns Supreme in Modern Web Development?](https://apidog.com/blog/xmlhttprequest-vs-fetch/#:~:text=Unlike%20XMLHttpRequest%2C%20which%20was%20initially,is%20its%20promise%2Dbased%20approach.)
 - [Fetch API - Replacement for XMLHttpRequest (XHR)](https://www.atatus.com/blog/fetch-api-replacement-for-xmlhttprequest-xhr/)
+
+## Working with [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData/FormData)
+
+`FormData()` is a built-in JavaScript object specifically designed to handle form data. It provides a way to construct a key-value representation of form field values, _including text and file inputs_. This format, known as `multipart/form-data`, is essential for submitting form data to web servers using techniques like `fetch` or `XMLHttpRequest` (XHR).
+
+### Key Points about `FormData()`:
+
+- **Creates a key-value representation:** It allows you to add form field names as keys and their corresponding values as values.
+- **Handles text and file inputs:** You can include both text data from input fields and file data from `<input type="file">` elements.
+- **Multipart/form-data encoding:** The data is formatted in the `multipart/form-data` format, which is the standard format for submitting form data to web servers.
+
+### Example
+
+```javascript
+<form id="myForm">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" value="John Doe">
+  <br>
+  <label for="file">File:</label>
+  <input type="file" id="file" name="file">
+  <br>
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+const form = document.getElementById('myForm');
+
+form.addEventListener('submit', async (event) => {
+  event.preventDefault(); // Prevent default form submission
+
+  const formData = new FormData(form); // Create a FormData object from the form
+  // Can also do like that
+  // const formData = new FormData();
+  // formData.append('name', form.name);
+  // formData.append('file', form.file);
+
+  // Accessing form data (optional, for demonstration purposes)
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+
+  // Send the FormData using fetch (replace with your server-side URL)
+  const response = await fetch('/submit-form', {
+    method: 'POST',
+    body: formData
+  });
+
+  // Handle the response from the server (replace with your logic)
+  const data = await response.json();
+  console.log(data);
+});
+</script>
+```
+
+### Explanation
+
+**1. HTML Form:**
+
+- We create a simple HTML form with a name input field and a file upload field.
+
+**2. JavaScript Code**
+
+- We select the form element using `document.getElementById('myForm')`.
+- We add a `submit` event listener to the form.
+- Inside the event listener:
+  - `event.preventDefault()` prevents the default form submission behavior.
+  - We create a new `FormData` object using `new FormData(form)`, passing the form element as an argument. This automatically captures the values from the form fields.
+  - (Optional) We iterate through the `formData` object using a loop to access the key-value pairs for demonstration purposes.
+  - We use `fetch` to send the `formData` object to the server. We set the method to `POST` and the body to `formData`. Replace `/submit-form` with your actual server-side URL.
+  - We handle the response from the server by parsing it as JSON (replace with your logic for processing the response).
+
+Readings:
+
+- [Uploading Files](https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications)
 
 ---
 
